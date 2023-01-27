@@ -1,5 +1,5 @@
 // Third-party imports
-import { model, models, Schema, Types} from "mongoose";
+import { model, models, Schema, Types } from "mongoose";
 
 const companySchema = new Schema(
     {
@@ -11,4 +11,4 @@ const companySchema = new Schema(
 );
 
 // makes the model for mongoose collections
-export const Model = models.CompanySchema || model("CompanySchema", companySchema)
+export const Model = models.CompanySchema || model("CompanySchema", companySchema);
