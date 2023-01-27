@@ -6,24 +6,33 @@ import { JobApplication } from "@/interface/JobApplication";
 
 const jobPostingSchema = new Schema (
     {
-        company: String,
-        jobDescription: String,
+        company: {
+            type: String,
+            required: true
+        },
+        jobDescription: {
+            type: String,
+            required: true
+        },
         jobTitle: {
             type: String,
             enum: JobPosting.JobTitleType,
-            default: JobPosting.JobTitleType.FullTime
+            default: JobPosting.JobTitleType.FullTime,
+            required: true
         },
         employmentType: {
             type: String,
             enum: JobPosting.Employment,
-            default: JobPosting.Employment.OnSite
+            default: JobPosting.Employment.OnSite,
+            required: true
         },
-        documentType: [String],
+        documentType: [] as String[],
         datePosted: Date,
         approvalState: {
             type: String,
             enum: JobPosting.ProjectApproval,
-            default: JobPosting.ProjectApproval.Pending
+            default: JobPosting.ProjectApproval.Pending,
+            required: true
         },
         JobApplication: [] as JobApplication[]
     }
