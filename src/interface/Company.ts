@@ -1,5 +1,5 @@
 // Third-party import
-import { Types } from "mongoose"
+import { Types } from "mongoose";
 
 export interface Company {
     _id?: Types.ObjectId
