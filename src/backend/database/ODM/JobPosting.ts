@@ -2,28 +2,30 @@
 import { model, models, Schema, Types } from "mongoose";
 // Local import
 import { JobPosting } from "@/interface/JobPosting";
+import { JobApplication } from "@/interface/JobApplication";
 
 const jobPostingSchema = new Schema (
     {
-        Company: String || Types.ObjectId,
-        JobDescription: String,
-        JobTitle: {
+        company: String,
+        jobDescription: String,
+        jobTitle: {
             type: String,
             enum: JobPosting.JobTitleType,
             default: JobPosting.JobTitleType.FullTime
         },
-        EmploymentType: {
+        employmentType: {
             type: String,
             enum: JobPosting.Employment,
             default: JobPosting.Employment.OnSite
         },
-        Document: String,
-        DatePosted: Date,
-        ApprovalState: {
+        documentType: [String],
+        datePosted: Date,
+        approvalState: {
             type: String,
             enum: JobPosting.ProjectApproval,
             default: JobPosting.ProjectApproval.Pending
-        }
+        },
+        JobApplication: [] as JobApplication[]
     }
 );
 
