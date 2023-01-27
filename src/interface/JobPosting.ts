@@ -1,7 +1,6 @@
 // Third-party import
 import { Types } from "mongoose";
-// Local import
-import { Company } from "@/interface/Company";
+import { JobApplication } from "@/interface/JobApplication";
 
 export namespace JobPosting {
     export enum JobTitleType {
@@ -24,11 +23,14 @@ export namespace JobPosting {
 
 export interface JobPosting {
     _id?: Types.ObjectId
-    Company: Company
-    JobDescription: string
-    JobTitle: JobPosting.JobTitleType
-    EmploymentType: JobPosting.Employment
-    Document: string
-    DatePosted: Date
-    ApprovalState: JobPosting.ProjectApproval
+    company: string
+    jobPostingEmail: string
+    companyPhoneNumber: string
+    jobDescription: string
+    jobTitle: JobPosting.JobTitleType
+    employmentType: JobPosting.Employment
+    documentType: [string]
+    datePosted: Date
+    approvalState: JobPosting.ProjectApproval
+    jobApplications: [JobApplication] // an array of jobapplication for admin, they can use this to view who applied for the jobs
 }
