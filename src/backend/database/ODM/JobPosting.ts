@@ -10,6 +10,10 @@ const jobPostingSchema = new Schema (
             type: String,
             required: true
         },
+        jobEmail: {
+            type: String,
+            required: true
+        },
         jobDescription: {
             type: String,
             required: true
@@ -27,16 +31,20 @@ const jobPostingSchema = new Schema (
             required: true
         },
         documentType: [] as String[],
-        datePosted: Date,
+        datePosted: {
+            type: Date,
+            default: Date.now()
+        },
         approvalState: {
             type: String,
             enum: JobPosting.ProjectApproval,
             default: JobPosting.ProjectApproval.Pending,
             required: true
         },
-        JobApplication: [] as JobApplication[]
+        jobApplication: [] as JobApplication[]
     }
 );
+
 
 // makes the model for mongoose collections
 export const Model = models.JobPostingSchema || model("jobPostingSchema", jobPostingSchema);

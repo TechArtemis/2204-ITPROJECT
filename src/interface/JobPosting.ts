@@ -24,13 +24,12 @@ export namespace JobPosting {
 export interface JobPosting {
     _id?: Types.ObjectId
     company: string
-    jobPostingEmail: string
-    companyPhoneNumber: string
+    jobEmail: string
     jobDescription: string
     jobTitle: JobPosting.JobTitleType
     employmentType: JobPosting.Employment
     documentType: [string]
     datePosted: Date
     approvalState: JobPosting.ProjectApproval
-    jobApplications: [JobApplication] // an array of jobapplication for admin, they can use this to view who applied for the jobs
+    jobApplication: [JobApplication] // an array of jobapplication for admin, they can use this to view who applied for the jobs
 }
