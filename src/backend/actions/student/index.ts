@@ -15,10 +15,11 @@ export async function createStudent(student: Student) {
         }
         const newStudent = new studentModel (
             {
+                name: student.name,
                 email: student.email,
+                password: student.password,
                 phoneNumber: student.phoneNumber,
-                studentID: student.studentID,
-                jobApplication: student.jobApplication
+                studentID: student.studentID
             }
         );
 
@@ -32,19 +33,27 @@ export async function createStudent(student: Student) {
 }
 
 export async function getStudent(_id: String | Types.ObjectId) {
-    await Database.setup(process.env.MONGODB_URI);
-    const getStudent = await studentModel.findOne({ _id: _id });
-    return getStudent;
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const getStudent = await studentModel.findOne({ _id: _id });
+        return { code: 200, message: getStudent };
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
 }
 
 export async function updateStudent(_id: String | Types.ObjectId, student: Student) {
-    await Database.setup(process.env.MONGODB_URI);
-    const updateStudent = await studentModel.findOneAndUpdate({ _id },
-        {
-            name: student.name,
-            email: student.email,
-            phoneNumber: student.phoneNumber
-        },
-        { new: true });
-    return updateStudent;
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const updateStudent = await studentModel.findOneAndUpdate({ _id },
+            {
+                name: student.name,
+                email: student.email,
+                phoneNumber: student.phoneNumber
+            },
+            { new: true });
+        return { code: 500, message: updateStudent };
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
 }

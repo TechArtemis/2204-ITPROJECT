@@ -1,9 +1,6 @@
 // Third-party import
 import { model, models, Schema, Types } from "mongoose";
 
-// Local Import
-import { JobApplication } from "@/interface/JobApplication";
-
 const studentSchema = new Schema(
     {
         id: String || Types.ObjectId,
@@ -11,7 +8,11 @@ const studentSchema = new Schema(
             type: String,
             required: true
         },
-        email:{
+        email: {
+            type: String,
+            required: true
+        },
+        password: {
             type: String,
             required: true
         },
@@ -22,9 +23,6 @@ const studentSchema = new Schema(
         studentID: {
             type: String,
             required: true
-        },
-        jobApplication: {
-            type: [] as JobApplication[]
         }
     }
 );
