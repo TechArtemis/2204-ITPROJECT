@@ -40,7 +40,7 @@ const LoggedInHeaderComponent = () => {
                     align={"center"}>
                     {/* This will make it so that it'll make a hamburder icon halfway through the screen */}
                     <Flex
-                        display={["none", "none", "none", "flex"]}>
+                        display={["none", "none", "none", "none", "flex"]}>
                         {/* Find Co-op button */}
                         <Link href="#">
                             <Button
@@ -101,7 +101,7 @@ const LoggedInHeaderComponent = () => {
                         size={"lg"}
                         mr={2}
                         icon={<HamburgerIcon/>}
-                        display={["flex", "flex", "flex", "none"]}
+                        display={["flex", "flex", "flex", "flex", "none"]}
                         onClick={() => changeDisplay("flex")}
                     />
                 </Flex>
