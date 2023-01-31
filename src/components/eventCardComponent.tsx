@@ -3,7 +3,7 @@ import { Card, CardHeader, CardBody } from "@chakra-ui/react";
 // Local Imports
 import styles from "@/styles/JobPostings.module.sass";
 
-const eventCardComponent = () => {
+const EventCardComponent = () => {
     return (
         <Card bg={"#566157"} maxW={"300px"} maxH={"200px"} p={"1vh"} borderRadius={"3xl"} my={"30px"}>
             <CardHeader>
@@ -17,4 +17,4 @@ const eventCardComponent = () => {
     );
 };
 
-export default eventCardComponent;
+export default EventCardComponent;

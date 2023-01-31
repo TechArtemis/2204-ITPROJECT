@@ -7,7 +7,7 @@ import styles from "@/styles/JobPostings.module.sass";
 import heartIcon from "@/../public/images/heartIcon.png";
 import companyIcon from "@/../public/images/companyDefaultIcon.png";
 
-const jobCardCompany = () => {
+const JobCardCompany = () => {
     return (
         <>
             <Card maxW={"330px"} minW={"280px"} borderRadius={"3xl"} boxShadow={"dark-lg"} ml={"5vh"} my={"5vh"}>
@@ -47,4 +47,4 @@ const jobCardCompany = () => {
     );
 };
 
-export default jobCardCompany;
+export default JobCardCompany;

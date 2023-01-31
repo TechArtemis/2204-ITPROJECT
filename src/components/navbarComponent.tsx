@@ -9,7 +9,7 @@ import vccLogo from "@/../public/images/vccLogo.png";
 import defaultProfile from "@/../public/images/defaultProfile.png";
 import styles from "@/styles/JobPostings.module.sass";
 
-const LoggedInHeaderComponent = () => {
+const NavbarComponent = () => {
     const [display, changeDisplay] = useState("none");
     useEffect(() => changeDisplay("none"), []);
 
@@ -190,4 +190,4 @@ const LoggedInHeaderComponent = () => {
     );
 };
 
-export default LoggedInHeaderComponent;
+export default NavbarComponent;
