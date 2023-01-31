@@ -32,17 +32,20 @@ const jobPostingSchema = new Schema (
             default: JobPosting.JobTitleType.FullTime,
             required: true
         },
-        employmentType: {
+        employment: {
             type: String,
-            enum: JobPosting.Employment,
-            default: JobPosting.Employment.OnSite,
+            enum: JobPosting.EmploymentType,
+            default: JobPosting.EmploymentType.OnSite,
             required: true
         },
         requiredDocuments: {
             type: [] as String[],
             required: true
         },
-        optionalDocuments: [] as String[],
+        optionalDocuments: {
+            type: [] as String[],
+            required: true
+        },
         datePosted: {
             type: Date,
             default: Date.now()

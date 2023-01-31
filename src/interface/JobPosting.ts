@@ -9,7 +9,7 @@ export namespace JobPosting {
         Contracted,
         Seasonal
     }
-    export enum Employment {
+    export enum EmploymentType {
         Remote,
         Hybrid,
         OnSite
@@ -29,7 +29,7 @@ export interface JobPosting {
     companyAbout: string
     jobDescription: string
     jobTitle: JobPosting.JobTitleType
-    employmentType: JobPosting.Employment
+    employment: JobPosting.EmploymentType
     requiredDocuments: [string],
     optionalDocuments: [string],
     datePosted: Date
