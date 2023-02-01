@@ -42,17 +42,27 @@ export async function getStudent(_id: String | Types.ObjectId) {
     }
 }
 
-export async function updateStudent(_id: String | Types.ObjectId, student: Student) {
+export async function updateStudent(email: String | Types.ObjectId, student: Student) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const updateStudent = await studentModel.findOneAndUpdate({ _id },
+        const updateStudent = await studentModel.findOneAndUpdate({ email },
             {
                 name: student.name,
                 email: student.email,
                 phoneNumber: student.phoneNumber
             },
             { new: true });
-        return { code: 500, message: updateStudent };
+        return { code: 200, message: updateStudent };
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
+}
+
+export async function updatePasswordByEmail(email: String, password: String) {
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const student = await studentModel.findByIdAndUpdate({ email }, { password }, { new: true });
+        return { code: 200, message: "Success" };
     } catch (error: any) {
         return { code: 500, message: error.message };
     }
