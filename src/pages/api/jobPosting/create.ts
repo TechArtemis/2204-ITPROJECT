@@ -1,8 +1,10 @@
+// Third-party import
+import { NextApiRequest, NextApiResponse } from "next";
+// Local import
 import { createJobPosting } from "@/backend/actions/jobPosting";
 import { JobPosting } from "@/interface/JobPosting";
 import { EMAIL_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
-import { NextApiRequest, NextApiResponse } from "next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
@@ -58,7 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 optionalDocuments: optionalDocuments,
                 datePosted: datePosted,
                 approvalState: approvalState
-            }
+            };
             const response = await createJobPosting(jobPost);
             res.status(response.code).json(
                 {

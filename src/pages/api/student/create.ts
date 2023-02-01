@@ -1,6 +1,7 @@
+// Third-party import
 import { NextApiRequest, NextApiResponse } from "next";
+// Local imports
 import { EMAIL_REGEX, PASSWORD_REGEX, PHONE_REGEX, STUDENTID_REGEX } from "@/shared/regex";
-
 import { Student } from "@/interface/Student";
 import { createStudent } from "@/backend/actions/student";
 import { isValidStr } from "@/shared/stringCheck";

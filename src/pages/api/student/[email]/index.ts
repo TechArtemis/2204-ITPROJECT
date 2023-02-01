@@ -1,6 +1,9 @@
+// Third-party import
+import { NextApiRequest, NextApiResponse } from "next";
+// Local imports
 import { updatePasswordByEmail } from "@/backend/actions/student";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
-import { NextApiRequest, NextApiResponse } from "next";
+
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "PUT") {
