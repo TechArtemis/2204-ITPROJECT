@@ -8,14 +8,12 @@ export async function uploadFile(path: string) {
             unique_filename: true
         }
     );
-
     if (!response) {
         throw {
             status: 500,
             message: `failed to upload file with path: ${ path }`
         };
     }
-
     return {
         filename: response.public_id
     };

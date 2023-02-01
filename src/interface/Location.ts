@@ -1,3 +1,6 @@
+/**
+ * Enum for Location
+ */
 export namespace Location {
     export enum Province {
         AB,
@@ -16,6 +19,9 @@ export namespace Location {
     }
 }
 
+/**
+ * Interface for Location
+ */
 export interface Location {
     address: string
     city: string

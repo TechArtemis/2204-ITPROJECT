@@ -1,11 +1,15 @@
+// Third-party Import
+import { Types } from "mongoose";
 // Local Import
 import Database from "@/backend/database";
 import { Student } from "@/interface/Student";
 import { Model as studentModel } from "@/backend/database/ODM/Student";
 
-// Third-party Import
-import { Types } from "mongoose";
-
+/**
+ * Creates a student account in the database
+ * @param student the student object that is going to the database
+ * @returns a code and message
+ */
 export async function createStudent(student: Student) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -22,16 +26,18 @@ export async function createStudent(student: Student) {
                 studentID: student.studentID
             }
         );
-
         await newStudent.save();
         return { code: 200, message: "Student created" };
-
     } catch (error: any) {
         return { code: 500, message: error.message };
-
     }
 }
 
+/**
+ * A function that gets a student base on its email
+ * @param email the email of the student that you want to get
+ * @returns a code and a message
+ */
 export async function getStudent(email: String) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -45,13 +51,18 @@ export async function getStudent(email: String) {
     }
 }
 
+/**
+ * Updates the student account's name and phone number
+ * @param email used to identify the account
+ * @param student account that has the new details
+ * @returns the updated student account and updates the front end
+ */
 export async function updateStudent(email: String | Types.ObjectId, student: Student) {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const updateStudent = await studentModel.findOneAndUpdate({ email },
             {
                 name: student.name,
-                email: student.email,
                 phoneNumber: student.phoneNumber
             },
             { new: true });
@@ -61,6 +72,12 @@ export async function updateStudent(email: String | Types.ObjectId, student: Stu
     }
 }
 
+/**
+ * A function that updates the students password
+ * @param email the email of the student you want to change password
+ * @param password the new password for the student
+ * @returns a code and a message
+ */
 export async function updatePasswordByEmail(email: String, password: String) {
     try {
         await Database.setup(process.env.MONGODB_URI);

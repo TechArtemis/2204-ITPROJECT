@@ -9,9 +9,17 @@ import { isValidStr } from "@/shared/stringCheck";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
+            /**
+             * Declares and initialize the jobtitleArr to get the enums for JobTtitleType
+             * Declares and initialize the employmentArr to get the enums for EmployeeType
+             */
             const jobTitleArr = Object.values(JobPosting.JobTitleType);
             const employmentArr = Object.values(JobPosting.EmploymentType);
+            // Gets the request from the body
             const { jobPosting } = req.body;
+            /**
+             * The following if conditions validates the inputs
+             */
             if (!isValidStr(jobPosting.companyName)) {
                 throw {
                     code: 400,
@@ -48,6 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Employment Type"
                 };
             }
+            // Creates a JobPosting object to be created
             const jobPost : JobPosting = {
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
@@ -61,18 +70,22 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 datePosted: jobPosting.datePosted,
                 approvalState: jobPosting.approvalState
             };
+            // Creates the job posting in the database and stores the response
             const response = await createJobPosting(jobPost);
+            // Checks if the response is not code 200
             if (response.code !== 200) {
                 throw {
                     code: response.code,
                     message: response.message
                 };
             }
+            // Sends a response code and message
             res.status(response.code).json(
                 {
                     message: response.message
                 }
             );
+        // Catch an error and sends a response code and message
         } catch (error: any) {
             const { code = 500, message } = error;
             res.status(code).json(
@@ -83,6 +96,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
     else {
+        // Sends a response code of 405 and a message
         res.status(405).json(
             {
                 message: "Invalid Method"
