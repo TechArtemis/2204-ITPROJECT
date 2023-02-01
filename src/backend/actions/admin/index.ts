@@ -15,9 +15,9 @@ export async function createAdmin(admin: Admin) {
 
         const newAdmin = new adminModel(
             {
-                email: admin.Email,
-                password: admin.Password,
-                name: admin.Name
+                email: admin.email,
+                password: admin.password,
+                name: admin.name
             }
         );
 

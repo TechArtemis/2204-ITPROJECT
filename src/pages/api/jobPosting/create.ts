@@ -11,57 +11,63 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const jobTitleArr = Object.values(JobPosting.JobTitleType);
             const employmentArr = Object.values(JobPosting.EmploymentType);
-            const { companyName, companyContact, companyLocation, companyAbout, jobDescription, jobTitle, employment, requiredDocuments, optionalDocuments, datePosted, approvalState } = req.body;
-            if (!isValidStr(companyName)) {
+            const { jobPosting } = req.body;
+            if (!isValidStr(jobPosting.companyName)) {
                 throw {
                     code: 400,
                     message: "Invalid Company Name"
                 };
             }
-            if (!EMAIL_REGEX.test(companyContact)) {
+            if (!EMAIL_REGEX.test(jobPosting.companyContact)) {
                 throw {
                     code: 400,
                     message: "Invalid Contact"
                 };
             }
-            if (!isValidStr(companyAbout)) {
+            if (!isValidStr(jobPosting.companyAbout)) {
                 throw {
                     code: 400,
                     message: "Invalid Company About"
                 };
             }
-            if (!isValidStr(jobDescription)) {
+            if (!isValidStr(jobPosting.jobDescription)) {
                 throw {
                     code: 400,
                     message: "Invalid Job Description"
                 };
             }
-            if (!jobTitleArr.includes(jobTitle)) {
+            if (!jobTitleArr.includes(jobPosting.jobTitle)) {
                 throw {
                     code: 400,
                     message: "Invalid Job Title"
                 };
             }
-            if (!employmentArr.includes(employment)) {
+            if (!employmentArr.includes(jobPosting.employment)) {
                 throw {
                     code: 400,
                     message: "Invalid Employment Type"
                 };
             }
             const jobPost : JobPosting = {
-                companyName: companyName,
-                companyContact: companyContact,
-                companyLocation: companyLocation,
-                companyAbout: companyAbout,
-                jobDescription: jobDescription,
-                jobTitle: jobTitle,
-                employment: employment,
-                requiredDocuments: requiredDocuments,
-                optionalDocuments: optionalDocuments,
-                datePosted: datePosted,
-                approvalState: approvalState
+                companyName: jobPosting.companyName,
+                companyContact: jobPosting.companyContact,
+                companyLocation: jobPosting.companyLocation,
+                companyAbout: jobPosting.companyAbout,
+                jobDescription: jobPosting.jobDescription,
+                jobTitle: jobPosting.jobTitle,
+                employment: jobPosting.employment,
+                requiredDocuments: jobPosting.requiredDocuments,
+                optionalDocuments: jobPosting.optionalDocuments,
+                datePosted: jobPosting.datePosted,
+                approvalState: jobPosting.approvalState
             };
             const response = await createJobPosting(jobPost);
+            if (response.code !== 200) {
+                throw {
+                    code: response.code,
+                    message: response.message
+                };
+            }
             res.status(response.code).json(
                 {
                     message: response.message
