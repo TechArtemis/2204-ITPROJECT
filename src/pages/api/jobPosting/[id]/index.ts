@@ -3,7 +3,7 @@ import { NextApiRequest, NextApiResponse } from "next";
 // Local import
 import { getJobPosting } from "@/backend/actions/jobPosting";
 
-export default async function hanlder(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
         try {
             const { id } = req.query;
@@ -29,5 +29,12 @@ export default async function hanlder(req: NextApiRequest, res: NextApiResponse)
                 }
             );
         }
+    }
+    else {
+        res.status(405).json(
+            {
+                message: "Invalid Method"
+            }
+        );
     }
 }
