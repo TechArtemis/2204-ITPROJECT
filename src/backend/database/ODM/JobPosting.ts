@@ -2,15 +2,23 @@
 import { model, models, Schema, Types } from "mongoose";
 // Local import
 import { JobPosting } from "@/interface/JobPosting";
-import { JobApplication } from "@/interface/JobApplication";
+import { Location } from "@/interface/Location";
 
 const jobPostingSchema = new Schema (
     {
-        company: {
+        companyName: {
             type: String,
             required: true
         },
-        jobEmail: {
+        companyContact: {
+            type: String,
+            required: true
+        },
+        companyLocation: {
+            type: Location,
+            required: true
+        },
+        companyAbout: {
             type: String,
             required: true
         },
@@ -30,7 +38,11 @@ const jobPostingSchema = new Schema (
             default: JobPosting.Employment.OnSite,
             required: true
         },
-        documentType: [] as String[],
+        requiredDocuments: {
+            type: [] as String[],
+            required: true
+        },
+        optionalDocuments: [] as String[],
         datePosted: {
             type: Date,
             default: Date.now()
@@ -40,8 +52,7 @@ const jobPostingSchema = new Schema (
             enum: JobPosting.ProjectApproval,
             default: JobPosting.ProjectApproval.Pending,
             required: true
-        },
-        jobApplication: [] as JobApplication[]
+        }
     }
 );
 
