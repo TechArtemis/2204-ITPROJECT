@@ -17,8 +17,8 @@ export namespace Location {
 }
 
 export interface Location {
-    Address: string
-    City: string
-    Province: Location.Province
-    PostalCode: string
+    address: string
+    city: string
+    province: Location.Province
+    postalCode: string
 }

@@ -32,10 +32,13 @@ export async function createStudent(student: Student) {
     }
 }
 
-export async function getStudent(_id: String | Types.ObjectId) {
+export async function getStudent(email: String) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const getStudent = await studentModel.findOne({ _id: _id });
+        const getStudent = await studentModel.findOne({ email });
+        if (!getStudent) {
+            return { code: 400, message: "Not logged in" };
+        }
         return { code: 200, message: getStudent };
     } catch (error: any) {
         return { code: 500, message: error.message };

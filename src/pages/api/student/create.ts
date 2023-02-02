@@ -9,45 +9,51 @@ import { isValidStr } from "@/shared/stringCheck";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
-            const { name, email, password, phoneNumber, studentID } : Student = req.body;
-            if (isValidStr(name)) {
+            const { student } = req.body;
+            if (isValidStr(student.name)) {
                 throw {
                     code: 400,
                     message: "Invalid Name"
                 };
             }
-            if (!EMAIL_REGEX.test(email)) {
+            if (!EMAIL_REGEX.test(student.email)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"
                 };
             }
-            if (!PASSWORD_REGEX.test(password)) {
+            if (!PASSWORD_REGEX.test(student.password)) {
                 throw {
                     code: 400,
                     message: "Invalid Password"
                 };
             }
-            if (!PHONE_REGEX.test(phoneNumber)) {
+            if (!PHONE_REGEX.test(student.phoneNumber)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"
                 };
             }
-            if (!STUDENTID_REGEX.test(studentID)) {
+            if (!STUDENTID_REGEX.test(student.studentID)) {
                 throw {
                     code: 400,
                     message: "Invalid StudentID"
                 };
             }
-            const student : Student = {
-                name: name,
-                email: email,
-                password: password,
-                phoneNumber: phoneNumber,
-                studentID: studentID
+            const newStudent : Student = {
+                name: student.name,
+                email: student.email,
+                password: student.password,
+                phoneNumber: student.phoneNumber,
+                studentID: student.studentID
             };
-            const response = await createStudent(student);
+            const response = await createStudent(newStudent);
+            if (response.code !== 200) {
+                throw {
+                    code: response.code,
+                    message: response.message
+                };
+            }
             res.status(response.code).json(
                 {
                     message: response.message
