@@ -4,6 +4,9 @@ import { model, models, Schema, Types } from "mongoose";
 import { JobPosting } from "@/interface/JobPosting";
 import { Location } from "@/interface/Location";
 
+/**
+ * Schema for JobPosting
+ */
 const jobPostingSchema = new Schema (
     {
         companyName: {
@@ -58,7 +61,6 @@ const jobPostingSchema = new Schema (
         }
     }
 );
-
 
 // makes the model for mongoose collections
 export const Model = models.JobPostingSchema || model("jobPostingSchema", jobPostingSchema);

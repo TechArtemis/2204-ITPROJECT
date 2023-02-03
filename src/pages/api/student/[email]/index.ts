@@ -4,19 +4,18 @@ import { NextApiRequest, NextApiResponse } from "next";
 import { getStudent, updatePasswordByEmail } from "@/backend/actions/student";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 
-
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
         try {
             const { email } = req.query;
-
+            // validation
             if (!EMAIL_REGEX.test(email as string)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"
                 };
             }
-
+            // get the student function
             const response = await getStudent(email as string);
             if (response.code !== 200) {
                 throw {
@@ -24,6 +23,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+            // send the student to front-end
             res.status(200).json(
                 {
                     message: response.message
@@ -52,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const { email } = req.query;
             const { password } = req.body;
+            // validation
             if (!EMAIL_REGEX.test(email as string)) {
                 throw {
                     code: 400,
@@ -64,6 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Password"
                 };
             }
+            // we update password using email
             const response = await updatePasswordByEmail(email as string, password);
             if (response.code !== 200) {
                 throw {
@@ -71,6 +73,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+            // we return a message for success or error
             res.status(response.code).json(
                 {
                     message: response.message
@@ -84,5 +87,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             );
         }
+    }
+    else {
+        res.status(405).json(
+            {
+                message: "Invalid Method"
+            }
+        );
     }
 }

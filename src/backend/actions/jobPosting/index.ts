@@ -5,6 +5,11 @@ import Database from "@/backend/database";
 import { JobPosting } from "@/interface/JobPosting";
 import { Model as jobPostingModel } from "@/backend/database/ODM/JobPosting";
 
+/**
+ * A function that creates a new JobPosting in the database
+ * @param jobPosting The new JobPosting object
+ * @returns a code and a message
+ */
 export async function createJobPosting(jobPosting: JobPosting) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -30,6 +35,11 @@ export async function createJobPosting(jobPosting: JobPosting) {
     }
 }
 
+/**
+ * gets the job posting from the database
+ * @param _id used to identify which job posting to get
+ * @returns the job posting that matches the ID
+ */
 export async function getJobPosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -43,6 +53,11 @@ export async function getJobPosting(_id: String | Types.ObjectId) {
     }
 }
 
+/**
+ * A function that changes the approval state of a job posting in the database
+ * @param _id the ID of the job posting to be changed
+ * @returns a code and a message
+ */
 export async function approveJobPosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -57,6 +72,11 @@ export async function approveJobPosting(_id: String | Types.ObjectId) {
     }
 }
 
+/**
+ * A function that changes the approval state to rejected
+ * @param _id used to identify which job posting to get
+ * @returns a code and message
+ */
 export async function rejectJobPosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -71,6 +91,12 @@ export async function rejectJobPosting(_id: String | Types.ObjectId) {
     }
 }
 
+/**
+ * A function that updates an existing job posting
+ * @param _id used to identify which job posting to get
+ * @param jobPosting has the new details to update the old jobPost
+ * @returns the new job posting
+ */
 export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting: JobPosting) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -93,12 +119,17 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
                 approvalState: JobPosting.ProjectApproval.Pending,
             },
             { new: true });
-        return { code: 200, newJobPosting };
+        return { code: 200, message: newJobPosting };
     } catch (error: any) {
         return { code: 500, message: error.message };
     }
 }
 
+/**
+ * A function that deletes a Job Posting in the database.
+ * @param _id used to get a specific Job Posting in the database
+ * @returns a code and a message
+ */
 export async function deletePosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -113,6 +144,10 @@ export async function deletePosting(_id: String | Types.ObjectId) {
     }
 }
 
+/**
+ * A function that returns all job posts
+ * @returns all job posts
+ */
 export async function getAllPosting() {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -123,6 +158,10 @@ export async function getAllPosting() {
     }
 }
 
+/**
+ * A function that deletes all Job Posting that is more than 30 days old
+ * @returns a code and a message
+ */
 export async function deleteExpired() {
     try {
         const today = new Date();

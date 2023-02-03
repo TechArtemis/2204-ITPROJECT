@@ -1,15 +1,10 @@
 // Third-party imports
 import { model, models, Schema, Types } from "mongoose";
-/*
-    AdminID
-    AdminEmail
-    AdminPassword
-    use verification code
-    name: Admin
-*/
+/**
+ * Schema for Admin
+ */
 const adminSchema = new Schema(
     {
-        id: String || Types.ObjectId,
         email: {
             type: String,
             required: true
@@ -21,8 +16,6 @@ const adminSchema = new Schema(
         name: "Admin"
     }
 );
-
-
 
 // makes the model for mongoose collections
 export const Model = models.adminSchema || model("AdminSchema", adminSchema);

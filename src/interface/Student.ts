@@ -1,6 +1,9 @@
 // Third-party import
 import { Types } from "mongoose";
 
+/**
+ * Interface for Student
+ */
 export interface Student {
     _id?: Types.ObjectId
     name: string

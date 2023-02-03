@@ -1,6 +1,9 @@
 // Third-party import
 import { model, models, Schema, Types } from "mongoose";
 
+/**
+ * Schema for Student
+ */
 const studentSchema = new Schema(
     {
         id: String || Types.ObjectId,
@@ -28,5 +31,3 @@ const studentSchema = new Schema(
 );
 
 export const Model = models.studentSchema || model("studentSchema", studentSchema);
-
-

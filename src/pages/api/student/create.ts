@@ -7,9 +7,13 @@ import { createStudent } from "@/backend/actions/student";
 import { isValidStr } from "@/shared/stringCheck";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    // post method
     if (req.method === "POST") {
         try {
             const { student } = req.body;
+            /**
+             * used for validating the student object
+             */
             if (isValidStr(student.name)) {
                 throw {
                     code: 400,
@@ -40,6 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid StudentID"
                 };
             }
+            // make a student using the info we got from the front-end
             const newStudent : Student = {
                 name: student.name,
                 email: student.email,
@@ -47,6 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 phoneNumber: student.phoneNumber,
                 studentID: student.studentID
             };
+            // send the student to the actionfunctions
             const response = await createStudent(newStudent);
             if (response.code !== 200) {
                 throw {
@@ -54,6 +60,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+            // send a success code to front end + message if successful
             res.status(response.code).json(
                 {
                     message: response.message
@@ -67,5 +74,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             );
         }
+    }
+    else {
+        res.status(405).json(
+            {
+                message: "Invalid Method"
+            }
+        );
     }
 }
