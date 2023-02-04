@@ -25,10 +25,10 @@ export default function JobPostings() {
             items: 1,
             itemsFit: "contain"
         },
-        910: {
-            items: 2,
-            itemsFit: "contain"
-        },
+        // 910: {
+        //     items: 2,
+        //     itemsFit: "contain"
+        // },
         1024: {
             items: 2,
             itemsFit: "contain"
