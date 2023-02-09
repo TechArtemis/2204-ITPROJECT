@@ -18,7 +18,7 @@ import { signIn } from "next-auth/react";
 import router from "next/router";
 import { getToken } from "next-auth/jwt";
 
-export default function Register() {
+export default function LogIn() {
 
     const [input, setInput] = useState("");
     const [email, setEmail] = useState("");
