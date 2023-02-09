@@ -14,7 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             /**
              * used for validating the student object
              */
-            if (isValidStr(student.name)) {
+            if (!isValidStr(student.name)) {
                 throw {
                     code: 400,
                     message: "Invalid Name"
