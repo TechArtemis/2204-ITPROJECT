@@ -7,6 +7,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
     return (
+        <>
         <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
             <Head>
                 <title>Vancouver CST</title>
@@ -116,6 +117,7 @@ export default function Home() {
                     </a>
                 </div>
             </main>
+            </div>
         </>
     );
 }
