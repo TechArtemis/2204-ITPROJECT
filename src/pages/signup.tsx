@@ -1,66 +1,186 @@
-import Head from "next/head";
-import { FaRegEnvelope, FaAddressCard } from "react-icons/fa";
-import { MdLockOutline } from "react-icons/md";
+import {
+    Flex,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    InputGroup,
+    HStack,
+    InputRightElement,
+    Stack,
+    Button,
+    Heading,
+    Text,
+    useColorModeValue,
+    Link,
+    FormHelperText,
+    FormErrorMessage,
+} from "@chakra-ui/react";
+import { SetStateAction, useState } from "react";
+import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import NextLink from "next/link";
+import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { isValidStr } from "@/shared/stringCheck";
+import { Alumni } from "@/interface/Alumni";
+import { instance } from "@/shared/axiosInstance";
+import router from "next/router";
+import { signIn } from "next-auth/react";
 
+export default function SignupCard() {
+    const [showPassword, setShowPassword] = useState(false);
+    const [input, setInput] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [fName, setFName] = useState("");
+    const [lName, setLName] = useState("");
 
-export default function SignUp() {
+    const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => setInput(e.target.value);
+
+    const handleEmailChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.target.value;
+
+        setEmail(val);
+    };
+
+    const handlePasswordChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.target.value;
+
+        setPassword(val);
+    };
+
+    const handleFNameChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.target.value;
+
+        setFName(val);
+    };
+
+    const handleLNameChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const val = event.target.value;
+
+        setLName(val);
+    };
+
+    const handleSubmit = async() => {
+        if (!EMAIL_REGEX.test(email)) {
+
+        }
+        if (!PASSWORD_REGEX.test(password)) {
+
+        }
+        if (!isValidStr(fName) || !isValidStr(lName)) {
+
+        }
+        const name = fName + " " + lName;
+        const alumni : Alumni = {
+            name,
+            email,
+            password
+        };
+        const obj = {
+            alumni
+        };
+        try {
+            const { data } = await instance.post("alumni/create", obj);
+            const response = await signIn("credentials", { redirect: false, email, password });
+            console.log(response);
+            if(response?.ok) {
+                router.push("/");
+            }
+        } catch(error: any) {
+            console.log("NETWORK ERROR", error);
+        }
+    };
+
+    const isError = input === "";
+
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-100">
-            <Head>
-                <title>Vancouver CST</title>
-                <link rel="icon" href="/favicon.ico" />
-            </Head>
-
-            <main className="flex flex-cold items-center justify-center w-full flex-1 px-20 text-center">
-                <div className="bg-white rounded-2xl shadow-2xl flex w-2/3 max-w-4xl">
-                    <div className="w-3/5 p-5">
-                        <div className="text-left font-bold">
-                            {/* <span className="text-green-500">Vancouver Community College CST</span>  */} {/* replace placeholder text with logo */}
-                        </div>
-                        <div className="py-10">
-                            <h2 className="text-3xl font-bold text-green-500 mb-2">Create Your Account</h2>
-                            <div className="border-2 w-10 border-green-500 inline-block mb-2"></div>
-                            <p className="text-gray-400 my-3"> Fill in information below</p>
-                            <div className="flex flex-col items-center">
-                                <div className="bg-gray-100 w-64 p-2 flex items-center rounded-xl border-2 border-gray-300 mb-2">
-                                    <FaRegEnvelope className="text-gray-400 m-2"/>
-                                    <input type="email" name="email" placeholder="Email" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="bg-gray-100 w-64 p-2 flex items-center rounded-xl border-2 border-gray-300 mb-2">
-                                    <MdLockOutline className="text-gray-400 m-2"/>
-                                    <input type="password" name="password" placeholder="Password" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="bg-gray-100 w-64 p-2 flex items-center rounded-xl border-2 border-gray-300 mb-2">
-                                    <MdLockOutline className="text-gray-400 m-2"/>
-                                    <input type="password" name="password" placeholder="Please re-enter your password" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="bg-gray-100 w-64 p-2 flex items-center rounded-xl border-2 border-gray-300 mb-2">
-                                    <FaAddressCard className="text-gray-400 m-2"/>
-                                    <input type="text" name="firstname" placeholder="First Name" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-xl border-2 border-gray-300">
-                                    <FaAddressCard className="text-gray-400 border-gray m-2"/>
-                                    <input type="text" name="lastname" placeholder="Last Name" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="bg-gray-100 w-64 p-2 flex items-center mb-3 rounded-xl border-2 border-gray-300">
-                                    <FaAddressCard className="text-gray-400 border-gray m-2"/>
-                                    <input type="text" name="studentid" placeholder="Student ID" className="bg-gray-100 outline-non text-sm flex-1"/>
-                                </div>
-                                <div className="flex justify-between w-64 mb-5">
-                                    <label className="flex items-center text-xs mr-1"><input type="checkbox" name="remember" className="mr-1"/> Remember me</label>
-                                </div>
-                                <a href="./" className="border-2 border-green-500 text-green-500 rounded-full px-12 py-2 inline-block font-semibold hover:bg-green-500 hover:text-white">Sign Up</a>
-                            </div>
-                        </div>
-                    </div>
-                    {/* Text Paragraph Placeholder */}
-                    <div className="w-2/5 bg-[url('/images/SchoolVCC2.jpg')] bg-center bg-cover text-stone-200 rounded-tr-2xl rounded-br-2xl py-36 px-12">
-                        <h2 className="text-3xl font-bold mb-2">VCC CST</h2>
-                        <div className="border-2 w-10 border-stone-200 inline-block mb-2"></div>
-                        <p className="mb-2">Sign up to join the CST student and alumni job board. This board will have employers from all over the world posting jobs and projects for CST students!</p>
-                    </div>
-                </div>
-            </main>
-        </div>
+        <Flex
+            minH={"100vh"}
+            align={"center"}
+            justify={"center"}
+            bg={useColorModeValue("gray.50", "gray.800")}>
+            <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
+                <Stack align={"center"}>
+                    <Heading fontSize={"4xl"} textAlign={"center"}>
+                        Sign up
+                    </Heading>
+                    <Text fontSize={"lg"} color={"gray.600"}>
+                        to see the VCC CST job board
+                    </Text>
+                </Stack>
+                <Box
+                    rounded={"lg"}
+                    bg={useColorModeValue("white", "gray.700")}
+                    boxShadow={"lg"}
+                    p={8}>
+                    <Stack spacing={4}>
+                        <HStack>
+                            <Box>
+                                <FormControl id="firstName" isRequired>
+                                    <FormLabel>First Name</FormLabel>
+                                    <Input type="text" onChange={handleFNameChange} />
+                                </FormControl>
+                            </Box>
+                            <Box>
+                                <FormControl id="lastName" isRequired>
+                                    <FormLabel>Last Name</FormLabel>
+                                    <Input type="text" onChange={handleLNameChange} />
+                                </FormControl>
+                            </Box>
+                        </HStack>
+                        <FormControl id="email" isInvalid={isError}>
+                            <FormLabel>Email address</FormLabel>
+                            <Input type='email' onChange={handleEmailChange} />
+                            {!isError ? (
+                                <FormHelperText>
+                                    Enter your VCC student email or personal CST alumni email
+                                </FormHelperText>
+                            ) : (
+                                <FormErrorMessage>Email is required.</FormErrorMessage>
+                            )}
+                        </FormControl>
+                        <FormControl id="password" isInvalid={isError}>
+                            <FormLabel>Password</FormLabel>
+                            <InputGroup>
+                                <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
+                                {!isError ? (
+                                    <FormHelperText>
+                                        Enter Password
+                                    </FormHelperText>
+                                ) : (
+                                    <FormErrorMessage>Password is required.</FormErrorMessage>
+                                )}
+                                <InputRightElement h={"full"}>
+                                    <Button
+                                        variant={"ghost"}
+                                        onClick={() =>
+                                            setShowPassword((showPassword) => !showPassword)
+                                        }>
+                                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                    </Button>
+                                </InputRightElement>
+                            </InputGroup>
+                        </FormControl>
+                        <Stack spacing={10} pt={2}>
+                            <Button
+                                loadingText="Submitting"
+                                size="lg"
+                                bg={"green.400"}
+                                color={"white"}
+                                _hover={{
+                                    bg: "green.500",
+                                }} onClick={handleSubmit}>
+                                Sign up
+                            </Button>
+                        </Stack>
+                        <Stack pt={6}>
+                            <Text align={"center"}>
+                                Already a user? <Link as={NextLink} href='./login' color={"green.400"} >Login</Link>
+                            </Text>
+                        </Stack>
+                    </Stack>
+                </Box>
+            </Stack>
+        </Flex>
     );
 }
