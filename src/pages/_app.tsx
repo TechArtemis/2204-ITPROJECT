@@ -1,11 +1,12 @@
 import "@/styles/globals.sass";
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import type { AppProps } from "next/app";
+import { customTheme } from "@/styles/theme";
 
 export default function App({ Component, pageProps }: AppProps) {
     return (
-        <ChakraProvider>
-            <Component {...pageProps} />
+        <ChakraProvider theme={ customTheme }>
+            <Component { ...pageProps } />
         </ChakraProvider>
     );
 }

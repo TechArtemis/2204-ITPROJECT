@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 // 3rd Party Imports
-import { Box, Flex, Grid, GridItem, Divider, Center } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Divider, Center, Button, extendTheme } from "@chakra-ui/react";
 import Image from "next/image";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
@@ -78,7 +78,7 @@ export default function JobPostings() {
                     </h1>
                 </div>
             </Box>
-            <Flex>
+            <Flex overflowX="hidden" overflowY="hidden">
                 <Flex display={["none", "none", "flex", "flex"]}>
                     <Box bg={"#485049"} minW={"380px"} h={"1350px"} color={"white"}>
                         <Grid>
@@ -128,7 +128,14 @@ export default function JobPostings() {
                             mouseTracking
                             items={items}
                             responsive={responsive}
+                            disableDotsControls={true}
                             controlsStrategy="alternate"
+                            renderPrevButton={() => {
+                                return <Button colorScheme={"whatsapp"} variant="solid"> Previous </Button>;
+                            }}
+                            renderNextButton={() => {
+                                return <Button colorScheme={"whatsapp"} variant="solid"> Next </Button>;
+                            }}
                         />
 
                     </Flex>
@@ -138,7 +145,17 @@ export default function JobPostings() {
                         <AliceCarousel
                             mouseTracking
                             items={items}
+                            responsive={responsive}
+                            disableDotsControls={true}
+                            controlsStrategy="alternate"
+                            renderPrevButton={() => {
+                                return <Button colorScheme={"whatsapp"} variant="solid"> Previous </Button>;
+                            }}
+                            renderNextButton={() => {
+                                return <Button colorScheme={"whatsapp"} variant="solid"> Next </Button>;
+                            }}
                         />
+
                     </Flex>
                 </Box>
             </Flex>
