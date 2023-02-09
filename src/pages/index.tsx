@@ -2,10 +2,20 @@ import Head from "next/head";
 import { Inter } from "@next/font/google";
 import styles from "@/styles/Index.module.sass";
 import Link from "next/link";
+import { getToken } from "next-auth/jwt";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
-export default function Home() {
+interface Props {
+    name: string,
+    email: string
+}
+
+export default function Home(props: Props) {
+    const [name] = useState(props.name);
+    const [email] = useState(props.email);
+
     const settings = {
         dots: true,
         infinite: true,
@@ -22,7 +32,8 @@ export default function Home() {
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-
+            Name: { name }
+            Email: { email }
             <div className={styles.homePage}>
                 <h1 className={styles.testLink}>
                     <p>Job Posting <Link href="./jobPostings">Page</Link></p>
@@ -30,4 +41,41 @@ export default function Home() {
             </div>
         </>
     );
+}
+
+export async function getServerSideProps(context: { [key: string]: any }) {
+    const secret = process.env.NEXTAUTH_SECRET;
+    const token = await getToken(
+        {
+            req: context.req,
+            secret
+        }
+    );
+    if (!token) {
+        return {
+            props: {
+                name: "Not Signed In",
+                email: "None"
+            }
+        };
+    }
+    const user = token.user as any;
+    let userEmail = user.email;
+    if(!userEmail) {
+        userEmail = user._id;
+    }
+    if(token.name !== user.name) {
+        return {
+            props: {
+                name: "Not Signed In",
+                email: "None"
+            }
+        };
+    }
+    return {
+        props: {
+            name: user.name,
+            email: user.email
+        }
+    };
 }
