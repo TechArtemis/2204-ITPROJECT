@@ -37,7 +37,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             );
         }
-    } 
+    }
     else if (req.method === "PUT") {
         const session = await getServerSession(req, res, authOptions);
 
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 {
                     message
                 }
-            )
+            );
         }
     }
     else {
