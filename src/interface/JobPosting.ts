@@ -19,12 +19,6 @@ export namespace JobPosting {
         Hybrid,
         OnSite
     }
-    // Enum for Project Approval
-    export enum ProjectApproval {
-        Rejected,
-        Pending,
-        Approved
-    }
 }
 
 /**
@@ -39,8 +33,5 @@ export interface JobPosting {
     jobDescription: string
     jobTitle: JobPosting.JobTitleType
     employment: JobPosting.EmploymentType
-    requiredDocuments: [string],
-    optionalDocuments: [string],
     datePosted: Date
-    approvalState: JobPosting.ProjectApproval
 }
