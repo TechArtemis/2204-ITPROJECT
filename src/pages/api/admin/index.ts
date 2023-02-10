@@ -31,7 +31,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             };
             // creates the admin account
             const response = await createAdmin(newAdmin);
-            // if invalid, throw erroe
+            // if invalid, throw error
             if (response.code !== 200) {
                 throw {
                     code: 400,
