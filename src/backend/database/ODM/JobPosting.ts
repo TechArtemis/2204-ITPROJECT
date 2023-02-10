@@ -41,23 +41,10 @@ const jobPostingSchema = new Schema (
             default: JobPosting.EmploymentType.OnSite,
             required: true
         },
-        requiredDocuments: {
-            type: [] as String[],
-            required: true
-        },
-        optionalDocuments: {
-            type: [] as String[],
-            required: true
-        },
+
         datePosted: {
             type: Date,
             default: Date.now()
-        },
-        approvalState: {
-            type: String,
-            enum: JobPosting.ProjectApproval,
-            default: JobPosting.ProjectApproval.Pending,
-            required: true
         }
     }
 );

@@ -16,7 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const jobTitleArr = Object.values(JobPosting.JobTitleType);
             const employmentArr = Object.values(JobPosting.EmploymentType);
             // Gets the request from the body
-            const { jobPosting } = req.body;
+            const jobPosting : JobPosting = req.body;
             /**
              * The following if conditions validates the inputs
              */
@@ -65,10 +65,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 jobDescription: jobPosting.jobDescription,
                 jobTitle: jobPosting.jobTitle,
                 employment: jobPosting.employment,
-                requiredDocuments: jobPosting.requiredDocuments,
-                optionalDocuments: jobPosting.optionalDocuments,
-                datePosted: jobPosting.datePosted,
-                approvalState: jobPosting.approvalState
+                datePosted: jobPosting.datePosted
             };
             // Creates the job posting in the database and stores the response
             const response = await createJobPosting(jobPost);

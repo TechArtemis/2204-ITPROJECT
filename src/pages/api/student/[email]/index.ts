@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 // Local imports
 import { getStudent, updatePasswordByEmail } from "@/backend/actions/student";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { authOptions } from "../../auth/[...nextauth]";
+import { getServerSession } from "next-auth/next";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "GET") {
@@ -40,15 +42,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     else if (req.method === "PUT") {
         // Implement when nextauth is implemented
-        // const session = await unstable_GetServerSession(resa, req, authOptions);
+        const session = await getServerSession(req, res, authOptions);
 
-        // if (!session) {
-        //     res.status(500).json(
-        //         {
-        //             message: "Not logged in"
-        //         }
-        //     );
-        // }
+        if (!session) {
+            res.status(500).json(
+                {
+                    message: "Not logged in"
+                }
+            );
+        }
         try {
             const { email } = req.query;
             const { password } = req.body;
