@@ -31,6 +31,10 @@ const jobPostingSchema = new Schema (
         },
         jobTitle: {
             type: String,
+            required: true
+        },
+        jobType: {
+            type: String,
             enum: JobPosting.JobTitleType,
             default: JobPosting.JobTitleType.FullTime,
             required: true
