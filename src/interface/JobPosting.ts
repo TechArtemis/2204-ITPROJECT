@@ -31,7 +31,8 @@ export interface JobPosting {
     companyLocation: Location
     companyAbout: string
     jobDescription: string
-    jobTitle: JobPosting.JobTitleType
+    jobType: JobPosting.JobTitleType
+    jobTitle: string
     employment: JobPosting.EmploymentType
     datePosted: Date
 }

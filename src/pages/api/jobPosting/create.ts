@@ -44,12 +44,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Job Description"
                 };
             }
-            if (!jobTitleArr.includes(jobPosting.jobTitle)) {
+            if (!jobTitleArr.includes(jobPosting.jobType)) {
+                throw {
+                    code: 400,
+                    message: "Invalid Job Type"
+                };
+            }
+
+            if (!isValidStr(jobPosting.jobTitle)) {
                 throw {
                     code: 400,
                     message: "Invalid Job Title"
                 };
             }
+
             if (!employmentArr.includes(jobPosting.employment)) {
                 throw {
                     code: 400,
@@ -64,6 +72,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 companyAbout: jobPosting.companyAbout,
                 jobDescription: jobPosting.jobDescription,
                 jobTitle: jobPosting.jobTitle,
+                jobType: jobPosting.jobType,
                 employment: jobPosting.employment,
                 datePosted: jobPosting.datePosted
             };
