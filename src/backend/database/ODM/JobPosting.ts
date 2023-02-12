@@ -3,7 +3,6 @@ import { model, models, Schema, Types } from "mongoose";
 // Local import
 import { JobPosting } from "@/interface/JobPosting";
 import { Location } from "@/interface/Location";
-
 /**
  * Schema for JobPosting
  */
@@ -18,7 +17,7 @@ const jobPostingSchema = new Schema (
             required: true
         },
         companyLocation: {
-            type: Location,
+            type: [] as Location[],
             required: true
         },
         companyAbout: {
