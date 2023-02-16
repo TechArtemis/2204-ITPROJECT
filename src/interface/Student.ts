@@ -1,6 +1,6 @@
 // Third-party import
 import { Types } from "mongoose";
-import {JobPosting} from "@/interface/JobPosting";
+import { JobPosting } from "@/interface/JobPosting";
 
 /**
  * Interface for Student
