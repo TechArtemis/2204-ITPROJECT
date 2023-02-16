@@ -37,6 +37,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             );
         }
     }
+    else if (req.method === "POST") {
+        try {
+            const { email } = req.query;
+            // validation
+            if (!EMAIL_REGEX.test(email as string)) {
+                throw {
+                    code: 400,
+                    message: "Invalid Email"
+                };
+            }
+        } catch (error:any) {
+            const { code = 500, message } = error;
+            res.status(500).json(
+                {
+                    message
+                }
+            );
+        }
+    }
     else {
         res.status(405).json(
             {
