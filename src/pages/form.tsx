@@ -283,15 +283,19 @@ export default function FormPages() {
 
         if (formPage === 3){
 
-            const jobPost = {
+            const jobPosting = {
                 companyName: data?.companyName,
                 companyAbout: data?.companyAbout,
-                companyLocation: {
-                    address: data?.companyLocation.address,
-                    city: data?.companyLocation.city,
-                    province: data?.companyLocation.province,
-                    postalCode: data?.companyLocation.postalCode
-                },
+                companyLocation: [
+                    {
+                        location:{
+                            address: data?.companyLocation.address,
+                            city: data?.companyLocation.city,
+                            province: data?.companyLocation.province,
+                            postalCode: data?.companyLocation.postalCode
+                        }
+                    }
+                ],
                 companyContact: data?.companyContact,
                 jobTitle: data?.jobTitle,
                 jobType: data?.jobType,
@@ -300,7 +304,13 @@ export default function FormPages() {
 
             };
 
-            await instance.post("/jobPosting/create", jobPost);
+            const obj = {
+                jobPosting
+            };
+
+            console.log(jobPosting);
+
+            await instance.post("/jobPosting/create", obj);
             router.push("/");
             console.log("test", data);
 

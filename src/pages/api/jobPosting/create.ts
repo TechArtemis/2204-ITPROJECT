@@ -13,10 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
              * Declares and initialize the jobtitleArr to get the enums for JobTtitleType
              * Declares and initialize the employmentArr to get the enums for EmployeeType
              */
-            const jobTitleArr = Object.values(JobPosting.JobTitleType);
-            const employmentArr = Object.values(JobPosting.EmploymentType);
+
             // Gets the request from the body
-            const jobPosting : JobPosting = req.body;
+            const employmentArr = Object.values(JobPosting.EmploymentType);
+            const jobTitleArr = Object.values(JobPosting.JobTitleType);
+            const { jobPosting } = req.body;
+            console.log(jobPosting);
             /**
              * The following if conditions validates the inputs
              */
