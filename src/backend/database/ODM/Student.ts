@@ -26,6 +26,10 @@ const studentSchema = new Schema(
         studentID: {
             type: String,
             required: true
+        },
+        favorites: {
+            type: Schema.Types.ObjectId,
+            ref: "JobPosting"
         }
     }
 );

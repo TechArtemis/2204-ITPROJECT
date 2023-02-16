@@ -3,6 +3,22 @@ import { Types } from "mongoose";
 import { Location } from "@/interface/Location";
 
 /**
+ * Interface for Job Posting
+ */
+export interface JobPosting {
+    _id?: Types.ObjectId
+    companyName: string
+    companyContact: string
+    companyLocation: Location
+    companyAbout: string
+    jobDescription: string
+    jobType: JobPosting.JobTitleType
+    jobTitle: string
+    employment: JobPosting.EmploymentType
+    datePosted: Date
+}
+
+/**
  * Enums for Job Posting
  */
 export namespace JobPosting {
@@ -21,18 +37,3 @@ export namespace JobPosting {
     }
 }
 
-/**
- * Interface for Job Posting
- */
-export interface JobPosting {
-    _id?: Types.ObjectId
-    companyName: string
-    companyContact: string
-    companyLocation: Location
-    companyAbout: string
-    jobDescription: string
-    jobType: JobPosting.JobTitleType
-    jobTitle: string
-    employment: JobPosting.EmploymentType
-    datePosted: Date
-}
