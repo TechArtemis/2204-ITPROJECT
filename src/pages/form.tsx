@@ -8,6 +8,8 @@ import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 import { Location } from "@/interface/Location";
+import SelectOption from "@/components/dropdown";
+import { JobPosting } from "@/interface/JobPosting";
 // import ImageUpload from "@/components/imageUpload";
 
 const BusinessIcon = dynamic(() => import("@mui/icons-material/Business"));
@@ -43,8 +45,23 @@ interface CompanyJob {
     jobDescription: string;
 }
 
-export function CompanyPostInfo({ onSubmit } : any ) {
-    const [data, setData] = useState ({
+
+interface Province {
+    value: keyof typeof Location.Province;
+    label: string;
+}
+
+export function CompanyPostInfo({ onSubmit }: any) {
+
+    const options: Province[] = Object.keys(Location.Province).map(key => {
+        return {
+            value: key,
+            label: Location.Province[key as keyof typeof Location.Province]
+        };
+    }) as Province[];
+
+
+    const [data, setData] = useState({
         companyName: "",
         companyContact: "",
         companyLocation: {
@@ -60,11 +77,11 @@ export function CompanyPostInfo({ onSubmit } : any ) {
         setData({ ...data, [event.target.name]: event.target.value });
     }
 
-    function handleCompanyLocation(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
+    function handleCompanyLocation(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
         setData({ ...data, companyLocation: { ...data.companyLocation, [event.target.name]: event.target.value } });
     }
 
-    return ( <form className={styles.container}>
+    return (<form className={styles.container}>
         <div className={styles.logo}>
             <Image src={"/images/vccLogo.png"} alt={"logo"} width={100} height={100}></Image>
         </div>
@@ -76,42 +93,43 @@ export function CompanyPostInfo({ onSubmit } : any ) {
                     placeholder="Company Name"
                     name="companyName" value={data.companyName}
                     onChangeInput={handleChange}>
-                    <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Contact"
                     name="companyContact" value={data.companyContact}
                     onChangeInput={handleChange} >
-                    <AlternateEmailIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <AlternateEmailIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Address"
                     name="address" value={data.companyLocation.address}
                     onChangeInput={handleCompanyLocation}>
-                    <LocationOnIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <LocationOnIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Enter your city"
                     name="city" value={data.companyLocation.city}
                     onChangeInput={handleCompanyLocation}>
-                    <LocationCityIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <LocationCityIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
-                <Input
-                    type="text"
-                    placeholder="Province"
-                    name="province" value={data.companyLocation.province}
-                    onChangeInput={handleCompanyLocation}>
-                    <LandscapeIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
-                </Input>
+                <SelectOption
+                    name="province"
+                    value={data.companyLocation.province}
+                    onChange={handleCompanyLocation}
+                    options={options}
+                >
+                    <LandscapeIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                </SelectOption>
                 <Input
                     type="text"
                     placeholder="Postal Code"
                     name="postalCode" value={data.companyLocation.postalCode}
                     onChangeInput={handleCompanyLocation}>
-                    <MarkunreadMailboxIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <MarkunreadMailboxIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="textarea"
@@ -120,7 +138,7 @@ export function CompanyPostInfo({ onSubmit } : any ) {
                     rows={4}
                     onChangeTextArea={handleChange}
                 >
-                    <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                    <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
 
             </div>
@@ -135,8 +153,32 @@ export function CompanyPostInfo({ onSubmit } : any ) {
 };
 
 
+interface JobType {
+    value: keyof typeof JobPosting.JobTitleType;
+    label: string;
+}
+
+interface Employment {
+    value: keyof typeof JobPosting.JobTitleType;
+    label: string;
+}
 
 export function JobPostInfo({ onSubmit, item }: any) {
+
+    const jobTypeOptions: JobType[] = Object.keys(JobPosting.JobTitleType).map(key => {
+        return {
+            value: key,
+            label: JobPosting.JobTitleType[key as keyof typeof JobPosting.JobTitleType]
+        };
+    }) as JobType[];
+
+    const employmentOptions: Employment[] = Object.keys(JobPosting.EmploymentType).map(key => {
+        return {
+            value: key,
+            label: JobPosting.EmploymentType[key as keyof typeof JobPosting.EmploymentType]
+        };
+    }) as Employment[];
+
     const [data, setData] = useState({
         jobTitle: "",
         jobType: "",
@@ -144,7 +186,7 @@ export function JobPostInfo({ onSubmit, item }: any) {
         jobDescription: "",
 
     });
-    function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
+    function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
         setData({ ...data, [event.target.name]: event.target.value });
     }
 
@@ -161,25 +203,24 @@ export function JobPostInfo({ onSubmit, item }: any) {
                         placeholder="Job Title"
                         name="jobTitle" value={data.jobTitle}
                         onChangeInput={handleChange}>
-                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                     </Input>
-                    {/* add a map function to this category */}
-                    <Input
-                        type="text"
-                        label="Job Type"
-                        placeholder="Job Type"
-                        name="jobType" value={data.jobType}
-                        onChangeInput={handleChange}>
-                        <PersonSearchIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
-                    </Input>
-                    <Input
-                        type="text"
-                        label="Job Employment"
-                        placeholder="Job Employment"
-                        name="employment" value={data.employment}
-                        onChangeInput={handleChange} >
-                        <WorkIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
-                    </Input>
+                    <SelectOption
+                        name="jobType"
+                        value={data.jobType}
+                        onChange={handleChange}
+                        options={jobTypeOptions}
+                    >
+                        <PersonSearchIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </SelectOption>
+                    <SelectOption
+                        name="employment"
+                        value={data.employment}
+                        onChange={handleChange}
+                        options={employmentOptions}
+                    >
+                        <WorkIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </SelectOption>
                     <Input
                         type="textarea"
                         placeholder="Enter your Desctiption"
@@ -187,13 +228,13 @@ export function JobPostInfo({ onSubmit, item }: any) {
                         rows={4}
                         onChangeTextArea={handleChange}
                     >
-                        <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }}/>
+                        <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                     </Input>
                 </div>
                 <Button
                     type="submit"
                     onClick={() => onSubmit(data)}>
-                Next
+                    Next
                 </Button>
             </div>
         </form>
@@ -204,7 +245,7 @@ export function PostCoop({ onSubmit, data }: any) {
     const [value, setValue] = useState(1);
     const [button, setButton] = useState(1);
 
-    return(
+    return (
         <div>
             <div className={styles.header}>
                 <Image src={"/images/defaultProfile.png"} alt={"image"} width={150} height={150}></Image>
@@ -217,18 +258,18 @@ export function PostCoop({ onSubmit, data }: any) {
                     {button === 1 ?
                         <div>
                             <button onClick={() => setButton(0)}>
-                                <EditIcon fontSize={"large"} sx={{ color: "#000000" }}/>
+                                <EditIcon fontSize={"large"} sx={{ color: "#000000" }} />
                             </button>
 
                         </div>
                         :
                         <div>
                             <button onClick={() => setButton(1)}>
-                                <DeleteIcon fontSize={"large"} sx={{ color: "#DA0000" }}/>
+                                <DeleteIcon fontSize={"large"} sx={{ color: "#DA0000" }} />
                             </button>
                             <button onClick={() => setButton(1)}>
                                 <CheckIcon type="submit"
-                                    onClick={() => onSubmit(data)}/>
+                                    onClick={() => onSubmit(data)} />
                             </button>
                         </div>
                     }
@@ -261,34 +302,28 @@ export function PostCoop({ onSubmit, data }: any) {
                         <h1>Job Description</h1>
                         <p>{data.jobDescription}</p>
                     </div>
-
                 }
-
             </div>
         </div>
     );
-
-
 }
-
-
 
 
 export default function FormPages() {
     const [formPage, setFormPage] = useState<number>(1);
     const [data, setData] = useState<CompanyJob>();
 
-    async function handleSubmit(datatest : CompanyJob) {
+    async function handleSubmit(datatest: CompanyJob) {
         setData({ ...data, ...datatest });
 
-        if (formPage === 3){
+        if (formPage === 3) {
 
             const jobPosting = {
                 companyName: data?.companyName,
                 companyAbout: data?.companyAbout,
                 companyLocation: [
                     {
-                        location:{
+                        location: {
                             address: data?.companyLocation.address,
                             city: data?.companyLocation.city,
                             province: data?.companyLocation.province,
@@ -317,8 +352,6 @@ export default function FormPages() {
         } else {
             setFormPage(formPage + 1);
         }
-
-
     }
 
     return (

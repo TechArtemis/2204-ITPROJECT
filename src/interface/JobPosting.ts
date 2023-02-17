@@ -25,16 +25,16 @@ export interface JobPosting {
 export namespace JobPosting {
     // Enum for Job Title Type
     export enum JobTitleType {
-        PartTime,
-        FullTime,
-        Contracted,
-        Seasonal
+        PartTime = "Part-time",
+        FullTime = "Full-time",
+        Contracted = "Contracted",
+        Seasonal = "Seasonal"
     }
     // Enum for Employement Type
     export enum EmploymentType {
-        Remote,
-        Hybrid,
-        OnSite
+        Remote = "Remote",
+        Hybrid = "Hybrid",
+        OnSite = "OnSite"
     }
 }
 
