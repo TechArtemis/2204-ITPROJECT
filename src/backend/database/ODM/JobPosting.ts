@@ -53,4 +53,4 @@ const jobPostingSchema = new Schema (
 );
 
 // makes the model for mongoose collections
-export const Model = models.JobPostingSchema || model("jobPostingSchema", jobPostingSchema);
+export const Model = models.JobPostingSchema || model("JobPostingSchema", jobPostingSchema);

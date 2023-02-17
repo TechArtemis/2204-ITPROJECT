@@ -22,4 +22,4 @@ const alumniSchema = new Schema(
     }
 );
 
-export const Model = models.alumniSchema || model("alumniSchema", alumniSchema);
+export const Model = models.AlumniSchema || model("AlumniSchema", alumniSchema);
