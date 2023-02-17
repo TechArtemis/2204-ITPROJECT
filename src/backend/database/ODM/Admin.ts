@@ -18,4 +18,4 @@ const adminSchema = new Schema(
 );
 
 // makes the model for mongoose collections
-export const Model = models.adminSchema || model("AdminSchema", adminSchema);
+export const Model = models.AdminSchema || model("AdminSchema", adminSchema);

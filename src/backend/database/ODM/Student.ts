@@ -34,4 +34,4 @@ const studentSchema = new Schema(
     }
 );
 
-export const Model = models.studentSchema || model("studentSchema", studentSchema);
+export const Model = models.StudentSchema || model("StudentSchema", studentSchema);
