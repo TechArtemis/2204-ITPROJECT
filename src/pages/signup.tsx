@@ -4,6 +4,7 @@ import {
     FormControl,
     FormLabel,
     Input,
+    Image,
     InputGroup,
     HStack,
     InputRightElement,
@@ -94,93 +95,110 @@ export default function SignupCard() {
     const isError = input === "";
 
     return (
-        <Flex
-            minH={"100vh"}
-            align={"center"}
-            justify={"center"}
-            bg={useColorModeValue("gray.50", "gray.800")}>
-            <Stack spacing={8} mx={"auto"} maxW={"lg"} py={12} px={6}>
-                <Stack align={"center"}>
-                    <Heading fontSize={"4xl"} textAlign={"center"}>
+        <>
+            <div>
+                <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
+                    <Flex
+                        p={8}
+                        flex={1}
+                        minH={"100vh"}
+                        align={"center"}
+                        justify={"center"}
+                        bg={useColorModeValue("gray.50", "gray.800")}>
+                        <Stack spacing={8} mx={"auto"} w={"full"} maxW={"lg"} py={12} px={6}>
+                            <Stack align={"center"}>
+                                <Heading fontSize={"4xl"} textAlign={"center"}>
                         Sign up
-                    </Heading>
-                    <Text fontSize={"lg"} color={"gray.600"}>
+                                </Heading>
+                                <Text fontSize={"lg"} color={"gray.600"}>
                         to see the VCC CST job board
-                    </Text>
-                </Stack>
-                <Box
-                    rounded={"lg"}
-                    bg={useColorModeValue("white", "gray.700")}
-                    boxShadow={"lg"}
-                    p={8}>
-                    <Stack spacing={4}>
-                        <HStack>
-                            <Box>
-                                <FormControl id="firstName" isRequired>
-                                    <FormLabel>First Name</FormLabel>
-                                    <Input type="text" onChange={handleFNameChange} />
-                                </FormControl>
-                            </Box>
-                            <Box>
-                                <FormControl id="lastName" isRequired>
-                                    <FormLabel>Last Name</FormLabel>
-                                    <Input type="text" onChange={handleLNameChange} />
-                                </FormControl>
-                            </Box>
-                        </HStack>
-                        <FormControl id="email" isInvalid={isError}>
-                            <FormLabel>Email address</FormLabel>
-                            <Input type='email' onChange={handleEmailChange} />
-                            {!isError ? (
-                                <FormHelperText>
+                                </Text>
+                            </Stack>
+                            <Box
+                                rounded={"lg"}
+                                bg={useColorModeValue("white", "gray.700")}
+                                boxShadow={"lg"}
+                                p={8}>
+                                <Stack spacing={4}>
+                                    <HStack>
+                                        <Box>
+                                            <FormControl id="firstName" isRequired>
+                                                <FormLabel>First Name</FormLabel>
+                                                <Input type="text" onChange={handleFNameChange} />
+                                            </FormControl>
+                                        </Box>
+                                        <Box>
+                                            <FormControl id="lastName" isRequired>
+                                                <FormLabel>Last Name</FormLabel>
+                                                <Input type="text" onChange={handleLNameChange} />
+                                            </FormControl>
+                                        </Box>
+                                    </HStack>
+                                    <FormControl id="email" isInvalid={isError}>
+                                        <FormLabel>Email address</FormLabel>
+                                        <Input type='email' onChange={handleEmailChange} />
+                                        {!isError ? (
+                                            <FormHelperText>
                                     Enter your VCC student email or personal CST alumni email
-                                </FormHelperText>
-                            ) : (
-                                <FormErrorMessage>Email is required.</FormErrorMessage>
-                            )}
-                        </FormControl>
-                        <FormControl id="password" isInvalid={isError}>
-                            <FormLabel>Password</FormLabel>
-                            <InputGroup>
-                                <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
-                                {!isError ? (
-                                    <FormHelperText>
+                                            </FormHelperText>
+                                        ) : (
+                                            <FormErrorMessage>Email is required.</FormErrorMessage>
+                                        )}
+                                    </FormControl>
+                                    <FormControl id="password" isInvalid={isError}>
+                                        <FormLabel>Password</FormLabel>
+                                        <InputGroup>
+                                            <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
+                                            {!isError ? (
+                                                <FormHelperText>
                                         Enter Password
-                                    </FormHelperText>
-                                ) : (
-                                    <FormErrorMessage>Password is required.</FormErrorMessage>
-                                )}
-                                <InputRightElement h={"full"}>
-                                    <Button
-                                        variant={"ghost"}
-                                        onClick={() =>
-                                            setShowPassword((showPassword) => !showPassword)
-                                        }>
-                                        {showPassword ? <ViewIcon /> : <ViewOffIcon />}
-                                    </Button>
-                                </InputRightElement>
-                            </InputGroup>
-                        </FormControl>
-                        <Stack spacing={10} pt={2}>
-                            <Button
-                                loadingText="Submitting"
-                                size="lg"
-                                bg={"green.400"}
-                                color={"white"}
-                                _hover={{
-                                    bg: "green.500",
-                                }} onClick={handleSubmit}>
+                                                </FormHelperText>
+                                            ) : (
+                                                <FormErrorMessage>Password is required.</FormErrorMessage>
+                                            )}
+                                            <InputRightElement h={"full"}>
+                                                <Button
+                                                    variant={"ghost"}
+                                                    onClick={() =>
+                                                        setShowPassword((showPassword) => !showPassword)
+                                                    }>
+                                                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
+                                                </Button>
+                                            </InputRightElement>
+                                        </InputGroup>
+                                    </FormControl>
+                                    <Stack spacing={10} pt={2}>
+                                        <Button
+                                            loadingText="Submitting"
+                                            size="lg"
+                                            bg={"green.400"}
+                                            color={"white"}
+                                            _hover={{
+                                                bg: "green.500",
+                                            }} onClick={handleSubmit}>
                                 Sign up
-                            </Button>
-                        </Stack>
-                        <Stack pt={6}>
-                            <Text align={"center"}>
+                                        </Button>
+                                    </Stack>
+                                    <Stack pt={6}>
+                                        <Text align={"center"}>
                                 Already a user? <Link as={NextLink} href='./login' color={"green.400"} >Login</Link>
-                            </Text>
+                                        </Text>
+                                    </Stack>
+                                </Stack>
+                            </Box>
                         </Stack>
-                    </Stack>
-                </Box>
-            </Stack>
-        </Flex>
+                    </Flex>
+                    <Flex flex={1}>
+                        <Image
+                            alt={"Sign Up Image"}
+                            objectFit={"cover"}
+                            src={
+                                "./images/studentsBanner.png"
+                            }
+                        />
+                    </Flex>
+                </Stack>
+            </div>
+        </>
     );
 }
