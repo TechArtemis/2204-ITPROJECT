@@ -4,6 +4,7 @@ import { Types } from "mongoose";
 import Database from "@/backend/database";
 import { Student } from "@/interface/Student";
 import { Model as studentModel } from "@/backend/database/ODM/Student";
+import { Model as jobpostingModel } from "@/backend/database/ODM/JobPosting";
 
 /**
  * Creates a student account in the database
@@ -94,14 +95,26 @@ export async function updatePasswordByEmail(email: String, password: String) {
  * @param email the email of the student
  * @returns a code and a message
  */
-export async function addFavorites(email: string) {
+export async function updateFavorites(email: string, jobId: string, action: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const student = await studentModel.findOne({ email });
-        if(student) {
-            await student.save();
-            return { code: 200, message: "Success" };
+        const jobposting = await jobpostingModel.findById(jobId);
+        if(!student) {
+            return { code: 400, message: "Your not registered" };
         }
+        if(!jobposting) {
+            return { code: 400, message: "Error updating favorites" };
+        }
+
+        if(action === "add") {
+            student.favorites.unshift(jobposting);
+        } else if(action === "remove") {
+            student.favorites.pull(jobposting);
+        } else {
+            return { code: 400, message: "Action does not exist" };
+        }
+        await student.save();
     } catch (error: any) {
         return { code: 500, message: error.message };
     }
