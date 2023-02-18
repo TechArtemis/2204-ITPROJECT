@@ -8,13 +8,13 @@ import { Location } from "@/interface/Location";
  */
 const jobPostingSchema = new Schema (
     {
-        image: {
-            type: String,
-            required: true,
-        },
         companyName: {
             type: String,
             required: true
+        },
+        companyImage: {
+            type: String,
+            required: true,
         },
         companyContact: {
             type: String,

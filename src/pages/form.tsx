@@ -10,7 +10,6 @@ import router from "next/router";
 import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
-// import ImageUpload from "@/components/imageUpload";
 
 const BusinessIcon = dynamic(() => import("@mui/icons-material/Business"));
 const AlternateEmailIcon = dynamic(() => import("@mui/icons-material/AlternateEmail"));
@@ -26,10 +25,8 @@ const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
 const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
 const CheckIcon = dynamic(() => import("@mui/icons-material/Check"));
 
-
-
 interface CompanyJob {
-    // companyLogo: string;
+    companyImage: string;
     companyName: string;
     companyContact: string;
     companyLocation: {
@@ -60,26 +57,43 @@ export function CompanyPostInfo({ onSubmit }: any) {
         };
     }) as Province[];
 
-
-    const [data, setData] = useState({
+    const [item, setItem] = useState({
+        companyImage: "",
         companyName: "",
         companyContact: "",
         companyLocation: {
             address: "",
             city: "",
-            province: "",
+            province: "AB",
             postalCode: "",
         },
         companyAbout: ""
     });
 
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
-        setData({ ...data, [event.target.name]: event.target.value });
+        setItem({ ...item, [event.target.name]: event.target.value });
     }
 
     function handleCompanyLocation(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
-        setData({ ...data, companyLocation: { ...data.companyLocation, [event.target.name]: event.target.value } });
+        setItem({ ...item, companyLocation: { ...item.companyLocation, [event.target.name]: event.target.value } });
     }
+
+    async function handleImgUpload (event: ChangeEvent<HTMLInputElement>){
+        const val = event.target.files![0];
+        const form = new FormData();
+        form.append("files", val!);
+        const setting = {
+            method: "POST",
+            url: "cloudinary",
+            data: form
+        };
+        try {
+            const { data } = await instance.request(setting);
+            setItem({ ...item, companyImage: data.data.url.public_id });
+        } catch (error: any) {
+            console.log("NETWORK ERROR", error);
+        }
+    };
 
     return (<form className={styles.container}>
         <div className={styles.logo}>
@@ -89,36 +103,43 @@ export function CompanyPostInfo({ onSubmit }: any) {
             <div className={styles.field}>
                 {/* <ImageUpload image={data.image} onChange={handleChange} /> */}
                 <Input
+                    type="file"
+                    value={""}
+                    placeholder="Upload an Image"
+                    onChangeInput={handleImgUpload}>
+                    <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                </Input>
+                <Input
                     type="text"
                     placeholder="Company Name"
-                    name="companyName" value={data.companyName}
+                    name="companyName" value={item.companyName}
                     onChangeInput={handleChange}>
                     <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Contact"
-                    name="companyContact" value={data.companyContact}
+                    name="companyContact" value={item.companyContact}
                     onChangeInput={handleChange} >
                     <AlternateEmailIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Address"
-                    name="address" value={data.companyLocation.address}
+                    name="address" value={item.companyLocation.address}
                     onChangeInput={handleCompanyLocation}>
                     <LocationOnIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="text"
                     placeholder="Enter your city"
-                    name="city" value={data.companyLocation.city}
+                    name="city" value={item.companyLocation.city}
                     onChangeInput={handleCompanyLocation}>
                     <LocationCityIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <SelectOption
                     name="province"
-                    value={data.companyLocation.province}
+                    value={item.companyLocation.province}
                     onChange={handleCompanyLocation}
                     options={options}
                 >
@@ -127,14 +148,14 @@ export function CompanyPostInfo({ onSubmit }: any) {
                 <Input
                     type="text"
                     placeholder="Postal Code"
-                    name="postalCode" value={data.companyLocation.postalCode}
+                    name="postalCode" value={item.companyLocation.postalCode}
                     onChangeInput={handleCompanyLocation}>
                     <MarkunreadMailboxIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
                 </Input>
                 <Input
                     type="textarea"
                     placeholder="Enter your Desctiption"
-                    name="companyAbout" value={data.companyAbout}
+                    name="companyAbout" value={item.companyAbout}
                     rows={4}
                     onChangeTextArea={handleChange}
                 >
@@ -144,7 +165,7 @@ export function CompanyPostInfo({ onSubmit }: any) {
             </div>
             <Button
                 type="submit"
-                onClick={() => onSubmit(data)}>
+                onClick={() => onSubmit(item)}>
                 Next
             </Button>
         </div>
@@ -181,8 +202,8 @@ export function JobPostInfo({ onSubmit, item }: any) {
 
     const [data, setData] = useState({
         jobTitle: "",
-        jobType: "",
-        employment: "",
+        jobType: "PartTime",
+        employment: "Remote",
         jobDescription: "",
 
     });
@@ -248,7 +269,7 @@ export function PostCoop({ onSubmit, data }: any) {
     return (
         <div>
             <div className={styles.header}>
-                <Image src={"/images/defaultProfile.png"} alt={"image"} width={150} height={150}></Image>
+                <Image src={`https://res.cloudinary.com/honeydrew/${data.companyImage}` } alt={"image"} width={150} height={150}></Image>
                 <div className={styles.subheader}>
                     <div>
                         <h1>{data.companyName}</h1>
@@ -319,6 +340,7 @@ export default function FormPages() {
         if (formPage === 3) {
 
             const jobPosting = {
+                companyImage: data?.companyImage,
                 companyName: data?.companyName,
                 companyAbout: data?.companyAbout,
                 companyLocation: [
@@ -342,9 +364,6 @@ export default function FormPages() {
             const obj = {
                 jobPosting
             };
-
-            console.log(jobPosting);
-
             await instance.post("/jobPosting/create", obj);
             router.push("/");
             console.log("test", data);
@@ -362,5 +381,4 @@ export default function FormPages() {
         </div>
     );
 }
-
 

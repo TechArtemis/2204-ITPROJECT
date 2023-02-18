@@ -25,6 +25,7 @@ import { Alumni } from "@/interface/Alumni";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 import { signIn } from "next-auth/react";
+import { getToken } from "next-auth/jwt";
 
 export default function SignupCard() {
     const [showPassword, setShowPassword] = useState(false);
@@ -183,4 +184,26 @@ export default function SignupCard() {
             </Stack>
         </Flex>
     );
+}
+
+
+export async function getServerSideProps(context: { [key: string]: any }) {
+    const secret = process.env.NEXTAUTH_SECRET;
+    const token = await getToken(
+        {
+            req: context.req,
+            secret: secret
+        }
+    );
+
+    // If the user is already logged in, redirect.
+    // Note: Make sure not to redirect to the same page
+    // To avoid an infinite loop!
+    if (token) {
+        return { redirect: { destination: "/", permanent: false } };
+    }
+
+    return {
+        props: {}
+    };
 }

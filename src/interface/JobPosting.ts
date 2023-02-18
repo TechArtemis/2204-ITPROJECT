@@ -6,17 +6,19 @@ import { Location } from "@/interface/Location";
  * Interface for Job Posting
  */
 export interface JobPosting {
-    _id?: Types.ObjectId,
-    image: string,
-    companyName: string
-    companyContact: string
-    companyLocation: Location
-    companyAbout: string
-    jobDescription: string
-    jobType: JobPosting.JobTitleType
-    jobTitle: string
-    employment: JobPosting.EmploymentType
-    datePosted: Date
+    _id?: Types.ObjectId;
+    companyImage: string;
+    companyName: string;
+    companyContact: string;
+    companyLocation: [{
+        location: Location;
+    }];
+    companyAbout: string;
+    jobDescription: string;
+    jobType: JobPosting.JobTitleType;
+    jobTitle: string;
+    employment: JobPosting.EmploymentType;
+    datePosted: Date;
 }
 
 /**
@@ -25,8 +27,8 @@ export interface JobPosting {
 export namespace JobPosting {
     // Enum for Job Title Type
     export enum JobTitleType {
-        PartTime = "Part-time",
-        FullTime = "Full-time",
+        PartTime = "PartTime",
+        FullTime = "FullTime",
         Contracted = "Contracted",
         Seasonal = "Seasonal"
     }

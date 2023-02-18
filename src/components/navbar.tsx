@@ -18,8 +18,8 @@ export default function Navbar() {
                 <Image src={"/images/vcc.png"} alt={"logo"} width={100} height={100}></Image>
                 <div>
                     <Link href={"/"}>Home</Link>
-                    <Link href={"/"}>Jobs</Link>
-                    <Link href={"/"}>Saved</Link>
+                    <Link href={"/displayJobs"}>Jobs</Link>
+                    <Link href={"/savedJobs"}>Saved</Link>
                 </div>
                 <div>
                     {session?.user?.email || session?.user?.name } <br />
@@ -33,7 +33,7 @@ export default function Navbar() {
         <div className={styles.nav}>
             <Image src={"/images/vcc.png"} alt={"logo"} width={100} height={100}></Image>
             <div>
-                <Link href={"/jobPostings"}>Home</Link>
+                <Link href={"/"}>Home</Link>
                 <Link href={"/displayJobs"}>Jobs</Link>
                 <Link href={"/savedJobs"}>Saved</Link>
             </div>

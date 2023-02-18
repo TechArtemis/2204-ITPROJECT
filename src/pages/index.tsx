@@ -5,11 +5,11 @@ import Image from "next/image";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
 // Local Imports
-import NavbarComponent from "@/components/navbarComponent";
 import EventCardComponent from "@/components/eventCardComponent";
 import JobCardComponent from "@/components/jobCardComponent";
 import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
+import { getToken } from "next-auth/jwt";
 
 export default function JobPostings() {
     const responsive = {
@@ -66,8 +66,6 @@ export default function JobPostings() {
 
     return (
         <>
-            <NavbarComponent/>
-
             <Box bg={"gray.500"} w={"100%"} h={"50vh"} mt={180} color={"white"}>
                 <div className={styles.bannerContainer}>
                     <Image className={styles.bannerImage} src={StudentsBanner} alt="Students banner"/>
@@ -144,4 +142,25 @@ export default function JobPostings() {
             </Flex>
         </>
     );
+}
+
+export async function getServerSideProps(context: { [key: string]: any }) {
+    const secret = process.env.NEXTAUTH_SECRET;
+    const token = await getToken(
+        {
+            req: context.req,
+            secret: secret
+        }
+    );
+
+    // If the user is already logged in, redirect.
+    // Note: Make sure not to redirect to the same page
+    // To avoid an infinite loop!
+    if (!token) {
+        return { redirect: { destination: "/login", permanent: false } };
+    }
+
+    return {
+        props: {}
+    };
 }
