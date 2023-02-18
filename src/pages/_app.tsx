@@ -1,4 +1,3 @@
-import Layout from "@/components/layout";
 import "@/styles/globals.sass";
 import { ChakraProvider } from "@chakra-ui/react";
 import { SessionProvider } from "next-auth/react";
@@ -8,9 +7,7 @@ export default function App({ Component, pageProps: { session, ...pageProps } }:
     return (
         <ChakraProvider>
             <SessionProvider session={ session }>
-                <Layout>
-                    <Component {...pageProps} />
-                </Layout>
+                <Component {...pageProps} />
             </SessionProvider>
 
         </ChakraProvider>

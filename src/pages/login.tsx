@@ -17,6 +17,7 @@ import React, { SetStateAction, useState } from "react";
 import { signIn } from "next-auth/react";
 import router from "next/router";
 import { getToken } from "next-auth/jwt";
+import Navbar from "@/components/navbar";
 
 export default function LogIn() {
 
@@ -110,6 +111,8 @@ export async function getServerSideProps(context: { [key: string]: any }) {
             secret: secret
         }
     );
+
+    console.log(token);
 
     // If the user is already logged in, redirect.
     // Note: Make sure not to redirect to the same page

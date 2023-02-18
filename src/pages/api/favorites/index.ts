@@ -3,11 +3,12 @@ import { EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
-import { authOptions } from "../../../auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({ req });
     if(req.method === "GET") {
+        console.log("Entered Get");
         try {
             if(!session) {
                 throw {
@@ -18,12 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const { email } = req.query;
 
             // validation
-            if (!EMAIL_REGEX.test(email as string)) {
-                throw {
-                    code: 400,
-                    message: "Invalid Email"
-                };
-            }
+            // if (!EMAIL_REGEX.test(email as string)) {
+            //     throw {
+            //         code: 400,
+            //         message: "Invalid Email"
+            //     };
+            // }
 
             const response = await getFavorites(email as string);
             if(response.code !== 200) {
@@ -47,26 +48,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             );
         }
     }
+    // else if (req.method === "POST") {
+    //     try {
+    //         const { email } = req.query;
+    //         // validation
+    //         if (!EMAIL_REGEX.test(email as string)) {
+    //             throw {
+    //                 code: 400,
+    //                 message: "Invalid Email"
+    //             };
+    //         }
+    //     } catch (error:any) {
+    //         const { code = 500, message } = error;
+    //         res.status(500).json(
+    //             {
+    //                 message
+    //             }
+    //         );
+    //     }
+    // }
     else if (req.method === "POST") {
-        try {
-            const { email } = req.query;
-            // validation
-            if (!EMAIL_REGEX.test(email as string)) {
-                throw {
-                    code: 400,
-                    message: "Invalid Email"
-                };
-            }
-        } catch (error:any) {
-            const { code = 500, message } = error;
-            res.status(500).json(
-                {
-                    message
-                }
-            );
-        }
-    }
-    else if (req.method === "PUT") {
+
+        console.log("Entered");
         try {
             if(!session) {
                 throw {
@@ -74,8 +77,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "You are not logged in"
                 };
             }
-            const { id } = req.query;
-            const { action } = req.body;
+
+            const { action, id } = req.body;
+
+            console.log(id);
+            console.log(action);
+            console.log(session.user?.email);
 
 
             const response = await updateFavorites(session.user?.email as string, id as string, action);
