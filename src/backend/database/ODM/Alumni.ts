@@ -18,6 +18,10 @@ const alumniSchema = new Schema(
         password: {
             type: String,
             required: true
+        },
+        favorites: {
+            type: [{ type: Schema.Types.ObjectId, ref: "JobPosting" }],
+            default: [],
         }
     }
 );

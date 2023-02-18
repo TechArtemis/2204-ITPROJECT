@@ -10,6 +10,7 @@ import router from "next/router";
 import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
+import Navbar from "@/components/navbar";
 
 const BusinessIcon = dynamic(() => import("@mui/icons-material/Business"));
 const AlternateEmailIcon = dynamic(() => import("@mui/icons-material/AlternateEmail"));
@@ -95,81 +96,80 @@ export function CompanyPostInfo({ onSubmit }: any) {
         }
     };
 
-    return (<form className={styles.container}>
-        <div className={styles.logo}>
-            <Image src={"/images/vccLogo.png"} alt={"logo"} width={100} height={100}></Image>
-        </div>
-        <div className={styles.form}>
-            <div className={styles.field}>
-                {/* <ImageUpload image={data.image} onChange={handleChange} /> */}
-                <Input
-                    type="file"
-                    value={""}
-                    placeholder="Upload an Image"
-                    onChangeInput={handleImgUpload}>
-                    <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <Input
-                    type="text"
-                    placeholder="Company Name"
-                    name="companyName" value={item.companyName}
-                    onChangeInput={handleChange}>
-                    <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <Input
-                    type="text"
-                    placeholder="Contact"
-                    name="companyContact" value={item.companyContact}
-                    onChangeInput={handleChange} >
-                    <AlternateEmailIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <Input
-                    type="text"
-                    placeholder="Address"
-                    name="address" value={item.companyLocation.address}
-                    onChangeInput={handleCompanyLocation}>
-                    <LocationOnIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <Input
-                    type="text"
-                    placeholder="Enter your city"
-                    name="city" value={item.companyLocation.city}
-                    onChangeInput={handleCompanyLocation}>
-                    <LocationCityIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <SelectOption
-                    name="province"
-                    value={item.companyLocation.province}
-                    onChange={handleCompanyLocation}
-                    options={options}
-                >
-                    <LandscapeIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </SelectOption>
-                <Input
-                    type="text"
-                    placeholder="Postal Code"
-                    name="postalCode" value={item.companyLocation.postalCode}
-                    onChangeInput={handleCompanyLocation}>
-                    <MarkunreadMailboxIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
-                <Input
-                    type="textarea"
-                    placeholder="Enter your Desctiption"
-                    name="companyAbout" value={item.companyAbout}
-                    rows={4}
-                    onChangeTextArea={handleChange}
-                >
-                    <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                </Input>
+    return (
+        <form className={styles.container}>
+            <Navbar/>
+            <div className={styles.form}>
+                <div className={styles.field}>
+                    {/* <ImageUpload image={data.image} onChange={handleChange} /> */}
+                    <Input
+                        type="file"
+                        value={""}
+                        placeholder="Upload an Image"
+                        onChangeInput={handleImgUpload}>
+                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <Input
+                        type="text"
+                        placeholder="Company Name"
+                        name="companyName" value={item.companyName}
+                        onChangeInput={handleChange}>
+                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <Input
+                        type="text"
+                        placeholder="Contact"
+                        name="companyContact" value={item.companyContact}
+                        onChangeInput={handleChange} >
+                        <AlternateEmailIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <Input
+                        type="text"
+                        placeholder="Address"
+                        name="address" value={item.companyLocation.address}
+                        onChangeInput={handleCompanyLocation}>
+                        <LocationOnIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <Input
+                        type="text"
+                        placeholder="Enter your city"
+                        name="city" value={item.companyLocation.city}
+                        onChangeInput={handleCompanyLocation}>
+                        <LocationCityIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <SelectOption
+                        name="province"
+                        value={item.companyLocation.province}
+                        onChange={handleCompanyLocation}
+                        options={options}
+                    >
+                        <LandscapeIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </SelectOption>
+                    <Input
+                        type="text"
+                        placeholder="Postal Code"
+                        name="postalCode" value={item.companyLocation.postalCode}
+                        onChangeInput={handleCompanyLocation}>
+                        <MarkunreadMailboxIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
+                    <Input
+                        type="textarea"
+                        placeholder="Enter your Desctiption"
+                        name="companyAbout" value={item.companyAbout}
+                        rows={4}
+                        onChangeTextArea={handleChange}
+                    >
+                        <DescriptionIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input>
 
-            </div>
-            <Button
-                type="submit"
-                onClick={() => onSubmit(item)}>
+                </div>
+                <Button
+                    type="submit"
+                    onClick={() => onSubmit(item)}>
                 Next
-            </Button>
-        </div>
-    </form>
+                </Button>
+            </div>
+        </form>
     );
 };
 
@@ -213,9 +213,7 @@ export function JobPostInfo({ onSubmit, item }: any) {
 
     return (
         <form className={styles.container}>
-            <div className={styles.logo}>
-                <Image src={"/images/vccLogo.png"} alt={"logo"} width={100} height={100}></Image>
-            </div>
+            <Navbar/>
             <div className={styles.form}>
                 <div className={styles.field}>
                     <Input
@@ -268,6 +266,7 @@ export function PostCoop({ onSubmit, data }: any) {
 
     return (
         <div>
+            <Navbar/>ß
             <div className={styles.header}>
                 <Image src={`https://res.cloudinary.com/honeydrew/${data.companyImage}` } alt={"image"} width={150} height={150}></Image>
                 <div className={styles.subheader}>
@@ -364,9 +363,11 @@ export default function FormPages() {
             const obj = {
                 jobPosting
             };
+
+            console.log(obj);
+
             await instance.post("/jobPosting/create", obj);
             router.push("/");
-            console.log("test", data);
 
         } else {
             setFormPage(formPage + 1);

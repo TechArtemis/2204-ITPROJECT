@@ -29,6 +29,7 @@ const studentSchema = new Schema(
         },
         favorites: {
             type: Schema.Types.ObjectId,
+            default: [],
             ref: "JobPosting"
         }
     }

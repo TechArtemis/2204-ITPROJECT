@@ -3,6 +3,7 @@ import Card from "@/components/cards";
 import { JobPosting } from "@/interface/JobPosting";
 import { getToken } from "next-auth/jwt";
 import styles from "@/styles/displayJobs.module.sass";
+import Navbar from "@/components/navbar";
 
 interface Props {
     data:JobPosting[]
@@ -10,8 +11,10 @@ interface Props {
 
 // This is page is used to display all the jobs posted by the company
 export default function DisplayJobs({ data } : Props) {
+    console.log("Test", data);
     return (
         <div>
+            <Navbar/>
             <div>
                 <div className={styles.cardArr}>
                     {data.map((post: JobPosting, idx) => (
@@ -21,7 +24,7 @@ export default function DisplayJobs({ data } : Props) {
                                 name={post.companyName}
                                 address={post.companyLocation[0].location.city}
                                 job={post.jobTitle}
-                                type={post.jobType}
+                                type={post.jobType} id={post._id as string}
                             />
                         </div>
                     ))}
@@ -52,7 +55,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
         const form = await getAllPosting();
 
-        console.log(form.message);
+        
 
         return {
             props: {

@@ -10,6 +10,7 @@ import JobCardComponent from "@/components/jobCardComponent";
 import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
 import { getToken } from "next-auth/jwt";
+import Navbar from "@/components/navbar";
 
 export default function JobPostings() {
     const responsive = {
@@ -66,6 +67,7 @@ export default function JobPostings() {
 
     return (
         <>
+            <Navbar/>
             <Box bg={"gray.500"} w={"100%"} h={"50vh"} mt={180} color={"white"}>
                 <div className={styles.bannerContainer}>
                     <Image className={styles.bannerImage} src={StudentsBanner} alt="Students banner"/>

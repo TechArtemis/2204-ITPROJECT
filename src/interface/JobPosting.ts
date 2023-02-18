@@ -6,7 +6,7 @@ import { Location } from "@/interface/Location";
  * Interface for Job Posting
  */
 export interface JobPosting {
-    _id?: Types.ObjectId;
+    _id?: Types.ObjectId | string;
     companyImage: string;
     companyName: string;
     companyContact: string;

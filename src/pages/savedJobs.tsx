@@ -1,12 +1,15 @@
+import Navbar from "@/components/navbar";
 import { getToken } from "next-auth/jwt";
 
 
 export default function savedJobs(){
     return (
-        <div>savedJobs</div>
+        <div>
+            <Navbar/>
+            <p>savedJobs</p>
+        </div>
     );
 };
-
 
 export async function getServerSideProps(context: { [key: string]: any }) {
     const secret = process.env.NEXTAUTH_SECRET;
