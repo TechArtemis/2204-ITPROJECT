@@ -1,5 +1,9 @@
 import { ReactNode, ChangeEvent } from "react";
 import styles from "@/styles/components.module.sass";
+import dynamic from "next/dynamic";
+
+const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
+
 
 interface Props {
     value: string;
@@ -13,6 +17,7 @@ interface Props {
     readonly?: boolean;
     required?: boolean;
     rows?: number;
+    className?: string;
   }
 
 export default function Input(props:Props){
@@ -29,10 +34,23 @@ export default function Input(props:Props){
                     name={props.name}
                 >
                 </textarea>
-            ) : (
+            ) : props.type === "file" ? (
+                <div className={styles.fileupload}>
+                    <button>
+                        <CameraAlt fontSize={"large"} sx={{ color: "#84BD00" }}/>
+                    </button>
+                    <input
+                        type={props.type || "file" }
+                        value={props.value}
+                        onChange={props.onChangeInput}
+                        placeholder={props.placeholder}
+                        name={props.name}
+                    />
+                </div>
+            ): (
                 <input
                     className={styles.inputfield}
-                    type={props.type || "text"}
+                    type={ props.type || "text"}
                     value={props.value}
                     onChange={props.onChangeInput}
                     placeholder={props.placeholder}

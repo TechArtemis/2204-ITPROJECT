@@ -14,7 +14,7 @@ export default function Button(props: Props) {
         <button
             type={props.type}
             onClick={props.onClick}
-            className={styles.button}
+            className={props.className}
         >
             {props.children}
         </button>

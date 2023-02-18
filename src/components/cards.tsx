@@ -1,7 +1,7 @@
 import { JobPosting } from "@/interface/JobPosting";
 import Image from "next/image";
 import styles from "@/styles/components.module.sass";
-import { ReactNode, useState } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
@@ -21,10 +21,19 @@ interface Props {
     type: string,
     children?: ReactNode;
     className?: string;
+    // data: JobPosting[];
 }
 
 
 export default function Card( props : Props) {
+
+    // useEffect(() => {
+    //     const liked = props.data.filter((job:any) => {
+    //         if(job._id == props.id) {
+    //             setLiked(1);
+    //         }
+    //     })
+    // })
     const [liked, setLiked] = useState(0);
 
     console.log("Card",props);
@@ -52,11 +61,11 @@ export default function Card( props : Props) {
 
 
     return (
-        <div className={styles.cards} onClick={() =>handleClick()}>
+        <div className={styles.cards}>
             {props.children}
-            <div className={styles.companyInfo}>
+            <div className={styles.companyInfo} onClick={() =>handleClick()}>
                 <div>
-                    <Image src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={64} height={72}/>
+                    <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/>
                 </div>
                 <div>
                     <h3>{props.name}</h3>
