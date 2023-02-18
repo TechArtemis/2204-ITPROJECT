@@ -16,7 +16,17 @@ export default function savedJobs({ data }: Props){
         <div>
             <Navbar/>
             <div>
+
+                <div className={styles.title}>
+                    <h1>Saved Jobs</h1>
+                </div>
+
                 <div className={styles.cardArr}>
+
+                    {(data.length === 0 && (
+                        <div className={styles.nocontent}>No Jobs have been saved ⚠️</div>
+                    ))}
+
                     {data.map((post: JobPosting, idx) => (
                         <div key={idx} className={styles.cardWrapper}>
                             <Card
@@ -47,6 +57,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
         // If the user is already logged in, redirect.
         // Note: Make sure not to redirect to the same page
         // To avoid an infinite loop!
+        console.log(token);
         if (!token) {
             return { redirect: { destination: "/login", permanent: false } };
         }
@@ -55,6 +66,14 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
         console.log(token.email);
         console.log(form);
+
+        if (form.message.length === 0) {
+            return {
+                props: {
+                    data: []
+                }
+            };
+        }
 
 
         return {

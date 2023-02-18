@@ -3,12 +3,7 @@
     display: flex
     flex-direction: column
     width: 100%
-    height: 100vh
     background: #ffffff
-
-.logo
-    position: absolute
-    padding: 30px
 
 .form
     display: flex
@@ -17,21 +12,43 @@
     align-items: center
     justify-content: center
     width: 100%
-    height: 100vh
+
+.field
+    display: grid
+    justify-content: space-evenly
+    padding: 100px
+    flex-wrap: wrap
 
 //Post Co-op Styles
 
+.submitform
+    margin: 90px
+    padding-bottom: 80px
+    width: 1280px
+    border: 1px solid #c2c2c2
+    box-shadow: 4px 4px 4px 4px #cacaca
+    border-radius: 20px
+
+.logo
+    object-fit: cover
+    border-radius: 100px
+    width: 200px
+    height: 170px
+
 .header
     display: flex
-    padding: 150px 150px 100px 150px
+    margin-left: 100px
+    padding: 150px 0px 50px 50px
+
+    div
+        margin-left: 50px
 
 .subheader
     display: flex
-    justify-content: space-between
     width: 100%
 
     div
-        padding: 20px
+        padding-top: 25px
         font-size: 20px
         color: #000000
 
@@ -41,10 +58,13 @@
     p
         font-size: 20px
         font-weight: 300
-        color: #000000
+        color: #9c9c9c
 
     button
-        padding-left: 100px
+        display: flex
+        justify-content: space-evenly
+
+
 
 .content
     display: flex
@@ -63,7 +83,9 @@
 .subcontent
     display: flex
     flex-direction: row
-    padding-bottom: 50px
+    border-bottom: 1px solid #c2c2c2
+    width: 1000px
+    margin-bottom: 50px
 
     button
         display: flex
@@ -87,3 +109,21 @@
     display: flex
     flex-direction: column
     padding-left: 50px
+
+.submit
+    .button
+    background: #84BD00
+    border-radius: 20px
+    width: 250px
+    height: 73px
+    font-style: normal
+    font-weight: 500
+    font-size: 24px
+    line-height: 29px
+    text-align: center
+    color: #FFFFFF
+
+
+.options
+    display: flex
+    gap: 50px
