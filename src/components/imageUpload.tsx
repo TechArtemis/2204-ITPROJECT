@@ -1,39 +1,44 @@
-import { ChangeEvent, useRef, MouseEvent } from "react";
-import Image from "next/image";
-import styles from "@/styles/components.module.sass";
+// import { ChangeEvent, useRef } from "react";
+// import dynamic from "next/dynamic";
+// import Image from "next/image";
 
-interface Props {
-    image: File | null;
-    imageUrl?: string;
-    onRemove?: (e: MouseEvent<HTMLButtonElement>) => void;
-    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-}
+// const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
+// const Close = dynamic(() => import("@mui/icons-material/Close"));
+
+// interface Props {
+//     image?: string;
+//     type?: "text" | "password" | "email" | "datetime-local" | "tel" | "textarea" | "file";
+//     value: string;
+//     placeholder?: string;
+//     onChange?: (e: ChangeEvent<HTMLInputElement>) => void;
+//     onRemove?: (e: ChangeEvent<HTMLButtonElement>) => void;
+// }
 
 
-export default function ImageUpload(props: Props) {
-    return (
-        <div className={styles.imgwrapper}>
-            <div className={styles.upload}>
-                {props.image ? (
-                    <Image src={URL.createObjectURL(props.image)} alt="" />
-                ) : (
-                    <div className={styles.icon}>
-                        <i className="fa fa-camera" aria-hidden="true"></i>
-                    </div>
-                )}
-            </div>
-            <input
-                type="file"
-                id="file-input"
-                className={styles.fileinput}
-                accept="image/*"
-                onChange={props.onChange}
-            />
-            {props.image && (
-                <button className={styles.remove} onClick={props.onRemove}>
-                    <p className="fa fa-times" aria-hidden="true"></p>
-                </button>
-            )}
-        </div>
-    );
-}
+// export default function ImageUpload(props: Props) {
+//     // ref for passing click to input file picker
+//     const inputRef = useRef<HTMLInputElement>(null);
+
+//     // handle image upload
+//     const handleClick = () => {
+//         inputRef.current?.click();
+//     };
+
+//     return (
+//         <div onClick={handleClick}>
+//             <button type="button" onClick={handleClick}>
+//                 <Close fontSize="medium" />
+//             </button>
+
+//             <Image src={} alt={"logo"}/>
+//             <input
+//                 type={props.type || "text"}
+//                 onChange={props.onChange}
+//                 value={props.value}
+//                 accept="image/png, image/jpeg"
+//                 ref={inputRef}>
+//             </input>
+//         </div>
+//     );
+// }
+

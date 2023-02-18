@@ -4,7 +4,7 @@ import styles from "@/styles/components.module.sass";
 interface Props {
     value: string;
     label?: string;
-    type?: "text" | "password" | "email" | "datetime-local" | "tel" | "textarea";
+    type?: "text" | "password" | "email" | "datetime-local" | "tel" | "textarea" | "file";
     children?: ReactNode;
     onChangeTextArea?: (event: ChangeEvent<HTMLTextAreaElement>) => void;
     onChangeInput?: (e: ChangeEvent<HTMLInputElement>) => void;
