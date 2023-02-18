@@ -12,10 +12,14 @@ import { Model as jobPostingModel } from "@/backend/database/ODM/JobPosting";
  */
 export async function createJobPosting(jobPosting: JobPosting) {
     try {
+        console.log(jobPosting);
+
+        console.log(jobPosting.companyImage);
         await Database.setup(process.env.MONGODB_URI);
         const jobPost = new jobPostingModel(
             {
                 companyName: jobPosting.companyName,
+                companyImage: jobPosting.companyImage,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,
                 companyAbout: jobPosting.companyAbout,
@@ -104,6 +108,7 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
         }
         const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
             {
+                companyImage: jobPosting.companyImage,
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,
@@ -148,6 +153,7 @@ export async function getAllPosting() {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const allPost = await jobPostingModel.find();
+        console.log(allPost);
         return { code: 200, message: allPost };
     } catch (error: any) {
         return { code: 500, message: error.message };

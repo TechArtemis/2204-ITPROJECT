@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap')
+
+.nav
+    display: flex
+    justify-content: space-around
+    align-items: center
+    width: 100%
+    padding: 100px 0px 0px 0px
+
+    font-family: 'Lato'
+    font-style: normal
+    font-weight: 300
+    font-size: 20px
+    line-height: 43px
+    text-transform: uppercase
+    color: #84BD00
+
+    div
+        display: flex
+        justify-content: space-between
+        gap: 50px
+
 .form
     display: flex
     border: 1px solid #000000
@@ -7,7 +29,6 @@
     width: 432px
     height: auto
 
-    
 .inputfield
     display: flex
     border: none
@@ -22,9 +43,14 @@
     width: 100%
     height: 100%
     outline: none
-    
 
-    
+.dropdown
+    display: flex
+    margin-left: 20px
+    width: 100%
+    height: 100%
+    outline: none
+
 .button
     background: #84BD00
     border-radius: 20px
@@ -38,44 +64,4 @@
     color: #FFFFFF
 
 
-// ImageUpload.sass
 
-.imgwrapper
-    display: flex
-    align-items: center
-    justify-content: center
-    position: relative
-
-.upload
-    width: 150px
-    height: 150px
-    border-radius: 50%
-    background-color: #f2f2f2
-    display: flex
-    align-items: center
-    justify-content: center
-    overflow: hidden
-    position: relative
-
-.icon
-    font-size: 40px
-    color: #979797
-
-.fileinput
-    display: none
-
-    img
-        width: 100%
-        height: 100%
-        object-fit: cover
-
-.remove
-    background-color: transparent
-    border: none
-    position: absolute
-    right: 0
-    top: 0
-    padding: 5px
-    cursor: pointer
-    font-size: 20px
-    color: #979797

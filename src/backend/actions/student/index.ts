@@ -4,6 +4,8 @@ import { Types } from "mongoose";
 import Database from "@/backend/database";
 import { Student } from "@/interface/Student";
 import { Model as studentModel } from "@/backend/database/ODM/Student";
+import { Model as alumniModel } from "@/backend/database/ODM/Alumni";
+import { Model as jobpostingModel } from "@/backend/database/ODM/JobPosting";
 
 /**
  * Creates a student account in the database
@@ -23,7 +25,8 @@ export async function createStudent(student: Student) {
                 email: student.email,
                 password: student.password,
                 phoneNumber: student.phoneNumber,
-                studentID: student.studentID
+                studentID: student.studentID,
+                favorites: []
             }
         );
         await newStudent.save();
@@ -83,6 +86,61 @@ export async function updatePasswordByEmail(email: String, password: String) {
         await Database.setup(process.env.MONGODB_URI);
         const student = await studentModel.findByIdAndUpdate({ email }, { password }, { new: true });
         return { code: 200, message: "Success" };
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
+}
+
+/**
+ * A function that add Job Posting to the favorites of the student
+ * @param email the email of the student
+ * @returns a code and a message
+ */
+export async function updateFavorites(email: string, jobId: string, action: string) {
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const student = await alumniModel.findOne({ email });
+        const jobposting = await jobpostingModel.findById(jobId);
+
+        console.log("Updated",email);
+        console.log("Updated Student", student);
+        if(!student) {
+            return { code: 400, message: "Your not registered" };
+        }
+        if(!jobposting) {
+            return { code: 400, message: "Error updating favorites" };
+        }
+        if(!student.favorites){
+            student.favorites = [];
+        }
+
+        if(action === "add") {
+            student.favorites.addToSet(jobposting);
+        } else if(action === "remove") {
+            student.favorites.pull(jobposting);
+        } else {
+            return { code: 400, message: "Action does not exist" };
+        }
+        await student.save();
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
+}
+
+/**
+ * A function that gets all favorites of the student
+ * @param email the email of the student
+ * @returns a code and a message
+ */
+export async function getFavorites(email: string) {
+    try{
+        await Database.setup(process.env.MONGODB_URI);
+        const student = await alumniModel.findOne({ email }).populate("favorites");
+        if(!student) {
+            return { code: 400, message: "Student not found." };
+        }
+        return { code: 200, message: student.favorites };
+
     } catch (error: any) {
         return { code: 500, message: error.message };
     }

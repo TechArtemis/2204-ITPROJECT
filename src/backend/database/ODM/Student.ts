@@ -26,8 +26,13 @@ const studentSchema = new Schema(
         studentID: {
             type: String,
             required: true
+        },
+        favorites: {
+            type: Schema.Types.ObjectId,
+            default: [],
+            ref: "JobPosting"
         }
     }
 );
 
-export const Model = models.studentSchema || model("studentSchema", studentSchema);
+export const Model = models.StudentSchema || model("StudentSchema", studentSchema);

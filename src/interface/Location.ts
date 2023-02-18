@@ -3,19 +3,19 @@
  */
 export namespace Location {
     export enum Province {
-        AB,
-        BC,
-        MB,
-        NB,
-        NL,
-        NS,
-        NT,
-        NU,
-        ON,
-        PE,
-        QC,
-        SK,
-        YT
+        AB = "AB",
+        BC = "BC",
+        MB = "MB",
+        NB = "NB",
+        NL = "NL",
+        NS = "NS",
+        NT = "NT",
+        NU = "NU",
+        ON = "ON",
+        PE = "PE",
+        QC = "QC",
+        SK = "SK",
+        YT = "YT"
     }
 }
 

@@ -21,6 +21,8 @@ import router from "next/router";
 import { getToken } from "next-auth/jwt";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import Navbar from "@/components/navbar";
+
 
 export default function LogIn() {
 
@@ -137,6 +139,8 @@ export async function getServerSideProps(context: { [key: string]: any }) {
             secret: secret
         }
     );
+
+    console.log(token);
 
     // If the user is already logged in, redirect.
     // Note: Make sure not to redirect to the same page

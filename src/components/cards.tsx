@@ -1,0 +1,91 @@
+import { JobPosting } from "@/interface/JobPosting";
+import Image from "next/image";
+import styles from "@/styles/components.module.sass";
+import { ReactNode, useState } from "react";
+import dynamic from "next/dynamic";
+import { instance } from "@/shared/axiosInstance";
+import router from "next/router";
+import { getFavorites } from "@/backend/actions/student";
+import { getToken } from "next-auth/jwt";
+import { getJobPosting } from "@/backend/actions/jobPosting";
+
+const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
+const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
+
+interface Props {
+    id: string;
+    image: string,
+    name: string,
+    address : string,
+    job: string,
+    type: string,
+    children?: ReactNode;
+    className?: string;
+}
+
+
+export default function Card( props : Props) {
+    const [liked, setLiked] = useState(0);
+
+    console.log("Card",props);
+
+    async function handleAddToLiked(id: string, action: string) {
+        console.log(id);
+        if (action === "add"){
+            setLiked(1);
+            const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
+
+            console.log(res);
+
+
+        } else {
+            setLiked(0);
+            const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
+
+        }
+    }
+
+    function handleClick() {
+        router.push(`/view/${props.id}`);
+
+    }
+
+
+    return (
+        <div className={styles.cards} onClick={() =>handleClick()}>
+            {props.children}
+            <div className={styles.companyInfo}>
+                <div>
+                    <Image src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={64} height={72}/>
+                </div>
+                <div>
+                    <h3>{props.name}</h3>
+                    <h4>{props.address}</h4>
+                </div>
+            </div>
+
+            <div className={styles.jobInfo}>
+                <div>
+                    <h1>{props.job}</h1>
+                    <h2>{props.type}</h2>
+                </div>
+
+                {liked === 0 ?
+                    <div>
+                        <button onClick={() => handleAddToLiked(props.id as string, "add")}>
+                            <FavoriteBorderIcon/>
+                        </button>
+                    </div>
+                    :
+                    <div>
+                        <button onClick={() => handleAddToLiked(props.id as string, "remove" )}>
+                            <FavoriteIcon/>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+
+    );
+};
+

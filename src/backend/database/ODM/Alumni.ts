@@ -18,8 +18,12 @@ const alumniSchema = new Schema(
         password: {
             type: String,
             required: true
+        },
+        favorites: {
+            type: [{ type: Schema.Types.ObjectId, ref: "JobPostingSchema" }],
+            default: [],
         }
     }
 );
 
-export const Model = models.alumniSchema || model("alumniSchema", alumniSchema);
+export const Model = models.AlumniSchema || model("AlumniSchema", alumniSchema);
