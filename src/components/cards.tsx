@@ -4,6 +4,10 @@ import styles from "@/styles/components.module.sass";
 import { ReactNode, useState } from "react";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
+import router from "next/router";
+import { getFavorites } from "@/backend/actions/student";
+import { getToken } from "next-auth/jwt";
+import { getJobPosting } from "@/backend/actions/jobPosting";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
@@ -41,9 +45,14 @@ export default function Card( props : Props) {
         }
     }
 
+    function handleClick() {
+        router.push(`/view/${props.id}`);
+
+    }
+
 
     return (
-        <div className={styles.cards}>
+        <div className={styles.cards} onClick={() =>handleClick()}>
             {props.children}
             <div className={styles.companyInfo}>
                 <div>
@@ -79,3 +88,4 @@ export default function Card( props : Props) {
 
     );
 };
+

@@ -135,7 +135,7 @@ export async function updateFavorites(email: string, jobId: string, action: stri
 export async function getFavorites(email: string) {
     try{
         await Database.setup(process.env.MONGODB_URI);
-        const student = await alumniModel.findById({ email }).populate("favorites");
+        const student = await alumniModel.findOne({ email }).populate("favorites");
         if(!student) {
             return { code: 400, message: "Student not found." };
         }

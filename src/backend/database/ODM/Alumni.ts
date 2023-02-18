@@ -20,7 +20,7 @@ const alumniSchema = new Schema(
             required: true
         },
         favorites: {
-            type: [{ type: Schema.Types.ObjectId, ref: "JobPosting" }],
+            type: [{ type: Schema.Types.ObjectId, ref: "JobPostingSchema" }],
             default: [],
         }
     }

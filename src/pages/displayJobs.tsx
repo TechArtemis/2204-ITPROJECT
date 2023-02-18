@@ -55,7 +55,6 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
         const form = await getAllPosting();
 
-        
 
         return {
             props: {
