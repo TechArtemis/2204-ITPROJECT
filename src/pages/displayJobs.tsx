@@ -4,30 +4,65 @@ import { JobPosting } from "@/interface/JobPosting";
 import { getToken } from "next-auth/jwt";
 import styles from "@/styles/displayJobs.module.sass";
 import Navbar from "@/components/navbar";
+import { useState } from "react";
+import dynamic from "next/dynamic";
+
+const Search = dynamic(() => import("@mui/icons-material/Search"));
 
 interface Props {
-    data:JobPosting[]
+    data: JobPosting[]
 }
 
 // This is page is used to display all the jobs posted by the company
-export default function DisplayJobs({ data } : Props) {
-    console.log("Test", data);
+export default function DisplayJobs({ data }: Props) {
+
+    const [search, setSearch] = useState("");
+
+    function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+        const val = event.target.value;
+
+        setSearch(val);
+    };
+
+
     return (
         <div>
-            <Navbar/>
+            <Navbar />
+            <div>
+                <input
+                    type="text"
+                    placeholder="Search companies, job name, keywords,etc."
+                    value={search}
+                    onChange={handleSearch}>
+                </input>
+                <Search fontSize="medium" />
+            </div>
+
+
+
+
             <div>
                 <div className={styles.cardArr}>
-                    {data.map((post: JobPosting, idx) => (
-                        <div key={idx} className={styles.cardWrapper}>
-                            <Card
-                                image={post.companyImage}
-                                name={post.companyName}
-                                address={post.companyLocation[0].location.city}
-                                job={post.jobTitle}
-                                type={post.jobType} id={post._id as string}
-                            />
-                        </div>
+
+                    {(data.length === 0 && (
+                        <p>No Jobs have created ⚠️</p>
                     ))}
+
+                    {data.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
+                        || card.jobTitle.toLowerCase().includes(search.toLowerCase())
+                        || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
+                        || card.jobType.toLowerCase().includes(search.toLowerCase()))
+                        .map((post: JobPosting, idx) => (
+                            <div key={idx} className={styles.cardWrapper}>
+                                <Card
+                                    image={post.companyImage}
+                                    name={post.companyName}
+                                    address={post.companyLocation[0].location.city}
+                                    job={post.jobTitle}
+                                    type={post.jobType} id={post._id as string}
+                                />
+                            </div>
+                        ))}
                 </div>
             </div>
         </div>
@@ -37,7 +72,7 @@ export default function DisplayJobs({ data } : Props) {
 
 
 export async function getServerSideProps(context: { [key: string]: any }) {
-    try{
+    try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken(
             {
