@@ -2,11 +2,19 @@ import { getFavorites, updateFavorites } from "@/backend/actions/student";
 import { EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "../../auth/[...nextauth]";
+import { getSession } from "next-auth/react";
+import { authOptions } from "../../../auth/[...nextauth]";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    const session = await getSession({ req });
     if(req.method === "GET") {
         try {
+            if(!session) {
+                throw {
+                    code: 400,
+                    message: "You are not logged in"
+                };
+            }
             const { email } = req.query;
 
             // validation
@@ -60,18 +68,17 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     }
     else if (req.method === "PUT") {
         try {
-            const session = await getServerSession(req, res, authOptions);
-            const { email } = req.query;
-            const { id, action } = req.body;
-
             if(!session) {
                 throw {
                     code: 400,
                     message: "You are not logged in"
                 };
             }
+            const { id } = req.query;
+            const { action } = req.body;
 
-            const response = await updateFavorites(email as string, id, action);
+
+            const response = await updateFavorites(session.user?.email as string, id as string, action);
             if(response?.code !== 200) {
                 throw {
                     code: response?.code,
