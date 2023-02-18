@@ -17,12 +17,12 @@ interface Props {
     data: JobPosting[]
 }
 
-interface Props2 {
-    data2: JobPosting[]
-}
+// interface Props2 {
+//     data2: JobPosting[]
+// }
 
 // This is page is used to display all the jobs posted by the company
-export default function DisplayJobs({ data }: Props, data2:Props2) {
+export default function DisplayJobs({ data }: Props) {
 
 
     const [search, setSearch] = useState("");
