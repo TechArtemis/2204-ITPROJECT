@@ -44,6 +44,21 @@ export async function updateUser(user: User, currentPassword: string, newPasswor
     }
 }
 
+export async function updateUser2(user: User, currentPassword: string, newPassword: string) {
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const verifyPassword = await userModel.findOne({ email: user.email });
+        const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
+        if(!isValid) {
+            return { code: 400, message: "Invalid" };
+        }
+        await userModel.findOneAndUpdate({ email: user.email }, { password: newPassword }, { new: true });
+        return { code: 200, message: "Success" };
+    } catch (error: any) {
+        return { code: 500, message: error.message };
+    }
+}
+
 export async function deleteUser(user: User, currentPassword: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
@@ -58,6 +73,19 @@ export async function deleteUser(user: User, currentPassword: string) {
         await userModel.findOneAndDelete({ email: existingUser.email });
         return { code: 400, message: "SUCCESS" };
     } catch(error: any) {
+        return { code: 500, message: error.message };
+    }
+}
+
+export async function getUser(email: String) {
+    try {
+        await Database.setup(process.env.MONGODB_URI);
+        const getUser = await userModel.findOne({ email });
+        if (!getUser) {
+            return { code: 400, message: "Not logged in" };
+        }
+        return { code: 200, message: getUser };
+    } catch (error: any) {
         return { code: 500, message: error.message };
     }
 }
