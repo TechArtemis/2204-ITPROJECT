@@ -2,7 +2,7 @@
 import { model, models, Schema, Types } from "mongoose";
 
 /**
- * Schema for Student
+ * Schema for User
  */
 const userSchema = new Schema(
     {
@@ -22,4 +22,4 @@ const userSchema = new Schema(
     }
 );
 
-export const Model = models.userSchema || model("userSchema", userSchema);
+export const Model = models.UserSchema || model("UserSchema", userSchema);
