@@ -18,7 +18,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const employmentArr = Object.values(JobPosting.EmploymentType);
             const jobTitleArr = Object.values(JobPosting.JobTitleType);
             const { jobPosting } = req.body;
-            console.log(jobPosting);
             /**
              * The following if conditions validates the inputs
              */
@@ -68,6 +67,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             // Creates a JobPosting object to be created
             const jobPost : JobPosting = {
+                companyImage: jobPosting.companyImage,
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,

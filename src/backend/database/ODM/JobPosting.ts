@@ -12,6 +12,10 @@ const jobPostingSchema = new Schema (
             type: String,
             required: true
         },
+        companyImage: {
+            type: String,
+            required: true,
+        },
         companyContact: {
             type: String,
             required: true

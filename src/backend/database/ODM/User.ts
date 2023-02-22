@@ -18,6 +18,10 @@ const userSchema = new Schema(
         password: {
             type: String,
             required: true
+        },
+        favorites: {
+            type: [{ type: Schema.Types.ObjectId, ref: "JobPostingSchema" }],
+            default: [],
         }
     }
 );
