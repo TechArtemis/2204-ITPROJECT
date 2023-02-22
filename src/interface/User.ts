@@ -11,7 +11,7 @@ export interface User {
     name: string
     email: string
     password?: string
-    favorites: Favorite[]   
+    favorites: Favorite[]
 }
 export interface Favorite {
     jobPosting: JobPosting["_id"];
