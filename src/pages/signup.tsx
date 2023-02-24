@@ -22,7 +22,7 @@ import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
-import { Alumni } from "@/interface/Alumni";
+import { User } from "@/interface/User";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 import { signIn } from "next-auth/react";
@@ -73,13 +73,13 @@ export default function SignupCard() {
 
         }
         const name = fName + " " + lName;
-        const alumni : Alumni = {
+        const user : User = {
             name,
             email,
             password
         };
         const obj = {
-            alumni
+            user
         };
         try {
             const { data } = await instance.post("alumni/create", obj);
