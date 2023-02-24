@@ -60,15 +60,15 @@ export async function updateName(user: User, currentPassword: string, newName: s
  * @param newPassword the user's new password
  * @returns the updated student account and updates the front end
  */
-export async function updatePassword(user: User, currentPassword: string, newPassword: string) {
+export async function updatePassword(email: string, currentPassword: string, newPassword: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const verifyPassword = await userModel.findOne({ email: user.email });
+        const verifyPassword = await userModel.findOne({ email });
         const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
         if(!isValid) {
             return { code: 400, message: "Invalid" };
         }
-        await userModel.findOneAndUpdate({ email: user.email }, { password: newPassword }, { new: true });
+        await userModel.findOneAndUpdate({ email }, { password: newPassword }, { new: true });
         return { code: 200, message: "Success" };
     } catch (error: any) {
         return { code: 500, message: error.message };

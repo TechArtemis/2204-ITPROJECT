@@ -5,12 +5,12 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcrypt";
 // Local import
 import Database from "@/backend/database";
-import { Model as alumniModel } from "@/backend/database/ODM/Alumni";
+import { Model as userModel } from "@/backend/database/ODM/User";
 import { NextAuthOptions } from "next-auth";
+import { User } from "@/interface/User";
+import { model } from "mongoose";
 
 const clientPromise = Database.setupAdapterConnection();
-
-
 
 export const authOptions: NextAuthOptions = ({
     adapter: MongoDBAdapter(clientPromise),
@@ -25,25 +25,25 @@ export const authOptions: NextAuthOptions = ({
             },
             async authorize(credentials) {
                 // extract username, password from credentials
-                const { email, password } : any = credentials;
+                const { email, password }: any = credentials;
                 // wait for db connection
                 await Database.setup(process.env.MONGODB_URI);
                 // Find a user given the username
-                const alumni = await alumniModel.findOne({ email });
-                console.log(alumni);
+                const user = await userModel.findOne({ email });
+                console.log(user);
                 // If the user isn't logged in / not signed in properly
-                if (!alumni) {
+                if (!user) {
                     return null;
                 }
                 // user.password is always encrypted
-                const isValid = await bcrypt.compare(password, alumni.password);
+                const isValid = await bcrypt.compare(password, user.password);
                 if (!isValid) {
                     return null;
                 }
                 return {
-                    name: alumni.name,
-                    email: alumni.email
-                };
+                    name: user.name,
+                    email: user.email
+                } as any;
             }
         })
     ],

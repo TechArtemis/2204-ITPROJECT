@@ -20,7 +20,7 @@ import {
 import { SetStateAction, useState } from "react";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { PASSWORD_REGEX, STUDENT_EMAIL_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
 import { User } from "@/interface/User";
 import { instance } from "@/shared/axiosInstance";
@@ -63,7 +63,7 @@ export default function SignupCard() {
     };
 
     const handleSubmit = async() => {
-        if (!EMAIL_REGEX.test(email)) {
+        if (!STUDENT_EMAIL_REGEX.test(email)) {
 
         }
         if (!PASSWORD_REGEX.test(password)) {
@@ -82,7 +82,7 @@ export default function SignupCard() {
             user
         };
         try {
-            const { data } = await instance.post("alumni/create", obj);
+            const { data } = await instance.post("user/create", obj);
             const response = await signIn("credentials", { redirect: false, email, password });
             console.log(response);
             if(response?.ok) {

@@ -1,9 +1,8 @@
-import { getFavorites, updateFavorites } from "@/backend/actions/user";
+import { getFavorites } from "@/backend/actions/user";
 import { STUDENT_EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({ req });
@@ -52,7 +51,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //     try {
     //         const { email } = req.query;
     //         // validation
-    //         if (!STUDENT_EMAIL_REGEX.test(email as string)) {
+    //         if (!EMAIL_REGEX.test(email as string)) {
     //             throw {
     //                 code: 400,
     //                 message: "Invalid Email"
@@ -67,46 +66,46 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //         );
     //     }
     // }
-    else if (req.method === "POST") {
+    // else if (req.method === "POST") {
 
-        console.log("Entered");
-        try {
-            if(!session) {
-                throw {
-                    code: 400,
-                    message: "You are not logged in"
-                };
-            }
+    //     console.log("Entered");
+    //     try {
+    //         if(!session) {
+    //             throw {
+    //                 code: 400,
+    //                 message: "You are not logged in"
+    //             };
+    //         }
 
-            const { action, id } = req.body;
+    //         const { action, id } = req.body;
 
-            console.log(id);
-            console.log(action);
-            console.log(session.user?.email);
+    //         console.log(id);
+    //         console.log(action);
+    //         console.log(session.user?.email);
 
 
-            const response = await updateFavorites(session.user?.email as string, id as string, action);
-            if(response?.code !== 200) {
-                throw {
-                    code: response?.code,
-                    message: response?.message
-                };
-            }
-            res.status(200).json(
-                {
-                    message: response.message
-                }
-            );
+    //         const response = await updateFavorites(session.user?.email as string, id as string, action);
+    //         if(response?.code !== 200) {
+    //             throw {
+    //                 code: response?.code,
+    //                 message: response?.message
+    //             };
+    //         }
+    //         res.status(200).json(
+    //             {
+    //                 message: response.message
+    //             }
+    //         );
 
-        } catch (error: any) {
-            const { code = 500, message } = error;
-            res.status(code).json(
-                {
-                    message
-                }
-            );
-        }
-    }
+    //     } catch (error: any) {
+    //         const { code = 500, message } = error;
+    //         res.status(code).json(
+    //             {
+    //                 message
+    //             }
+    //         );
+    //     }
+    // }
     else {
         res.status(405).json(
             {
