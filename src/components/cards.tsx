@@ -1,13 +1,9 @@
-import { JobPosting } from "@/interface/JobPosting";
 import Image from "next/image";
 import styles from "@/styles/components.module.sass";
 import { ReactNode, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
-import { getFavorites } from "@/backend/actions/student";
-import { getToken } from "next-auth/jwt";
-import { getJobPosting } from "@/backend/actions/jobPosting";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
