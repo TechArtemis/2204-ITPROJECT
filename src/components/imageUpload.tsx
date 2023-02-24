@@ -1,4 +1,4 @@
-// import { ChangeEvent, useRef } from "react";
+export default function test() {}// import { ChangeEvent, useRef } from "react";
 // import dynamic from "next/dynamic";
 // import Image from "next/image";
 

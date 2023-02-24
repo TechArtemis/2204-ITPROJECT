@@ -7,7 +7,7 @@ export const EMAIL_REGEX = /^[a-zA-Z0-9.!#$%&’+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:.
 /**
  * student email pattern
  */
-export const STUDENT_EMAIL_REGEX = /^000\d{6}+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)+(?:.[a-zA-Z0-9-]+)$/;
+export const STUDENT_EMAIL_REGEX = /^[000\d{6}]+@[a-zA-Z0-9-]+(?:.[a-zA-Z0-9-]+)+(?:.[a-zA-Z0-9-]+)$/;
 
 /**
   * phone number pattern
