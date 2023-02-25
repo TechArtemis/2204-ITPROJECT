@@ -27,3 +27,5 @@ export const Intro = () => {
         </Box>
     );
 };
+
+export default Intro;
