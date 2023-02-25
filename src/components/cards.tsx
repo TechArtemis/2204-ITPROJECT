@@ -1,14 +1,9 @@
-import { JobPosting } from "@/interface/JobPosting";
 import Image from "next/image";
 import styles from "@/styles/components.module.sass";
 import { ReactNode, useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
-import { getFavorites } from "@/backend/actions/student";
-import { getToken } from "next-auth/jwt";
-import { getJobPosting } from "@/backend/actions/jobPosting";
-import { MicExternalOffOutlined } from "@mui/icons-material";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
@@ -24,19 +19,11 @@ interface Props {
     children?: ReactNode;
     className?: string;
     extraFunction?: (jobID: string) => void;
-    // data: JobPosting[];
 }
 
 
 export default function Card( props : Props) {
 
-    // useEffect(() => {
-    //     const liked = props.data.filter((job:any) => {
-    //         if(job._id == props.id) {
-    //             setLiked(1);
-    //         }
-    //     })
-    // })
     const [liked, setLiked] = useState<boolean>(props.liked);
 
     async function handleAddToLiked(id: string, action: string) {

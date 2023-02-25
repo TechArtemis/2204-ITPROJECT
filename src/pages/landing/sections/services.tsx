@@ -28,3 +28,5 @@ export const Services = () => {
         </Box>
     );
 };
+
+export default Services;

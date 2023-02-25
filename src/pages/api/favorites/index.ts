@@ -1,5 +1,5 @@
-import { getFavorites, updateFavorites } from "@/backend/actions/student";
-import { EMAIL_REGEX } from "@/shared/regex";
+import { getFavorites, updateFavorites } from "@/backend/actions/user";
+import { STUDENT_EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
@@ -19,12 +19,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const { email } = req.query;
 
             // validation
-            // if (!EMAIL_REGEX.test(email as string)) {
-            //     throw {
-            //         code: 400,
-            //         message: "Invalid Email"
-            //     };
-            // }
+            if (!STUDENT_EMAIL_REGEX.test(email as string)) {
+                throw {
+                    code: 400,
+                    message: "Invalid Email"
+                };
+            }
 
             const response = await getFavorites(email as string);
             if(response.code !== 200) {
@@ -52,7 +52,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //     try {
     //         const { email } = req.query;
     //         // validation
-    //         if (!EMAIL_REGEX.test(email as string)) {
+    //         if (!STUDENT_EMAIL_REGEX.test(email as string)) {
     //             throw {
     //                 code: 400,
     //                 message: "Invalid Email"

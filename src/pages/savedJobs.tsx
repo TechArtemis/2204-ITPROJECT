@@ -1,4 +1,4 @@
-import { getFavorites } from "@/backend/actions/student";
+import { getFavorites } from "@/backend/actions/user";
 import Card from "@/components/cards";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";

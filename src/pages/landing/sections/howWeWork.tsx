@@ -19,3 +19,5 @@ export const HowWeWork = () => {
         </Box>
     );
 };
+
+export default HowWeWork;
