@@ -1,6 +1,6 @@
 /* eslint-disable react/jsx-key */
 // 3rd Party Imports
-import { Box, Flex, Grid, GridItem, Divider, Center, Button, extendTheme } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Divider, Center, Button, extendTheme, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
@@ -26,10 +26,6 @@ export default function JobPostings() {
             itemsFit: "contain"
         },
         910: {
-            items: 2,
-            itemsFit: "contain"
-        },
-        1024: {
             items: 2,
             itemsFit: "contain"
         },
@@ -131,10 +127,18 @@ export default function JobPostings() {
                             disableDotsControls={true}
                             controlsStrategy="alternate"
                             renderPrevButton={() => {
-                                return <Button colorScheme={"whatsapp"} variant="solid"> Previous </Button>;
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&lt;</Text>
+                                    </Button>
+                                );
                             }}
                             renderNextButton={() => {
-                                return <Button colorScheme={"whatsapp"} variant="solid"> Next </Button>;
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&gt;</Text>
+                                    </Button>
+                                );
                             }}
                         />
 
@@ -149,10 +153,16 @@ export default function JobPostings() {
                             disableDotsControls={true}
                             controlsStrategy="alternate"
                             renderPrevButton={() => {
-                                return <Button colorScheme={"whatsapp"} variant="solid"> Previous </Button>;
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&lt;</Text>
+                                    </Button>
+                                );
                             }}
                             renderNextButton={() => {
-                                return <Button colorScheme={"whatsapp"} variant="solid"> Next </Button>;
+                                return <Button colorScheme={"green"} variant="solid">
+                                    <Text fontSize='lg'>&gt;</Text>
+                                </Button>;
                             }}
                         />
 
