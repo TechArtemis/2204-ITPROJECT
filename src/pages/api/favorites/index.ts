@@ -8,7 +8,6 @@ import { authOptions } from "../auth/[...nextauth]";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({ req });
     if(req.method === "GET") {
-        console.log("Entered Get");
         try {
             if(!session) {
                 throw {
@@ -17,7 +16,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 };
             }
             const { email } = req.query;
-
             // validation
             if (!STUDENT_EMAIL_REGEX.test(email as string)) {
                 throw {
@@ -25,7 +23,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Email"
                 };
             }
-
             const response = await getFavorites(email as string);
             if(response.code !== 200) {
                 throw {
