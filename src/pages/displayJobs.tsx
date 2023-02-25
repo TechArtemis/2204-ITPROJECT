@@ -8,7 +8,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Button from "@/components/button";
 import router from "next/router";
-import { getFavorites } from "@/backend/actions/student";
+import { getFavorites } from "@/backend/actions/user";
 
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));

@@ -1,9 +1,8 @@
-import { getFavorites, updateFavorites } from "@/backend/actions/student";
-import { EMAIL_REGEX } from "@/shared/regex";
+import { getFavorites } from "@/backend/actions/user";
+import { STUDENT_EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
-import { authOptions } from "../auth/[...nextauth]";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({ req });
@@ -19,7 +18,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const { email } = req.query;
 
             // validation
-            if (!EMAIL_REGEX.test(email as string)) {
+            if (!STUDENT_EMAIL_REGEX.test(email as string)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"

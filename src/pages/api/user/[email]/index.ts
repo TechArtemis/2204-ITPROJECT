@@ -1,8 +1,8 @@
 // Third-party import
 import { NextApiRequest, NextApiResponse } from "next";
 // Local imports
-import { getStudent, updatePasswordByEmail } from "@/backend/actions/student";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { getUser, updatePassword } from "@/backend/actions/user";
+import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { authOptions } from "../../auth/[...nextauth]";
 import { getServerSession } from "next-auth/next";
 
@@ -11,14 +11,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         try {
             const { email } = req.query;
             // validation
-            if (!EMAIL_REGEX.test(email as string)) {
+            if (!STUDENT_EMAIL_REGEX.test(email as string)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"
                 };
             }
             // get the student function
-            const response = await getStudent(email as string);
+            const response = await getUser(email as string);
             if (response.code !== 200) {
                 throw {
                     code: response.code,
@@ -53,22 +53,28 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
         try {
             const { email } = req.query;
-            const { password } = req.body;
+            const { currentPassword, newPassword } = req.body;
             // validation
-            if (!EMAIL_REGEX.test(email as string)) {
+            if (!STUDENT_EMAIL_REGEX.test(email as string)) {
                 throw {
                     code: 400,
                     message: "Invalid Email"
                 };
             }
-            if (!PASSWORD_REGEX.test(password)) {
+            if (!PASSWORD_REGEX.test(currentPassword)) {
+                throw {
+                    code: 400,
+                    message: "Invalid Password"
+                };
+            }
+            if (!PASSWORD_REGEX.test(newPassword)) {
                 throw {
                     code: 400,
                     message: "Invalid Password"
                 };
             }
             // we update password using email
-            const response = await updatePasswordByEmail(email as string, password);
+            const response = await updatePassword(email as string, currentPassword, newPassword);
             if (response.code !== 200) {
                 throw {
                     code: response.code,

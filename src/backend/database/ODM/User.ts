@@ -2,9 +2,9 @@
 import { model, models, Schema, Types } from "mongoose";
 
 /**
- * Schema for Student
+ * Schema for User
  */
-const alumniSchema = new Schema(
+const userSchema = new Schema(
     {
         id: String || Types.ObjectId,
         name: {
@@ -26,4 +26,4 @@ const alumniSchema = new Schema(
     }
 );
 
-export const Model = models.AlumniSchema || model("AlumniSchema", alumniSchema);
+export const Model = models.UserSchema || model("UserSchema", userSchema);
