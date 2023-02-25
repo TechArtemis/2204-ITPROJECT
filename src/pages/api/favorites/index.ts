@@ -41,7 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
         } catch (error:any) {
             const { code = 500, message } = error;
-            res.status(500).json(
+            res.status(code).json(
                 {
                     message
                 }
@@ -68,8 +68,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //     }
     // }
     else if (req.method === "POST") {
-
-        console.log("Entered");
         try {
             if(!session) {
                 throw {
@@ -79,11 +77,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
 
             const { action, id } = req.body;
-
-            console.log(id);
-            console.log(action);
-            console.log(session.user?.email);
-
 
             const response = await updateFavorites(session.user?.email as string, id as string, action);
             if(response?.code !== 200) {

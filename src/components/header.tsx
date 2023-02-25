@@ -19,13 +19,13 @@ export const Header = () => {
                     Vancouver Community College
                 </Heading>
                 <HStack color="whiteAlpha.700" spacing="40px">
-                    <Link as={NextLink} href='./index'>Home</Link>
+                    <Link as={NextLink} href='./'>Home</Link>
                     <Link href='https://www.vcc.ca/programs/computer-systems-technology/' isExternal>Programs and Courses</Link>
                     <Link as={NextLink} href='./login'>Job Postings</Link>
                     <Link as={NextLink} href='./login'>Company Job Form</Link>
                 </HStack>
             </Flex>
-            <Link as={NextLink} href='./login' color="whiteAlpha.800">
+            <Link as={NextLink} href='/login' color="whiteAlpha.800">
                 Login to your account
                 <Icon as={FaSignInAlt} ml="10px" h={5} w={5} />
             </Link>

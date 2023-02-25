@@ -159,7 +159,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
     // Note: Make sure not to redirect to the same page
     // To avoid an infinite loop!
     if (!token) {
-        return { redirect: { destination: "/login", permanent: false } };
+        return { redirect: { destination: "/", permanent: false } };
     }
 
     return {
