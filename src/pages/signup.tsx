@@ -76,7 +76,8 @@ export default function SignupCard() {
         const alumni : Alumni = {
             name,
             email,
-            password
+            password,
+            favorites: []
         };
         const obj = {
             alumni
@@ -86,7 +87,7 @@ export default function SignupCard() {
             const response = await signIn("credentials", { redirect: false, email, password });
             console.log(response);
             if(response?.ok) {
-                router.push("/");
+                router.push("/home");
             }
         } catch(error: any) {
             console.log("NETWORK ERROR", error);
@@ -218,7 +219,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
     // Note: Make sure not to redirect to the same page
     // To avoid an infinite loop!
     if (token) {
-        return { redirect: { destination: "/", permanent: false } };
+        return { redirect: { destination: "/home", permanent: false } };
     }
 
     return {

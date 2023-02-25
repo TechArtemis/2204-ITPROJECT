@@ -4,6 +4,7 @@ import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import styles from "@/styles/displayJobs.module.sass";
 import { getToken } from "next-auth/jwt";
+import { useEffect, useState } from "react";
 
 
 interface Props {
@@ -11,7 +12,10 @@ interface Props {
 }
 
 
-export default function savedJobs({ data }: Props){
+export default function SavedJobs({ data }: Props){
+
+    const [jobs, setJobs] = useState<JobPosting[]>(data);
+
     return (
         <div>
             <Navbar/>
@@ -23,11 +27,11 @@ export default function savedJobs({ data }: Props){
 
                 <div className={styles.cardArr}>
 
-                    {(data.length === 0 && (
+                    {(jobs.length === 0 && (
                         <div className={styles.nocontent}>No Jobs have been saved ⚠️</div>
                     ))}
 
-                    {data.map((post: JobPosting, idx) => (
+                    {jobs.map((post: JobPosting, idx) => (
                         <div key={idx} className={styles.cardWrapper}>
                             <Card
                                 image={post.companyImage}
@@ -35,6 +39,11 @@ export default function savedJobs({ data }: Props){
                                 address={post.companyLocation[0].location.city}
                                 job={post.jobTitle}
                                 type={post.jobType} id={post._id as string}
+                                extraFunction={(jobPosting)=>{
+                                    console.info("here");
+                                    setJobs([...jobs.filter( job => job._id !== jobPosting)]);
+                                }}
+                                liked
                             />
                         </div>
                     ))}
@@ -64,21 +73,9 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
         const form = await getFavorites(token.email as string);
 
-        console.log(token.email);
-        console.log(form);
-
-        if (form.message.length === 0) {
-            return {
-                props: {
-                    data: []
-                }
-            };
-        }
-
-
         return {
             props: {
-                data: JSON.parse(JSON.stringify(form.message)),
+                data: JSON.parse(JSON.stringify(form.message))
             },
         };
     } catch (error) {

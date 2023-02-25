@@ -122,6 +122,8 @@ export async function updateFavorites(email: string, jobId: string, action: stri
             return { code: 400, message: "Action does not exist" };
         }
         await student.save();
+
+        return { code: 200, message: "success" };
     } catch (error: any) {
         return { code: 500, message: error.message };
     }

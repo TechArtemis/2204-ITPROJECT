@@ -50,7 +50,7 @@ export default function LogIn() {
             const response = await signIn("credentials", { redirect: false, email, password });
 
             if(response?.ok) {
-                router.push("/");
+                router.push("/home");
             } else {
                 throw new Error("Email/Password Invalid");
             }
@@ -146,7 +146,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
     // Note: Make sure not to redirect to the same page
     // To avoid an infinite loop!
     if (token) {
-        return { redirect: { destination: "/", permanent: false } };
+        return { redirect: { destination: "/home", permanent: false } };
     }
 
     return {

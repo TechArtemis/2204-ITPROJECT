@@ -6,6 +6,7 @@ import { Testimonials } from "./landing/sections/testimonials";
 import { Commitments } from "./landing/sections/commitments";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
+import { getToken } from "next-auth/jwt";
 
 
 export default function Home() {
@@ -20,4 +21,25 @@ export default function Home() {
             <Footer/>
         </Box>
     );
+}
+
+export async function getServerSideProps(context: { [key: string]: any }) {
+    const secret = process.env.NEXTAUTH_SECRET;
+    const token = await getToken(
+        {
+            req: context.req,
+            secret: secret
+        }
+    );
+
+    // If the user is already logged in, redirect.
+    // Note: Make sure not to redirect to the same page
+    // To avoid an infinite loop!
+    if (token) {
+        return { redirect: { destination: "/home", permanent: false } };
+    }
+
+    return {
+        props: {}
+    };
 }

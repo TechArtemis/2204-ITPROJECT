@@ -14,8 +14,6 @@ import Navbar from "@/components/navbar";
 
 
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
-
-
 const BusinessIcon = dynamic(() => import("@mui/icons-material/Business"));
 const AlternateEmailIcon = dynamic(() => import("@mui/icons-material/AlternateEmail"));
 const LocationOnIcon = dynamic(() => import("@mui/icons-material/LocationOn"));
@@ -47,9 +45,18 @@ interface CompanyJob {
     jobDescription: string;
 }
 
-
 interface Province {
     value: keyof typeof Location.Province;
+    label: string;
+}
+
+interface JobType {
+    value: keyof typeof JobPosting.JobTitleType;
+    label: string;
+}
+
+interface Employment {
+    value: keyof typeof JobPosting.JobTitleType;
     label: string;
 }
 
@@ -104,7 +111,6 @@ export function CompanyPostInfo({ onSubmit }: any) {
         <form className={styles.container}>
             <Navbar/>
             <div className={styles.form}>
-
                 <Input
                     type="file"
                     value={""}
@@ -177,17 +183,6 @@ export function CompanyPostInfo({ onSubmit }: any) {
         </form>
     );
 };
-
-
-interface JobType {
-    value: keyof typeof JobPosting.JobTitleType;
-    label: string;
-}
-
-interface Employment {
-    value: keyof typeof JobPosting.JobTitleType;
-    label: string;
-}
 
 export function JobPostInfo({ onSubmit, item }: any) {
 
@@ -335,7 +330,6 @@ export function PostCoop({ onSubmit, data }: any) {
         </div>
     );
 }
-
 
 export default function FormPages() {
     const [formPage, setFormPage] = useState<number>(1);

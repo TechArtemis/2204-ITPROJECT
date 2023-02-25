@@ -8,6 +8,7 @@ import router from "next/router";
 import { getFavorites } from "@/backend/actions/student";
 import { getToken } from "next-auth/jwt";
 import { getJobPosting } from "@/backend/actions/jobPosting";
+import { MicExternalOffOutlined } from "@mui/icons-material";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
@@ -19,8 +20,10 @@ interface Props {
     address : string,
     job: string,
     type: string,
+    liked: boolean,
     children?: ReactNode;
     className?: string;
+    extraFunction?: (jobID: string) => void;
     // data: JobPosting[];
 }
 
@@ -34,21 +37,26 @@ export default function Card( props : Props) {
     //         }
     //     })
     // })
-    const [liked, setLiked] = useState(0);
-
-    console.log("Card",props);
+    const [liked, setLiked] = useState<boolean>(props.liked);
 
     async function handleAddToLiked(id: string, action: string) {
+
+        if(props.extraFunction && action !== "add") {
+
+            props.extraFunction(id);
+        }
+
         console.log(id);
+
         if (action === "add"){
-            setLiked(1);
+            setLiked(true);
             const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
 
             console.log(res);
 
 
         } else {
-            setLiked(0);
+            setLiked(false);
             const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
 
         }
@@ -56,7 +64,6 @@ export default function Card( props : Props) {
 
     function handleClick() {
         router.push(`/view/${props.id}`);
-
     }
 
 
@@ -79,7 +86,7 @@ export default function Card( props : Props) {
                     <h2>{props.type}</h2>
                 </div>
 
-                {liked === 0 ?
+                { !liked ?
                     <div>
                         <button onClick={() => handleAddToLiked(props.id as string, "add")}>
                             <FavoriteBorderIcon/>
