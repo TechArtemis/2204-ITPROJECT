@@ -27,8 +27,8 @@ export interface JobPosting {
 export namespace JobPosting {
     // Enum for Job Title Type
     export enum JobTitleType {
-        PartTime = "PartTime",
-        FullTime = "FullTime",
+        PartTime = "Part Time",
+        FullTime = "Full Time",
         Contracted = "Contracted",
         Seasonal = "Seasonal"
     }

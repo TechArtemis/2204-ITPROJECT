@@ -1,9 +1,10 @@
 /* eslint-disable react/jsx-key */
 // 3rd Party Imports
-import { Box, Flex, Grid, GridItem, Divider, Center } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Divider, Center, Button, Text } from "@chakra-ui/react";
 import Image from "next/image";
 import AliceCarousel from "react-alice-carousel";
 import "react-alice-carousel/lib/scss/alice-carousel.scss";
+import { getFavorites } from "@/backend/actions/user";
 // Local Imports
 import EventCardComponent from "@/components/eventCardComponent";
 import JobCardComponent from "@/components/jobCardComponent";
@@ -11,8 +12,15 @@ import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
 import { getToken } from "next-auth/jwt";
 import Navbar from "@/components/navbar";
+import { getAllPosting } from "@/backend/actions/jobPosting";
+import { JobPosting } from "@/interface/JobPosting";
 
-export default function JobPostings() {
+interface Props {
+    jobs: JobPosting[];
+    favorites: JobPosting[];
+}
+
+export default function JobPostings(props: Props) {
     const responsive = {
         // 0: {
         //     items: 1,
@@ -30,10 +38,6 @@ export default function JobPostings() {
             items: 2,
             itemsFit: "contain"
         },
-        1024: {
-            items: 2,
-            itemsFit: "contain"
-        },
         1252: {
             items: 3,
             itemsFit: "contain"
@@ -44,26 +48,21 @@ export default function JobPostings() {
         }
     };
 
-    const items = [
-        <div className="item" data-value="1">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="2">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="3">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="4">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="5">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="6">
-            <JobCardComponent/>
-        </div>
-    ];
+    const items =
+        props.jobs.map((post: JobPosting, idx) => (
+            <div className="item" key={idx}>
+                <JobCardComponent
+                    id={post._id as string}
+                    image={post.companyImage}
+                    name={post.companyName}
+                    address={post.companyLocation[0].location.city}
+                    job={post.jobTitle}
+                    type={post.jobType}
+                    liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+                />
+            </div>
+        ));
+
 
     return (
         <>
@@ -128,17 +127,50 @@ export default function JobPostings() {
                             mouseTracking
                             items={items}
                             responsive={responsive}
+                            disableDotsControls={true}
                             controlsStrategy="alternate"
+                            renderPrevButton={() => {
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&lt;</Text>
+                                    </Button>
+                                );
+                            }}
+                            renderNextButton={() => {
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&gt;</Text>
+                                    </Button>
+                                );
+                            }}
                         />
 
                     </Flex>
-
                     <h1 className={styles.jobListTitle}>Based on your career interests</h1>
+
                     <Flex>
                         <AliceCarousel
                             mouseTracking
                             items={items}
+                            responsive={responsive}
+                            disableDotsControls={true}
+                            controlsStrategy="alternate"
+                            renderPrevButton={() => {
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&lt;</Text>
+                                    </Button>
+                                );
+                            }}
+                            renderNextButton={() => {
+                                return (
+                                    <Button colorScheme={"green"} variant="solid">
+                                        <Text fontSize='lg'>&gt;</Text>
+                                    </Button>
+                                );
+                            }}
                         />
+
                     </Flex>
                 </Box>
             </Flex>
@@ -162,7 +194,13 @@ export async function getServerSideProps(context: { [key: string]: any }) {
         return { redirect: { destination: "/", permanent: false } };
     }
 
+    const jobs = await getAllPosting();
+    const { message: favorites } = await getFavorites(token.email as string);
+
     return {
-        props: {}
+        props: {
+            jobs: JSON.parse(JSON.stringify(jobs.message)),
+            favorites: JSON.parse(JSON.stringify(favorites))
+        }
     };
 }
