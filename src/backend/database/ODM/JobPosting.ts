@@ -1,8 +1,10 @@
 // Third-party import
 import { model, models, Schema, Types } from "mongoose";
+
 // Local import
 import { JobPosting } from "@/interface/JobPosting";
 import { Location } from "@/interface/Location";
+
 /**
  * Schema for JobPosting
  */

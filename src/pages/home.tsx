@@ -1,10 +1,11 @@
 /* eslint-disable react/jsx-key */
-// 3rd Party Imports
+
+//third-party imports
 import { Box, Flex, Grid, GridItem, Divider, Center } from "@chakra-ui/react";
 import Image from "next/image";
 import AliceCarousel from "react-alice-carousel";
-import "react-alice-carousel/lib/scss/alice-carousel.scss";
-// Local Imports
+
+// local Imports
 import EventCardComponent from "@/components/eventCardComponent";
 import JobCardComponent from "@/components/jobCardComponent";
 import StudentsBanner from "@/../public/images/studentsBanner.png";
@@ -14,14 +15,6 @@ import Navbar from "@/components/navbar";
 
 export default function JobPostings() {
     const responsive = {
-        // 0: {
-        //     items: 1,
-        //     itemsFit: "contain"
-        // },
-        // 568: {
-        //     items: 1,
-        //     itemsFit: "contain"
-        // },
         796: {
             items: 1,
             itemsFit: "contain"
@@ -70,7 +63,7 @@ export default function JobPostings() {
             <Navbar/>
             <Box bg={"gray.500"} w={"100%"} h={"50vh"} mt={180} color={"white"}>
                 <div className={styles.bannerContainer}>
-                    <Image className={styles.bannerImage} src={StudentsBanner} alt="Students banner"/>
+                    <Image className={styles.bannerImage} src={StudentsBanner} alt="Students banner" />
                     <h1 className={styles.bannerTitle}>VCC Co-op<br/>
                         <span className={styles.bannerCaption}>
                             This is a caption that&apos;ll describe what the VCC Co-op Page is supposed to offer for students

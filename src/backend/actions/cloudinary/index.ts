@@ -7,6 +7,7 @@ export async function uploadFile(path: string) {
         const response = await uploader.upload(
             path,
             {
+                // eslint-disable-next-line camelcase
                 unique_filename: true
             }
         );

@@ -31,7 +31,7 @@ const handler = nextConnect({
 
 // Multer file type found in the Express namespace
 type NextApiRequestWithFiles = NextApiRequest & {
-  files: Express.Multer.File[];
+    files: Express.Multer.File[];
 };
 
 /**
@@ -80,8 +80,8 @@ handler
         } catch (error: any) {
             const {
                 code = 500,
-                message="internal server error",
-                cause="internal error"
+                message = "internal server error",
+                cause = "internal error"
             } = error;
             res.status(code).json(
                 {

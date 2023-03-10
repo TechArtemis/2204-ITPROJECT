@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, Flex, Heading, HStack, Text } from "@chakra-ui/react";
-import { ServiceCard } from "@/components/serviceCard";
+import ServiceCard from "@/components/serviceCard";
 import { RiComputerLine } from "react-icons/ri";
 import { BsPencilSquare } from "react-icons/bs";
 
-export const Services = () => {
+export default function Services() {
     return (
         <Box w="full" py="60px" px="200px">
             <Flex justifyContent="space-between" alignItems="center" pb="60px">
@@ -28,5 +28,3 @@ export const Services = () => {
         </Box>
     );
 };
-
-export default Services;

@@ -1,24 +1,30 @@
+//third-party imports
+import { getToken } from "next-auth/jwt";
+import { useState } from "react";
+
+//local imports
 import { getFavorites } from "@/backend/actions/user";
 import Card from "@/components/cards";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import styles from "@/styles/displayJobs.module.sass";
-import { getToken } from "next-auth/jwt";
-import { useEffect, useState } from "react";
 
-
+/**
+ * @param {jobPostings} JobPosting[] - array of job postings
+ *
+ */
 interface Props {
     data: JobPosting[]
 }
 
 
-export default function SavedJobs({ data }: Props){
+export default function SavedJobs({ data }: Props) {
 
     const [jobs, setJobs] = useState<JobPosting[]>(data);
 
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div>
 
                 <div className={styles.title}>
@@ -39,9 +45,9 @@ export default function SavedJobs({ data }: Props){
                                 address={post.companyLocation[0].location.city}
                                 job={post.jobTitle}
                                 type={post.jobType} id={post._id as string}
-                                extraFunction={(jobPosting)=>{
+                                extraFunction={(jobPosting) => {
                                     console.info("here");
-                                    setJobs([...jobs.filter( job => job._id !== jobPosting)]);
+                                    setJobs([...jobs.filter(job => job._id !== jobPosting)]);
                                 }}
                                 liked
                             />
@@ -54,7 +60,7 @@ export default function SavedJobs({ data }: Props){
 };
 
 export async function getServerSideProps(context: { [key: string]: any }) {
-    try{
+    try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken(
             {
@@ -66,7 +72,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
         // If the user is already logged in, redirect.
         // Note: Make sure not to redirect to the same page
         // To avoid an infinite loop!
-        console.log(token);
+
         if (!token) {
             return { redirect: { destination: "/login", permanent: false } };
         }
