@@ -1,8 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiRequest } from "next";
 import handler from "@/pages/api/user/create";
+import { getUser } from "@/backend/actions/user";
 
 describe("createUser API", () => {
-    it("should return 400 if name is missing or invalid", async () => {
+
+    it("Should return 400 if name is missing or invalid", async () => {
         const req = {
             method: "POST",
             body: {
@@ -26,7 +28,16 @@ describe("createUser API", () => {
         });
     });
 
-    it("should return 200 if all fields are filled and passes the requirements", async () => {
+    it("Should return ", async () => {
+        const email = "000451777@student.vcc.ca";
+        const res = getUser(email);
+
+        expect((await res).code).toBe(400);
+        expect((await res).message).toBe("User not registered");
+
+    });
+
+    it("Should return 200 if all fields are filled and passes the requirements", async () => {
         const req = {
             method: "POST",
             body: {
@@ -45,12 +56,11 @@ describe("createUser API", () => {
 
         await handler(req, res);
 
-        console.log("Response:", res.status, res.json);
+        console.log("Response:", res.json.mock);
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
             message: "User Created",
         });
     });
-
 });
