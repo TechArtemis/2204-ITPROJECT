@@ -1,5 +1,5 @@
 import { User } from "@/interface/User";
-import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX, PHONE_REGEX, STUDENTID_REGEX } from "@/shared/regex";
+import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
@@ -13,6 +13,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             /**
              * used for validating the user object
              */
+            console.log("1")
             if (!isValidStr(user.name)) {
                 throw {
                     code: 400,
@@ -31,6 +32,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Password"
                 };
             }
+            console.log("2")
             const hashedPassword = await bcrypt.hash(user.password, 10);
             // make a student using the info we got from the front-end
             const newUser : User = {
@@ -38,8 +40,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 email: user.email,
                 password: hashedPassword,
             };
+            console.log("3")
             // send the student to the actionfunctions
             const response = await createUser(newUser);
+            console.log("4")
             if (response.code !== 200) {
                 throw {
                     code: response.code,
