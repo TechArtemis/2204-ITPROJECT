@@ -3,11 +3,10 @@
     display: flex
     flex-direction: column
     width: 100%
-    background: #ffffff
 
 .form
     display: flex
-    padding: 70px
+    padding-top: 50px
     flex-direction: column
     align-items: center
     justify-content: center
@@ -16,18 +15,17 @@
 .field
     display: grid
     justify-content: space-evenly
-    padding: 100px
-    flex-wrap: wrap
 
 //Post Co-op Styles
 
 .submitform
-    margin: 90px
-    padding-bottom: 80px
-    width: 1280px
-    border: 1px solid #c2c2c2
-    box-shadow: 4px 4px 4px 4px #cacaca
-    border-radius: 20px
+    display: flex
+    flex-direction: column
+    border: 1px solid #9c9c9c
+    margin-top: 50px
+    margin-left: 50px
+    margin-right: 50px
+    border-radius: 2px
 
 .logo
     object-fit: cover
@@ -64,6 +62,11 @@
         display: flex
         justify-content: space-evenly
 
+.subheader2
+    display: flex
+    margin-left: 1000px
+
+   
 .content
     display: flex
     flex-direction: column
@@ -82,7 +85,7 @@
     display: flex
     flex-direction: row
     border-bottom: 1px solid #c2c2c2
-    width: 1000px
+    width: 1200px
     margin-bottom: 50px
 
     button
@@ -107,28 +110,91 @@
     display: flex
     flex-direction: column
     padding-left: 50px
+    padding-bottom: 100px
 
 .submit
-    .button
-        background: #84BD00
-        border-radius: 20px
-        width: 250px
-        height: 73px
-        font-style: normal
-        font-weight: 500
-        font-size: 24px
-        line-height: 29px
-        text-align: center
-        color: #FFFFFF
+    background: #84BD00
+    border-radius: 10px
+    width: 350px
+    height: 60px
+
+    font-style: normal
+    font-weight: 500
+    font-size: 17px
+    line-height: 29px
+    color: #FFFFFF
+
+.backbutton
+    background: #5b5b5b
+    border-radius: 10px
+    width: 350px
+    height: 60px
+
+    font-style: normal
+    font-weight: 500
+    font-size: 17px
+    line-height: 29px
+    color: #FFFFFF
+
+.back
+    display: flex
+    justify-content: center
+    align-items: center
+    padding-top: 10px
+
 
 .options
     display: flex
     gap: 50px
 
 //stepper
+$step-width: 33.33%// Define the width of each step
+$transition-duration: 0.3s // Define the duration of the animation
+
 .stepper
-    width: 100%
-    height: 3rem
-    display: flex   
-    flex-direction: row
-    justify-content: space-evenly
+    display: flex
+    justify-content: space-around
+
+    p
+        flex-basis: $step-width
+        text-align: center
+        padding: 17px
+        cursor: pointer
+        transition: all $transition-duration
+
+        &.unselected
+            background-color: #eee
+            color: #aaa
+
+        &.selected
+            background-color: #84BD00
+            color: #fff
+
+        &.error
+            background-color: #5b5b5b
+            color: #fff
+
+        &:hover:not(.selected)
+            background-color: #ccc
+
+        &.selected
+            animation: bounce-in $transition-duration
+
+    @keyframes bounce-in
+        0%
+            transform: scale(0.9)
+
+        50%
+            transform: scale(1.1)
+
+        100%
+            transform: scale(1)
+
+    @keyframes fade-in
+        0%
+            opacity: 0
+
+        100%
+            opacity: 1
+
+            animation: fade-in $transition-duration

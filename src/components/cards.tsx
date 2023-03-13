@@ -28,7 +28,7 @@ const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
 
 interface Props {
     id: string;
-    image: string,
+    image?: string,
     name: string,
     address: string,
     job: string,
@@ -73,7 +73,8 @@ export default function Card(props: Props) {
             {props.children}
             <div className={styles.companyInfo} onClick={() => handleClick()}>
                 <div>
-                    <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/>
+                    {/* <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/> */}
+                    <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
                 </div>
                 <div>
                     <h3>{props.name}</h3>
