@@ -14,7 +14,7 @@ import { Model as jobPostingModel } from "@/backend/database/ODM/JobPosting";
 export async function createUser(user: User) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        console.log("Entered createUser")
+        console.log("Entered createUser");
         const existingUser = await userModel.findOne({ email: user.email });
         if (existingUser) {
             return { code: 400, message: "Alumni already exists" };

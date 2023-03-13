@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
 const defaultUri: string = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
-mongoose.set('strictQuery', true)
+mongoose.set("strictQuery", true);
 export default class Database {
     static moongoseClient: typeof mongoose;
     static MongoClientPromise: Promise<MongoClient>;
 
     static async setup(uri: string = defaultUri): Promise<mongoose.Mongoose> {
-        if (!this.moongoseClient) { 
+        if (!this.moongoseClient) {
             this.moongoseClient = await mongoose.connect(uri).catch((error) => {
                 throw new Error("Error setting up mongoose connection", { cause: error });
             });
