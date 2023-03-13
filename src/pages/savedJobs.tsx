@@ -40,6 +40,7 @@ export default function SavedJobs({ data }: Props) {
                     {jobs.map((post: JobPosting, idx) => (
                         <div key={idx} className={styles.cardWrapper}>
                             <Card
+
                                 // image={post.companyImage}
                                 name={post.companyName}
                                 address={post.companyLocation[0].location.city}

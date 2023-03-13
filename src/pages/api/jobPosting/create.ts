@@ -71,6 +71,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             // Creates a JobPosting object to be created
             const jobPost: JobPosting = {
+
                 // companyImage: jobPosting.companyImage,
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
