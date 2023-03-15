@@ -13,7 +13,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             /**
              * used for validating the user object
              */
-            console.log("1");
             if (!isValidStr(user.name)) {
                 throw {
                     code: 400,
@@ -40,10 +39,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 email: user.email,
                 password: hashedPassword,
             };
-            console.log("3");
             // send the student to the actionfunctions
             const response = await createUser(newUser);
-            console.log("4");
             if (response.code !== 200) {
                 throw {
                     code: response.code,

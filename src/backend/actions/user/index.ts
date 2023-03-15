@@ -103,7 +103,7 @@ export async function getUser(email: String) {
         await Database.setup(process.env.MONGODB_URI);
         const getUser = await userModel.findOne({ email });
         if (!getUser) {
-            return { code: 400, message: "Not logged in" };
+            return { code: 400, message: "User not registered" };
         }
         return { code: 200, message: getUser };
     } catch (error: any) {

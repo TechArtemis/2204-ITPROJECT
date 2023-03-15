@@ -1,10 +1,11 @@
 import { NextApiRequest } from "next";
 import handler from "@/pages/api/user/create";
-import { getUser } from "@/backend/actions/user";
+import { getUser, deleteUser } from "@/backend/actions/user";
+import { User } from "@/interface/User"
 
 describe("createUser API", () => {
 
-    it("Should return 400 if name is missing or invalid", async () => {
+    it("Should return code 400 if name is missing or invalid", async () => {
         const req = {
             method: "POST",
             body: {
@@ -28,7 +29,7 @@ describe("createUser API", () => {
         });
     });
 
-    it("Should return ", async () => {
+    it("Should return code 400 Alumni already exists", async () => {
         const email = "000451777@student.vcc.ca";
         const res = getUser(email);
 
@@ -56,11 +57,9 @@ describe("createUser API", () => {
 
         await handler(req, res);
 
-        console.log("Response:", res.json.mock);
-
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            message: "User Created",
+            message: "User created",
         });
     });
 });

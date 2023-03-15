@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import { MongoClient } from "mongodb";
 
-const defaultUri: string = process.env.MONGODB_URI ?? "mongodb://localhost:27017";
+const defaultUri: string = process.env.MONGODB_URI ?? "mongodb://127.0.0.1:27017";
 mongoose.set("strictQuery", true);
 export default class Database {
     static moongoseClient: typeof mongoose;
