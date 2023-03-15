@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "testing": "echo \"hello\"",
+    "testing": "echo \"Applying Husky\"",
     "eslint:fix": "eslint . --max-warnings=0 --fix",
     "prepare": "husky install",
     "husky:pre-commit": "npm run testing && npm run eslint:fix",

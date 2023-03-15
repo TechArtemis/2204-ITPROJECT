@@ -1,7 +1,7 @@
 import { NextApiRequest } from "next";
 import handler from "@/pages/api/user/create";
 import { getUser, deleteUser } from "@/backend/actions/user";
-import { User } from "@/interface/User"
+import { User } from "@/interface/User";
 
 describe("createUser API", () => {
 
