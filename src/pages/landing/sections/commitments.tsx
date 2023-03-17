@@ -19,7 +19,7 @@ export const Commitments = () => {
                 </VStack>
             </Box>
             <AspectRatio ratio={8 / 10} width="500px">
-                <Img src="./images/studentsBanner.png"/>
+                <Img src="./images/studentsBanner.png" />
             </AspectRatio>
         </Flex>
     );

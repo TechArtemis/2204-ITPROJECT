@@ -1,6 +1,7 @@
-// Third-party import
+// third-party imports
 import { NextApiRequest, NextApiResponse } from "next";
-// Local import
+
+// local import
 import { createJobPosting } from "@/backend/actions/jobPosting";
 import { JobPosting } from "@/interface/JobPosting";
 import { EMAIL_REGEX } from "@/shared/regex";
@@ -9,6 +10,7 @@ import { isValidStr } from "@/shared/stringCheck";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     if (req.method === "POST") {
         try {
+
             /**
              * Declares and initialize the jobtitleArr to get the enums for JobTtitleType
              * Declares and initialize the employmentArr to get the enums for EmployeeType
@@ -18,6 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             const employmentArr = Object.values(JobPosting.EmploymentType);
             const jobTitleArr = Object.values(JobPosting.JobTitleType);
             const { jobPosting } = req.body;
+
             /**
              * The following if conditions validates the inputs
              */
@@ -65,9 +68,11 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Employment Type"
                 };
             }
+
             // Creates a JobPosting object to be created
-            const jobPost : JobPosting = {
-                companyImage: jobPosting.companyImage,
+            const jobPost: JobPosting = {
+
+                // companyImage: jobPosting.companyImage,
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,
@@ -78,8 +83,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 employment: jobPosting.employment,
                 datePosted: jobPosting.datePosted
             };
+
             // Creates the job posting in the database and stores the response
             const response = await createJobPosting(jobPost);
+
             // Checks if the response is not code 200
             if (response.code !== 200) {
                 throw {
@@ -87,13 +94,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+
             // Sends a response code and message
             res.status(response.code).json(
                 {
                     message: response.message
                 }
             );
-        // Catch an error and sends a response code and message
+
+            // Catch an error and sends a response code and message
         } catch (error: any) {
             const { code = 500, message } = error;
             res.status(code).json(
@@ -104,6 +113,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         }
     }
     else {
+
         // Sends a response code of 405 and a message
         res.status(405).json(
             {

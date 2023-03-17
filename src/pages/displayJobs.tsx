@@ -1,26 +1,32 @@
-import { getAllPosting } from "@/backend/actions/jobPosting";
-import Card from "@/components/cards";
-import { JobPosting } from "@/interface/JobPosting";
+//third-party imports
 import { getToken } from "next-auth/jwt";
+import { useState } from "react";
+import dynamic from "next/dynamic";
+import router from "next/router";
+
+//local imports
+import { getFavorites } from "@/backend/actions/user";
+import { getAllPosting } from "@/backend/actions/jobPosting";
 import styles from "@/styles/displayJobs.module.sass";
 import Navbar from "@/components/navbar";
-import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
 import Button from "@/components/button";
-import router from "next/router";
-import { getFavorites } from "@/backend/actions/user";
+import Card from "@/components/cards";
+import { JobPosting } from "@/interface/JobPosting";
 
+
+//dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
 
+/**
+ * @param {jobPostings} JobPosting[] - array of job postings
+ * @param {favorites} JobPosting[] - array of job postings that are favorited by the user
+ *
+ */
 interface Props {
     jobPostings: JobPosting[]
     favorites: JobPosting[]
 }
-
-// interface Props2 {
-//     data2: JobPosting[]
-// }
 
 // This is page is used to display all the jobs posted by the company
 export default function DisplayJobs({ jobPostings, favorites }: Props) {
@@ -56,7 +62,7 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
                     className={styles.post}>
                     <div>
                         <p>Post Job</p>
-                        <AddIcon fontSize="medium" sx={{ color: "#ffff" }}/>
+                        <AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
                     </div>
                 </Button>
             </div>

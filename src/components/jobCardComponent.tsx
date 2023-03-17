@@ -1,4 +1,4 @@
-// 3rd Party Imports
+//third-party imports
 import { Box, Flex, Card, CardHeader, CardBody } from "@chakra-ui/react";
 import Image from "next/image";
 
@@ -7,7 +7,7 @@ import styles from "@/styles/JobPostings.module.sass";
 import heartIcon from "@/../public/images/heartIcon.png";
 import companyIcon from "@/../public/images/companyDefaultIcon.png";
 
-const JobCardCompany = () => {
+export default function JobCardComponent() {
     return (
         <>
             <Card maxW={"330px"} minW={"280px"} borderRadius={"3xl"} boxShadow={"dark-lg"} ml={"5vh"} my={"5vh"}>
@@ -46,5 +46,3 @@ const JobCardCompany = () => {
         </>
     );
 };
-
-export default JobCardCompany;

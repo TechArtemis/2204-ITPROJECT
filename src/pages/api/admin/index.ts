@@ -1,5 +1,6 @@
 // Third-party import
 import { NextApiRequest, NextApiResponse } from "next";
+
 // Local import
 import { Admin } from "@/interface/Admin";
 import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
@@ -9,6 +10,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "POST") {
         try {
             const { admin } = req.body;
+
             /**
              * the following if conditions validates the input
              */
@@ -24,13 +26,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Password"
                 };
             }
-            const newAdmin : Admin = {
+            const newAdmin: Admin = {
                 email: admin.email,
                 password: admin.password,
                 name: "Admin"
             };
+
             // creates the admin account
             const response = await createAdmin(newAdmin);
+
             // if invalid, throw error
             if (response.code !== 200) {
                 throw {
@@ -38,6 +42,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+
             // response to front-end
             res.status(response.code).json(
                 {

@@ -62,7 +62,7 @@ export default function SignupCard() {
         setLName(val);
     };
 
-    const handleSubmit = async() => {
+    const handleSubmit = async () => {
         if (!STUDENT_EMAIL_REGEX.test(email)) {
 
         }
@@ -73,7 +73,7 @@ export default function SignupCard() {
 
         }
         const name = fName + " " + lName;
-        const user : User = {
+        const user: User = {
             name,
             email,
             password,
@@ -85,11 +85,11 @@ export default function SignupCard() {
         try {
             const { data } = await instance.post("user/create", obj);
             const response = await signIn("credentials", { redirect: false, email, password });
-            console.log(response);
-            if(response?.ok) {
+
+            if (response?.ok) {
                 router.push("/home");
             }
-        } catch(error: any) {
+        } catch (error: any) {
             console.log("NETWORK ERROR", error);
         }
     };
@@ -110,10 +110,10 @@ export default function SignupCard() {
                         <Stack spacing={8} mx={"auto"} w={"full"} maxW={"lg"} py={12} px={6}>
                             <Stack align={"center"}>
                                 <Heading fontSize={"4xl"} textAlign={"center"}>
-                        Sign up
+                                    Sign up
                                 </Heading>
                                 <Text fontSize={"lg"} color={"gray.600"}>
-                        to see the VCC CST job board
+                                    to see the VCC CST job board
                                 </Text>
                             </Stack>
                             <Box
@@ -141,7 +141,7 @@ export default function SignupCard() {
                                         <Input type='email' onChange={handleEmailChange} />
                                         {!isError ? (
                                             <FormHelperText>
-                                    Enter your VCC student email or personal CST alumni email
+                                                Enter your VCC student email or personal CST alumni email
                                             </FormHelperText>
                                         ) : (
                                             <FormErrorMessage>Email is required.</FormErrorMessage>
@@ -153,7 +153,7 @@ export default function SignupCard() {
                                             <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
                                             {!isError ? (
                                                 <FormHelperText>
-                                        Enter Password
+                                                    Enter Password
                                                 </FormHelperText>
                                             ) : (
                                                 <FormErrorMessage>Password is required.</FormErrorMessage>
@@ -178,12 +178,12 @@ export default function SignupCard() {
                                             _hover={{
                                                 bg: "green.500",
                                             }} onClick={handleSubmit}>
-                                Sign up
+                                            Sign up
                                         </Button>
                                     </Stack>
                                     <Stack pt={6}>
                                         <Text align={"center"}>
-                                Already a user? <Link as={NextLink} href='./login' color={"green.400"} >Login</Link>
+                                            Already a user? <Link as={NextLink} href='./login' color={"green.400"} >Login</Link>
                                         </Text>
                                     </Stack>
                                 </Stack>
@@ -194,9 +194,7 @@ export default function SignupCard() {
                         <Image
                             alt={"Sign Up Image"}
                             objectFit={"cover"}
-                            src={
-                                "./images/studentsBanner.png"
-                            }
+                            src={"./images/studentsBanner.png"}
                         />
                     </Flex>
                 </Stack>

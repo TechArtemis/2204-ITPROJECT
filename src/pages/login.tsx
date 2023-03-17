@@ -49,7 +49,7 @@ export default function LogIn() {
         try {
             const response = await signIn("credentials", { redirect: false, email, password });
 
-            if(response?.ok) {
+            if (response?.ok) {
                 router.push("/home");
             } else {
                 throw new Error("Email/Password Invalid");
@@ -73,7 +73,7 @@ export default function LogIn() {
                                 <Input type='email' onChange={handleEmailChange} />
                                 {!isError ? (
                                     <FormHelperText>
-                                Enter your VCC student email or personal CST alumni email
+                                        Enter your VCC student email or personal CST alumni email
                                     </FormHelperText>
                                 ) : (
                                     <FormErrorMessage>Email is required.</FormErrorMessage>
@@ -82,10 +82,10 @@ export default function LogIn() {
                             <FormControl id="password" isRequired isInvalid={isError}>
                                 <FormLabel>Password</FormLabel>
                                 <InputGroup>
-                                    <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange}/>
+                                    <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
                                     {!isError ? (
                                         <FormHelperText>
-                                Enter Password
+                                            Enter Password
                                         </FormHelperText>
                                     ) : (
                                         <FormErrorMessage></FormErrorMessage>
@@ -107,8 +107,8 @@ export default function LogIn() {
                                     align={"start"}
                                     justify={"space-between"}>
                                 </Stack>
-                                <Button colorScheme={"green"} variant={"solid"} onClick={ handleLogin }>
-                            Sign in
+                                <Button colorScheme={"green"} variant={"solid"} onClick={handleLogin}>
+                                    Sign in
                                 </Button>
                                 <Text align={"center"}>
                                     <Link as={NextLink} href='./signup' color={"green.400"} >Sign up</Link> for an account
@@ -120,9 +120,7 @@ export default function LogIn() {
                         <Image
                             alt={"Login Image"}
                             objectFit={"cover"}
-                            src={
-                                "./images/SchoolVCC2.jpg"
-                            }
+                            src={"./images/SchoolVCC2.jpg"}
                         />
                     </Flex>
                 </Stack>
@@ -139,8 +137,6 @@ export async function getServerSideProps(context: { [key: string]: any }) {
             secret: secret
         }
     );
-
-    console.log(token);
 
     // If the user is already logged in, redirect.
     // Note: Make sure not to redirect to the same page

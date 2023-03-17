@@ -1,5 +1,6 @@
 // Third-party import
 import bcrypt from "bcrypt";
+
 // Local import
 import Database from "@/backend/database";
 import { User } from "@/interface/User";
@@ -19,7 +20,7 @@ export async function createUser(user: User) {
         if (existingUser) {
             return { code: 400, message: "Alumni already exists" };
         }
-        const newUser = new userModel (
+        const newUser = new userModel(
             {
                 name: user.name,
                 email: user.email,
@@ -28,11 +29,14 @@ export async function createUser(user: User) {
             }
         );
         await newUser.save();
+
+
         return { code: 200, message: "User created" };
-    } catch(error: any) {
+    } catch (error: any) {
         return { code: 500, message: error.message };
     }
 }
+
 /**
  * update the user's name
  * @param user the current user
@@ -45,15 +49,18 @@ export async function updateName(user: User, currentPassword: string, newName: s
         await Database.setup(process.env.MONGODB_URI);
         const verifyPassword = await userModel.findOne({ email: user.email });
         const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
-        if(!isValid) {
+        if (!isValid) {
             return { code: 400, message: "Invalid" };
         }
         await userModel.findOneAndUpdate({ email: user.email }, { name: newName }, { new: true });
+
+
         return { code: 200, message: "Success" };
-    } catch(error: any) {
+    } catch (error: any) {
         return { code: 500, message: error.message };
     }
 }
+
 /**
  * Updates the student account's name and phone number
  * @param email used to identify the account
@@ -66,10 +73,12 @@ export async function updatePassword(email: string, currentPassword: string, new
         await Database.setup(process.env.MONGODB_URI);
         const verifyPassword = await userModel.findOne({ email });
         const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
-        if(!isValid) {
+        if (!isValid) {
             return { code: 400, message: "Invalid" };
         }
         await userModel.findOneAndUpdate({ email }, { password: newPassword }, { new: true });
+
+
         return { code: 200, message: "Success" };
     } catch (error: any) {
         return { code: 500, message: error.message };
@@ -80,19 +89,22 @@ export async function deleteUser(user: User, currentPassword: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const existingUser = await userModel.findOne({ email: user.email });
-        if(!existingUser) {
+        if (!existingUser) {
             return { code: 400, message: "Invalid" };
         }
         const isValid = await bcrypt.compare(existingUser.password, currentPassword);
-        if(!isValid) {
+        if (!isValid) {
             return { code: 400, message: "Invalid" };
         }
         await userModel.findOneAndDelete({ email: existingUser.email });
+
+
         return { code: 400, message: "SUCCESS" };
-    } catch(error: any) {
+    } catch (error: any) {
         return { code: 500, message: error.message };
     }
 }
+
 /**
  * A function that gets a student base on its email
  * @param email the email of the user that you want to get
@@ -105,6 +117,8 @@ export async function getUser(email: String) {
         if (!getUser) {
             return { code: 400, message: "User not registered" };
         }
+
+
         return { code: 200, message: getUser };
     } catch (error: any) {
         return { code: 500, message: error.message };
@@ -121,27 +135,26 @@ export async function updateFavorites(email: string, jobId: string, action: stri
         await Database.setup(process.env.MONGODB_URI);
         const student = await userModel.findOne({ email });
         const jobposting = await jobPostingModel.findById(jobId);
-
-        console.log("Updated",email);
-        console.log("Updated Student", student);
-        if(!student) {
+        if (!student) {
             return { code: 400, message: "Your not registered" };
         }
-        if(!jobposting) {
+        if (!jobposting) {
             return { code: 400, message: "Error updating favorites" };
         }
-        if(!student.favorites){
+        if (!student.favorites) {
             student.favorites = [];
         }
 
-        if(action === "add") {
+        if (action === "add") {
             student.favorites.addToSet(jobposting);
-        } else if(action === "remove") {
+        } else if (action === "remove") {
             student.favorites.pull(jobposting);
         } else {
             return { code: 400, message: "Action does not exist" };
         }
         await student.save();
+
+
         return { code: 200, message: "SUCCESS" };
     } catch (error: any) {
         return { code: 500, message: error.message };
@@ -154,12 +167,14 @@ export async function updateFavorites(email: string, jobId: string, action: stri
  * @returns a code and a message
  */
 export async function getFavorites(email: string) {
-    try{
+    try {
         await Database.setup(process.env.MONGODB_URI);
         const user = await userModel.findOne({ email }).populate("favorites");
-        if(!user) {
+        if (!user) {
             return { code: 400, message: "User not found." };
         }
+
+
         return { code: 200, message: user.favorites };
 
     } catch (error: any) {

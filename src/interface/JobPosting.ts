@@ -1,13 +1,27 @@
 // Third-party import
 import { Types } from "mongoose";
+
+//local import
 import { Location } from "@/interface/Location";
 
 /**
- * Interface for Job Posting
+ * @param {string} _id - id of Job Posting
+ * @param {string} companyImage - image of company
+ * @param {string} companyName - name of company
+ * @param {string} companyContact - contact of company
+ * @param {string} companyLocation - location of company
+ * @param {string} companyAbout - about of company
+ * @param {string} jobDescription - description of job
+ * @param {string} jobType - type of job
+ * @param {string} jobTitle - title of job
+ * @param {string} employment - employment type
+ * @param {string} datePosted - date posted
+ *
  */
 export interface JobPosting {
     _id?: Types.ObjectId | string;
-    companyImage: string;
+
+    // companyImage: string;
     companyName: string;
     companyContact: string;
     companyLocation: [{
@@ -21,10 +35,9 @@ export interface JobPosting {
     datePosted: Date;
 }
 
-/**
- * Enums for Job Posting
- */
+//namespace for JobPosting
 export namespace JobPosting {
+
     // Enum for Job Title Type
     export enum JobTitleType {
         PartTime = "PartTime",
@@ -32,6 +45,7 @@ export namespace JobPosting {
         Contracted = "Contracted",
         Seasonal = "Seasonal"
     }
+
     // Enum for Employement Type
     export enum EmploymentType {
         Remote = "Remote",

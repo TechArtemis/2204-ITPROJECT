@@ -1,15 +1,20 @@
+//third-party imports
+import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcrypt";
+
+// local imports
 import { User } from "@/interface/User";
 import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
-import { NextApiRequest, NextApiResponse } from "next";
-import bcrypt from "bcrypt";
 import { createUser } from "@/backend/actions/user";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+
     // post method
     if (req.method === "POST") {
         try {
             const { user } = req.body;
+
             /**
              * used for validating the user object
              */
@@ -33,12 +38,14 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             }
             console.log("2");
             const hashedPassword = await bcrypt.hash(user.password, 10);
+
             // make a student using the info we got from the front-end
-            const newUser : User = {
+            const newUser: User = {
                 name: user.name,
                 email: user.email,
                 password: hashedPassword,
             };
+
             // send the student to the actionfunctions
             const response = await createUser(newUser);
             if (response.code !== 200) {
@@ -47,6 +54,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+
             // send a success code to front end + message if successful
             res.status(response.code).json(
                 {
