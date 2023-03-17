@@ -11,7 +11,7 @@
     "eslint:fix": "eslint . --max-warnings=0 --fix",
     "prepare": "husky install",
     "husky:pre-commit": "npm run testing && npm run eslint:fix",
-    "test": "jest"
+    "test": "jest --detectOpenHandles"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.17",
