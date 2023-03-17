@@ -1,9 +1,10 @@
-import React from "react";
+
+//third-party imports
 import { Flex, Heading, HStack, Icon, Link } from "@chakra-ui/react";
 import { FaSignInAlt } from "react-icons/fa";
 import NextLink from "next/link";
 
-export const Header = () => {
+export default function Header(){
     return (
         <Flex
             px="200px"
@@ -33,4 +34,3 @@ export const Header = () => {
     );
 };
 
-export default Header;

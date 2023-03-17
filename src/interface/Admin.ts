@@ -2,7 +2,10 @@
 import { Types } from "mongoose";
 
 /**
- * Interface for Admin
+ * @param {string} _id - id of Admin
+ * @param {string} email - email of Admin
+ * @param {string} password - password of Admin
+ * @param {string} name - static value "Admin"
  */
 export interface Admin {
     _id?: Types.ObjectId,

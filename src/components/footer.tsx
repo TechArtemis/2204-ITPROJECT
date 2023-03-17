@@ -1,8 +1,11 @@
+//third-party imports
 import React from "react";
 import { Box, Heading, Icon, Link } from "@chakra-ui/react";
 import { FaSignInAlt } from "react-icons/fa";
 
-export const Footer = () => {
+
+
+export default function Footer() {
     return (
         <Box w="full" bg="green.900" px="200px" py="180px" textAlign="center">
             <Heading
@@ -22,4 +25,3 @@ export const Footer = () => {
     );
 };
 
-export default Footer;

@@ -23,6 +23,8 @@ export async function createAdmin(admin: Admin) {
             }
         );
         await newAdmin.save();
+
+
         return { code: 200, message: "Successful" };
     } catch (error: any) {
         return { code: 500, message: error.message };
@@ -41,6 +43,8 @@ export async function getAdmin(email: string) {
         if (!getAdmin) {
             return { code: 400, message: "Admin doesnt exist" };
         }
+
+
         return { code: 200, message: getAdmin };
     } catch (error: any) {
         return { code: 500, message: error.message };
@@ -57,6 +61,8 @@ export async function changePassword(password: string, email: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const getAdmin = await adminModel.findOneAndUpdate({ email }, { password }, { new: true });
+
+
         return { code: 200, message: "Password changed" };
     } catch (error: any) {
         return { code: 500, message: error.message };

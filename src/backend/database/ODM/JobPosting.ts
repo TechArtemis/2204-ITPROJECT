@@ -1,8 +1,10 @@
 // Third-party import
 import { model, models, Schema, Types } from "mongoose";
+
 // Local import
 import { JobPosting } from "@/interface/JobPosting";
 import { Location } from "@/interface/Location";
+
 /**
  * Schema for JobPosting
  */
@@ -12,10 +14,11 @@ const jobPostingSchema = new Schema (
             type: String,
             required: true
         },
-        companyImage: {
-            type: String,
-            required: true,
-        },
+
+        // companyImage: {
+        //     type: String,
+        //     required: true,
+        // },
         companyContact: {
             type: String,
             required: true

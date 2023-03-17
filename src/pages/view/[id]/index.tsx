@@ -1,49 +1,58 @@
-import Navbar from "@/components/navbar";
-import { EditIcon, DeleteIcon, CheckIcon } from "@chakra-ui/icons";
+//third-party imports
 import { useState } from "react";
 import Image from "next/image";
+import { getToken } from "next-auth/jwt";
+import dynamic from "next/dynamic";
+
+//local imports
+import Navbar from "@/components/navbar";
 import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
-import { getToken } from "next-auth/jwt";
+import button from "@/components/button";
+import { instance } from "@/shared/axiosInstance";
+import router from "next/router";
+
+
+//dynamic imports
+const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
+const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
+const CheckIcon = dynamic(() => import("@mui/icons-material/Check"));
 
 
 export default function PostCoop({ onSubmit, data }: any) {
     const [value, setValue] = useState(1);
-    const [button, setButton] = useState(1);
 
 
-    function handleDelete(){
+    async function handleDelete (id: string) {
+        try {
+            const res = await instance.delete(`/jobPosting/${id}/delete`);
+            if(res.status === 200) {
+                console.log("deleted");
+                router.push("/displayJobs");
+            }
 
+        } catch(error: any) {
+            console.log(error);
+        }
     }
+
+
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div className={styles.submitform}>
                 <div className={styles.header}>
-                    <Image className={styles.logo} src={`https://res.cloudinary.com/honeydrew/${data.companyImage}` } alt={"image"} width={150} height={150}/>
+                    {/* <Image className={styles.logo} src={`https://res.cloudinary.com/honeydrew/${data.companyImage}`} alt={"image"} width={150} height={150} /> */}
+                    <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={85} height={85} />
+
                     <div className={styles.subheader}>
                         <div>
                             <h1>{data.companyName}</h1>
                             <p>{data.companyLocation[0].location.city}</p>
                         </div>
-                        <div>
-                            {button === 1 ?
-                                <div>
-                                    <button onClick={() => setButton(0)}>
-                                        <EditIcon fontSize={"large"} sx={{ color: "#000000" }} />
-                                    </button>
-
-                                </div>
-                                :
-                                <div className={styles.options}>
-                                    <button onClick={() => setButton(1)}>
-                                        <DeleteIcon fontSize={"large"} sx={{ color: "#DA0000" }} />
-                                    </button>
-                                    <button onClick={() => setButton(1)}>
-                                        <CheckIcon fontSize={"large"} type="submit" sx={{ color: "#84BD00" }}/>
-                                    </button>
-                                </div>
-                            }
+                        <div className={styles.subheader2}>
+                            <button onClick={() => onSubmit(data, false)}>Post</button>
+                            <button onClick={() => handleDelete(data._id as string)}>Delete</button>
                         </div>
                     </div>
                 </div>
@@ -83,7 +92,7 @@ export default function PostCoop({ onSubmit, data }: any) {
 }
 
 export async function getServerSideProps(context: { [key: string]: any }) {
-    try{
+    try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken(
             {

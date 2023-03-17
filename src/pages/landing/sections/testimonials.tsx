@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Heading, Grid } from "@chakra-ui/react";
-import { TestimonialCard } from "@/components/testimonialsCard";
+import TestimonialCard from "@/components/testimonialsCard";
 
 
 export const Testimonials = () => {
