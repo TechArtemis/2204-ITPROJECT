@@ -31,6 +31,7 @@ export default function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
+
     const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => setInput(e.target.value);
 
     const handleEmailChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -45,7 +46,7 @@ export default function LogIn() {
         setPassword(val);
     };
 
-    const handleLogin = async () => {
+    async function handleLogin() {
         try {
             const response = await signIn("credentials", { redirect: false, email, password });
 
@@ -55,9 +56,8 @@ export default function LogIn() {
                 throw new Error("Email/Password Invalid");
             }
         } catch (error: any) {
-
         }
-    };
+    }
 
     const isError = input === "";
 
@@ -128,6 +128,7 @@ export default function LogIn() {
         </>
     );
 }
+
 
 export async function getServerSideProps(context: { [key: string]: any }) {
     const secret = process.env.NEXTAUTH_SECRET;

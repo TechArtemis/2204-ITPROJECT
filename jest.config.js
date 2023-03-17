@@ -1,6 +1,8 @@
 module.exports = {
 
     // ... other Jest configuration options ...
+    testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
+    preset: "ts-jest",
     testEnvironment: "node",
     moduleNameMapper: {
         "^@/(.*)$": "<rootDir>/src/$1",
@@ -13,10 +15,13 @@ module.exports = {
         },
     },
     transform: {
-        "^.+\\.tsx?$": "ts-jest",
+        "^.+\\.tsx?$": "ts-jest"
     },
     transformIgnorePatterns: [
         "/node_modules/(?!(module-to-transpile|other-module))",
+    ],
+    setupFilesAfterEnv: [
+        "@testing-library/jest-dom/extend-expect"
     ]
 };
 
