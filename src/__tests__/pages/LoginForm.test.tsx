@@ -38,7 +38,7 @@ describe("<LoginForm />", () => {
         });
     });
 
-    test("should allow entering a password", async () => {
+    test("should allow entering a username", async () => {
         const onUsernameChange = jest.fn();
         const { findByTestId } = renderingLoginForm({ onUsernameChange });
         const username = await findByTestId("username");
