@@ -19,10 +19,11 @@ describe("createUser API", () => {
     });
 
     afterAll( async() => {
-        await userModel.findOneAndDelete({email: "000451777@student.vcc.ca" });
+        await userModel.findOneAndDelete({ email: "000451777@student.vcc.ca" });
+        await userModel.findOneAndDelete({ email: "000123456@student.vcc.ca" });
 
         Database.disconnect();
-    })
+    });
     it("Should return code 400 if name is missing or invalid", async () => {
         const req = {
             method: "POST",
