@@ -6,18 +6,6 @@ import Database from "@/backend/database";
 
 describe("createUser API", () => {
 
-    beforeAll(() => {
-        const newUser = new userModel(
-            {
-                name: "Test 2",
-                email: "000123456@student.vcc.ca",
-                password: "Test12345!",
-                favorites: []
-            }
-        );
-        createUser(newUser);
-    });
-
     afterAll( async() => {
         await userModel.findOneAndDelete({ email: "000451777@student.vcc.ca" });
         await userModel.findOneAndDelete({ email: "000123456@student.vcc.ca" });
@@ -91,6 +79,7 @@ describe("createUser API", () => {
             json: jest.fn(),
         };
 
+        await handler(req, res);
         await handler(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
