@@ -1,10 +1,28 @@
 import { NextApiRequest } from "next";
 import handler from "@/pages/api/user/create";
-import { getUser, deleteUser } from "@/backend/actions/user";
+import { getUser, deleteUser, createUser } from "@/backend/actions/user";
 import { Model as userModel } from "@/backend/database/ODM/User";
+import Database from "@/backend/database";
 
 describe("createUser API", () => {
 
+    beforeAll(() => {
+        const newUser = new userModel(
+            {
+                name: "Test 2",
+                email: "000123456@student.vcc.ca",
+                password: "Test12345!",
+                favorites: []
+            }
+        );
+        createUser(newUser);
+    });
+
+    afterAll( async() => {
+        await userModel.findOneAndDelete({email: "000451777@student.vcc.ca" });
+
+        Database.disconnect();
+    })
     it("Should return code 400 if name is missing or invalid", async () => {
         const req = {
             method: "POST",
@@ -59,9 +77,10 @@ describe("createUser API", () => {
             method: "POST",
             body: {
                 user: {
-                    name: "Test John",
-                    email: "000451777@student.vcc.ca",
+                    name: "Test 2",
+                    email: "000123456@student.vcc.ca",
                     password: "Test12345!",
+                    favorites: []
                 },
             },
         } as NextApiRequest;
