@@ -34,7 +34,7 @@ export default function SavedJobs({ data }: Props) {
                 <div className={styles.cardArr}>
 
                     {(jobs.length === 0 && (
-                        <div className={styles.nocontent}>No Jobs have been saved ⚠️</div>
+                        <div className={styles.nocontent}>No Jobs have been saved yet</div>
                     ))}
 
                     {jobs.map((post: JobPosting, idx) => (
