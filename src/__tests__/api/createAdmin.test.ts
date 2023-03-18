@@ -1,17 +1,14 @@
+import handler from "@/pages/api/admin";
 import { NextApiRequest } from "next";
-import handler from "@/pages/api/user/create";
-import { getUser, deleteUser } from "@/backend/actions/user";
-import { Model as userModel } from "@/backend/database/ODM/User";
 
-describe("createUser API", () => {
+describe("createAdmin API", () => {
 
-    it("Should return code 400 if name is missing or invalid", async () => {
+    it("Should return code 400 if email is missing or invalid", async () => {
         const req = {
             method: "POST",
             body: {
-                user: {
-                    name: "",
-                    email: "000451777@student.vcc.ca",
+                admin: {
+                    email: "test",
                     password: "Test12345!",
                 },
             },
@@ -25,17 +22,16 @@ describe("createUser API", () => {
         await handler(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
-            message: "Invalid Name",
+            message: "Invalid Email",
         });
     });
 
-    it("Should return 200 if all fields are filled and passes the requirements", async () => {
+    it("Should return 200 if all fields are filled and passes the requirements, the Admin account is then made", async () => {
         const req = {
             method: "POST",
             body: {
-                user: {
-                    name: "Test John",
-                    email: "000451777@student.vcc.ca",
+                admin: {
+                    email: "test@mail.com",
                     password: "Test12345!",
                 },
             },
@@ -50,17 +46,16 @@ describe("createUser API", () => {
 
         expect(res.status).toHaveBeenCalledWith(200);
         expect(res.json).toHaveBeenCalledWith({
-            message: "User created",
+            message: "Successful",
         });
     });
 
-    it("Should return code 400 if user already exists", async () => {
+    it("Should return code 400 if Admin already exists", async () => {
         const req = {
             method: "POST",
             body: {
-                user: {
-                    name: "Test John",
-                    email: "000451777@student.vcc.ca",
+                admin: {
+                    email: "test@mail.com",
                     password: "Test12345!",
                 },
             },
@@ -74,7 +69,7 @@ describe("createUser API", () => {
         await handler(req, res);
         expect(res.status).toHaveBeenCalledWith(400);
         expect(res.json).toHaveBeenCalledWith({
-            message: "Alumni already exists",
+            message: "Admin already exists",
         });
 
     });

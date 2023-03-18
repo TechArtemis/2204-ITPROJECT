@@ -6,6 +6,7 @@ import { model, models, Schema, Types } from "mongoose";
  */
 const adminSchema = new Schema(
     {
+        id: String || Types.ObjectId,
         email: {
             type: String,
             required: true
@@ -14,7 +15,7 @@ const adminSchema = new Schema(
             type: String,
             required: true
         },
-        name: "Admin"
+        name: String
     }
 );
 
