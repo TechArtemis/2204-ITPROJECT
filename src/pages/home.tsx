@@ -1,9 +1,8 @@
 /* eslint-disable react/jsx-key */
 
-//third-party imports
-import { Box, Flex, Grid, GridItem, Divider, Center } from "@chakra-ui/react";
+// Third-party imports
+import { Box, Flex, Grid, GridItem, Divider, Center, Button, Text, SimpleGrid } from "@chakra-ui/react";
 import Image from "next/image";
-import AliceCarousel from "react-alice-carousel";
 
 // local Imports
 import EventCardComponent from "@/components/eventCardComponent";
@@ -12,51 +11,37 @@ import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
 import { getToken } from "next-auth/jwt";
 import Navbar from "@/components/navbar";
+import { JobPosting } from "@/interface/JobPosting";
+import { getAllPosting } from "@/backend/actions/jobPosting";
+import { getFavorites } from "@/backend/actions/user";
 
-export default function JobPostings() {
-    const responsive = {
-        796: {
-            items: 1,
-            itemsFit: "contain"
-        },
-        910: {
-            items: 2,
-            itemsFit: "contain"
-        },
-        1024: {
-            items: 2,
-            itemsFit: "contain"
-        },
-        1252: {
-            items: 3,
-            itemsFit: "contain"
-        },
-        1480: {
-            items: 4,
-            itemsFit: "contain"
-        }
+interface Props {
+    jobs: JobPosting[];
+    favorites: JobPosting[];
+}
+
+export default function JobPostings(props: Props) {
+    const settings = {
+        dots: true,
+        infinite: true,
+        speed: 500,
+        slidesToShow: 4,
+        slidesToScroll: 3
     };
 
-    const items = [
-        <div className="item" data-value="1">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="2">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="3">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="4">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="5">
-            <JobCardComponent/>
-        </div>,
-        <div className="item" data-value="6">
-            <JobCardComponent/>
+    const items = props.jobs.map((post: JobPosting, idx) => (
+        <div className="item" data-value={idx.toString()} key={idx}>
+            <JobCardComponent
+                id={post._id as string}
+                image={post.companyImage}
+                name={post.companyName}
+                address={post.companyLocation[0].location.city}
+                job={post.jobTitle}
+                type={post.jobType}
+                liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+            />
         </div>
-    ];
+    ));
 
     return (
         <>
@@ -77,7 +62,11 @@ export default function JobPostings() {
                         <Grid>
                             <GridItem>
                                 <Center>
-                                    <EventCardComponent/>
+                                    <EventCardComponent
+                                        name={"Learning Centre"}
+                                        description={"The Learning Centre is here to support you in preparing to apply for a job"}
+                                        link={"https://learningcentre.vcc.ca/learning-centre/resources/career-skills/#gsc.tab=0"}
+                                    />
                                 </Center>
                             </GridItem>
 
@@ -87,7 +76,11 @@ export default function JobPostings() {
 
                             <GridItem>
                                 <Center>
-                                    <EventCardComponent/>
+                                    <EventCardComponent
+                                        name={"Skills Assessments"}
+                                        description={"Check your skill level with Linkedin's skill assessment"}
+                                        link={"https://www.linkedin.com/skill-assessments/hub/quizzes/"}
+                                    />
                                 </Center>
                             </GridItem>
 
@@ -97,7 +90,11 @@ export default function JobPostings() {
 
                             <GridItem>
                                 <Center>
-                                    <EventCardComponent/>
+                                    <EventCardComponent
+                                        name={"Career Skills"}
+                                        description={"Get your read for job hunting and informational interviews"}
+                                        link={"https://libguides.vcc.ca/careerskills"}
+                                    />
                                 </Center>
                             </GridItem>
 
@@ -107,7 +104,11 @@ export default function JobPostings() {
 
                             <GridItem>
                                 <Center>
-                                    <EventCardComponent/>
+                                    <EventCardComponent
+                                        name={"Career Guidance"}
+                                        description={"VCC can help with all your employment and hiring needs."}
+                                        link={"https://www.vcc.ca/services/services-for-students/career-guidance/welcome/"}
+                                    />
                                 </Center>
                             </GridItem>
                         </Grid>
@@ -116,23 +117,62 @@ export default function JobPostings() {
 
                 <Box bg={"white"} w={"100%"} h={"125vh"}>
                     <h1 className={styles.jobListTitle}>Latest Jobs</h1>
-                    <Flex>
-                        <AliceCarousel
-                            mouseTracking
-                            items={items}
-                            responsive={responsive}
-                            controlsStrategy="alternate"
-                        />
 
-                    </Flex>
+                    {/* <Slider {...settings}>
+                        {
+                            props.jobs.map((post: JobPosting, idx) => (
+                                <div>
+                                    <JobCardComponent
+                                        id={post._id as string}
+                                        image={post.companyImage}
+                                        name={post.companyName}
+                                        address={post.companyLocation[0].location.city}
+                                        job={post.jobTitle}
+                                        type={post.jobType}
+                                        liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+                                    />
+                                </div>
+                            ))
+                        }
+                    </Slider> */}
+
+                    <SimpleGrid columns={3} spacing={0} ml={"5vh"}>
+                        {
+                            props.jobs.slice(-3).map((post: JobPosting, idx) => (
+                                <GridItem key={idx}>
+                                    <JobCardComponent
+                                        id={post._id as string}
+                                        image={post.companyImage}
+                                        name={post.companyName}
+                                        address={post.companyLocation[0].location.city}
+                                        job={post.jobTitle}
+                                        type={post.jobType}
+                                        liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+                                    />
+                                </GridItem>
+                            ))
+                        }
+                    </SimpleGrid>
+
 
                     <h1 className={styles.jobListTitle}>Based on your career interests</h1>
-                    <Flex>
-                        <AliceCarousel
-                            mouseTracking
-                            items={items}
-                        />
-                    </Flex>
+                    <SimpleGrid columns={3} spacing={0} ml={"5vh"}>
+                        {
+                            props.jobs.slice(-3).map((post: JobPosting, idx) => (
+                                <GridItem key={idx}>
+                                    <JobCardComponent
+                                        id={post._id as string}
+                                        image={post.companyImage}
+                                        name={post.companyName}
+                                        address={post.companyLocation[0].location.city}
+                                        job={post.jobTitle}
+                                        type={post.jobType}
+                                        liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+                                    />
+                                </GridItem>
+                            ))
+                        }
+                    </SimpleGrid>
                 </Box>
             </Flex>
         </>
@@ -155,7 +195,13 @@ export async function getServerSideProps(context: { [key: string]: any }) {
         return { redirect: { destination: "/", permanent: false } };
     }
 
+    const jobs = await getAllPosting();
+    const { message: favorites } = await getFavorites(token.email as string);
+
     return {
-        props: {}
+        props: {
+            jobs: JSON.parse(JSON.stringify(jobs.message)),
+            favorites: JSON.parse(JSON.stringify(favorites))
+        }
     };
 }

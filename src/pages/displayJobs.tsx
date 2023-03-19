@@ -75,7 +75,7 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
                 <div className={styles.cardArr} >
 
                     {(jobPostings.length === 0 && (
-                        <div className={styles.nocontent}>No Jobs have created ⚠️</div>
+                        <div className={styles.nocontent}>No Jobs have posted yet </div>
                     ))}
 
                     {jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
@@ -85,7 +85,6 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
                         .map((post: JobPosting, idx) => (
                             <div key={idx} className={styles.cardWrapper}>
                                 <Card
-                                    image={post.companyImage}
                                     name={post.companyName}
                                     address={post.companyLocation[0].location.city}
                                     job={post.jobTitle}

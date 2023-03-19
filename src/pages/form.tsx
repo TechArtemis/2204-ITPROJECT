@@ -12,8 +12,8 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
-import { Delete, Edit, PostAdd } from "@mui/icons-material";
 import Navbar from "@/components/navbar";
+
 
 
 //dynamic imports
@@ -21,12 +21,9 @@ const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded")
 const EmailIcon = dynamic(() => import("@mui/icons-material/EmailOutlined"));
 const LocationOnIcon = dynamic(() => import("@mui/icons-material/LocationOnOutlined"));
 const LocationCityIcon = dynamic(() => import("@mui/icons-material/LocationCity"));
-
 const LandscapeIcon = dynamic(() => import("@mui/icons-material/LandscapeOutlined"));
 const MarkunreadMailboxIcon = dynamic(() => import("@mui/icons-material/MarkunreadMailboxOutlined"));
 const DescriptionIcon = dynamic(() => import("@mui/icons-material/DescriptionOutlined"));
-
-
 const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"));
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 
@@ -43,7 +40,6 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
  * @param {string} jobDescription - description of the job
  *
  */
-
 
 //interface for the form
 interface CompanyJob {
@@ -102,56 +98,13 @@ function CompanyPostInfo({ onSubmit, data }: any) {
         onSubmit({ ...data, companyLocation: { ...data.companyLocation, [event.target.name]: event.target.value } });
     }
 
-    // function handleClick() {
-    //     inputRef.current?.click();
-    //     console.log("div");
-    // }
-
-    // async function handleImgUpload(event : ChangeEvent<HTMLInputElement>) {
-    //     try {
-    //         console.log("Entered");
-
-    //         const file = event.target.files!.item(0)!;
-
-    //         onSubmit({ ...data, companyImage: event.target.files!.item(0)! });
-
-    //     }
-    //     catch (error: any) {
-    //         console.log("NETWORK ERROR", error);
-    //     }
-    // }
+    function handleRouteToJobs() {
+        router.push("/displayJobs");
+    }
 
     return (
         <form className={styles.container}>
             <div className={styles.form}>
-
-                {/* <div onClick={handleClick} style={{ width: "100px", height:"300px", backgroundColor: "red" }}>
-                    <input
-                        name="companyImage"
-                        type="file"
-                        placeholder="Upload an Image"
-                        ref = {inputRef}
-                        onChange={handleImgUpload}
-                        multiple ={false}
-                        style={{ display: "none" }} />
-
-                    {data.companyImage ?
-                        <div style={{ position: "relative", width: "100%", height: "100%" }}>
-                            <Image
-                                src={URL.createObjectURL(data.companyImage)}
-                                layout="fill"
-                                objectFit="contain"
-                                objectPosition="center"
-                                alt="Image"
-                            />
-                        </div> :
-
-                        <button className={styles.noborder} >
-                            <CameraAlt fontSize={"large"} sx={{ color: "#84BD00" }} />
-                        </button>}
-                </div> */}
-
-
                 <div className={styles.field}>
                     <Input
                         type="text"
@@ -210,6 +163,14 @@ function CompanyPostInfo({ onSubmit, data }: any) {
                     className={styles.submit}>
                     Next
                 </Button>
+                <div className={styles.back}>
+                    <Button
+                        type="button"
+                        onClick={() => handleRouteToJobs()}
+                        className={styles.backbutton}>
+                    Return to home
+                    </Button>
+                </div>
             </div>
         </form>
     );
@@ -291,18 +252,11 @@ function PostCoop({ onSubmit, data }: any) {
         <div>
             <div className={styles.submitform}>
                 <div className={styles.header}>
-                    {/* <Image className={styles.logo} src={`https://res.cloudinary.com/honeydrew/${data.companyImage}`} alt={"image"} width={150} height={150}/> */}
                     <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={85} height={85} />
                     <div className={styles.subheader}>
                         <div>
                             <h1>{data.companyName}</h1>
                             <p>status</p>
-                        </div>
-
-                        <div className={styles.subheader2}>
-                            <button onClick={() => onSubmit(data, false)}>
-                                <Edit fontSize={"large"} />
-                            </button>
                         </div>
                     </div>
                 </div>
@@ -336,6 +290,10 @@ function PostCoop({ onSubmit, data }: any) {
                     }
                 </div>
             </div>
+            <div className={styles.subheader2}>
+                <button onClick={() => onSubmit(data, false)}
+                    className={styles.submit}>Submit</button>
+            </div>
         </div>
     );
 };
@@ -365,8 +323,6 @@ export default function FormPages() {
         return (
             data.companyAbout !== "" &&
             data.companyContact !== "" &&
-
-            // data.companyImage !== null &&
             data.companyLocation.address !== "" &&
             data.companyLocation.city !== "" &&
             data.companyLocation.postalCode !== "" &&

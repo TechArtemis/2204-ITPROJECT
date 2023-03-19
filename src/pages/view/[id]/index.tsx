@@ -8,7 +8,6 @@ import dynamic from "next/dynamic";
 import Navbar from "@/components/navbar";
 import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
-import button from "@/components/button";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 

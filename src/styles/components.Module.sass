@@ -4,6 +4,7 @@
     display: flex
     justify-content: space-around
     align-items: center
+    padding: 20px 0px 10px 0px
     width: 100%
     font-weight: 300
     font-size: 20px
@@ -14,7 +15,53 @@
     div
         display: flex
         justify-content: space-between
-        gap: 50px
+        gap: 100px
+
+        p
+            &:hover
+                border-bottom: 2px solid #84BD00
+
+.logo
+    display: inline-flex
+    justify-content: center
+    align-items: center
+    padding: 15px
+    width: 48px
+    height: 48px
+    border-radius: 50%
+    font-size: 24px
+    font-weight: bold
+    color: #fff
+    background-color: #95A5A5 // default color
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px
+
+    $colors: #2A80B9, #9C56B7, #34495E, #E74C3D, #E77E22 // array of possible colors
+    $random-color: nth($colors, floor(random() * length($colors)) + 1) // get a random color from the array
+    background-color: $random-color // set the background color to the random color
+
+.container
+    position: relative
+    display: inline-block
+
+.option
+    position: absolute
+    top: 45px
+    right: 0
+    width: 100px
+    background-color: #fff
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3)
+    border-radius: 4px
+    z-index: 1
+
+.optionItem
+    padding: 8px 16px
+    font-size: 14px
+    color: #202124
+    cursor: pointer
+    transition: background-color 0.3s ease
+
+    &:hover
+        background-color: #f1f3f4
 
 .form
     display: flex

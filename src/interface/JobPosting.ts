@@ -20,9 +20,8 @@ import { Location } from "@/interface/Location";
  */
 export interface JobPosting {
     _id?: Types.ObjectId | string;
-
-    // companyImage: string;
     companyName: string;
+    companyImage: string;
     companyContact: string;
     companyLocation: [{
         location: Location;
