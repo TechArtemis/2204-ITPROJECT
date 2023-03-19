@@ -50,7 +50,7 @@ export default function JobCardComponent(props: Props) {
 
     return (
         <>
-            <Card maxW={"330px"} minW={"280px"} borderRadius={"3xl"} boxShadow={"dark-lg"} my={"5vh"}>
+            <Card maxW={"330px"} minW={"280px"} minH={"300px"} maxH={"300px"} borderRadius={"3xl"} boxShadow={"dark-lg"} my={"5vh"}>
                 <CardHeader m={3}>
                     <Flex>
                         <Flex flex={"1"} gap={"6"} alignItems={"center"} flexWrap={"wrap"}>

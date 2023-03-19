@@ -7,7 +7,6 @@ import Image from "next/image";
 import styles from "@/styles/components.module.sass";
 import Profile from "@/components/profile";
 
-
 // Navbar component
 export default function Navbar() {
     return (
