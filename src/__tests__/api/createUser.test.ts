@@ -36,6 +36,30 @@ describe("createUser API", () => {
         });
     });
 
+    it("Should return code 400 if password is missing or invalid", async () => {
+        const req = {
+            method: "POST",
+            body: {
+                user: {
+                    name: "Test3",
+                    email: "000451777@student.vcc.ca",
+                    password: "",
+                },
+            },
+        } as NextApiRequest;
+
+        const res: any = {
+            status: jest.fn().mockReturnThis(),
+            json: jest.fn(),
+        };
+
+        await handler(req, res);
+        expect(res.status).toHaveBeenCalledWith(400);
+        expect(res.json).toHaveBeenCalledWith({
+            message: "Invalid Password",
+        });
+    });
+
     it("Should return 200 if all fields are filled and passes the requirements", async () => {
         const req = {
             method: "POST",
