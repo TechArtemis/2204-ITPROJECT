@@ -14,7 +14,6 @@ export default class Database {
             });
         }
 
-
         return this.moongoseClient;
     }
 
@@ -25,7 +24,6 @@ export default class Database {
                 throw new Error("Error setting up mongodb-adapter connection", { cause: error });
             });
         }
-
 
         return this.MongoClientPromise;
     }
