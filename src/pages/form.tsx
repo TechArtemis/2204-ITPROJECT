@@ -1,5 +1,5 @@
 //third-party imports
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
@@ -15,7 +15,6 @@ import { instance } from "@/shared/axiosInstance";
 import Navbar from "@/components/navbar";
 
 
-
 //dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
 const EmailIcon = dynamic(() => import("@mui/icons-material/EmailOutlined"));
@@ -26,7 +25,6 @@ const MarkunreadMailboxIcon = dynamic(() => import("@mui/icons-material/Markunre
 const DescriptionIcon = dynamic(() => import("@mui/icons-material/DescriptionOutlined"));
 const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"));
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
-
 
 /**
  * @param {string} companyImage - logo of the company
@@ -44,7 +42,7 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 //interface for the form
 interface CompanyJob {
 
-    // companyImage: File | null;
+    companyImage: File | null;
     companyName: string;
     companyContact: string;
     companyLocation: {
@@ -79,7 +77,7 @@ interface Employment {
 }
 
 //functions for the form pages
-function CompanyPostInfo({ onSubmit, data }: any) {
+function CompanyPostInfo({ onSubmit, item }: any) {
     const inputRef = useRef<HTMLInputElement>(null);
     const options: Province[] = Object.keys(Location.Province).map(key => {
         return {
@@ -90,60 +88,109 @@ function CompanyPostInfo({ onSubmit, data }: any) {
 
 
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) {
-        onSubmit({ ...data, [event.target.name]: event.target.value });
-        console.log(event.target.name);
+        onSubmit({ ...item, [event.target.name]: event.target.value });
     }
 
     function handleCompanyLocation(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
-        onSubmit({ ...data, companyLocation: { ...data.companyLocation, [event.target.name]: event.target.value } });
+        onSubmit({ ...item, companyLocation: { ...item.companyLocation, [event.target.name]: event.target.value } });
     }
 
     function handleRouteToJobs() {
         router.push("/displayJobs");
     }
 
+    async function handleImgUpload (event: ChangeEvent<HTMLInputElement>){
+        const val = event.target.files![0];
+        const form = new FormData();
+        form.append("files", val!);
+
+        const setting = {
+            method: "POST",
+            url: "cloudinary",
+            data: form
+        };
+
+        const { data } = await instance.request(setting);
+        // const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
+
+        onSubmit({ ...item, companyImage: data.data.url.public_id });
+        // const form = new FormData();
+        // form.append("files", val!);
+        // const setting = {
+        //     method: "POST",
+        //     url: "cloudinary",
+        //     data: form
+        // };
+        // try {
+        //     const { data } = await instance.request(setting);
+        //     console.log(data)
+        //     onSubmit({ ...item, companyImage: data.data.url.public_id });
+        // } catch (error: any) {
+        //     console.log("NETWORK ERROR", error);
+        // }
+    };
+
+    function handleFileClick() {
+        inputRef.current?.click();
+    }
+
     return (
-        <form className={styles.container}>
+        <div className={styles.container}>
             <div className={styles.form}>
                 <div className={styles.field}>
+                    <div onClick={handleFileClick}>
+                        <input type="file" name="companyImage" ref={inputRef} onChange={handleImgUpload} accept="image" style={{display: "none"}}/>
+                        {
+                            item.companyImage ? <Image src={URL.createObjectURL(item.companyImage)} width={100} height={100} alt="Image"/> :
+                            <button>
+                                <Image src={"/images/vcc.png"} width={100} height={75} alt="Logo"/>
+                            </button>
+                        }
+                    </div>
+                    {/* <Input
+                        type="file"
+                        placeholder="Upload an Image"
+                        onChangeInput={handleImgUpload}>
+                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
+                    </Input> */}
                     <Input
                         type="text"
                         placeholder="Company Name"
-                        name="companyName" value={data.companyName}
+                        name="companyName" value={item.companyName}
                         onChangeInput={handleChange}>
                         <BusinessIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
                         placeholder="Contact"
-                        name="companyContact" value={data.companyContact}
+                        name="companyContact" value={item.companyContact}
                         onChangeInput={handleChange} >
                         <EmailIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
                         placeholder="Address"
-                        name="address" value={data.companyLocation.address}
+                        name="address" value={item.companyLocation.address}
                         onChangeInput={handleCompanyLocation}>
                         <LocationOnIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
                         placeholder="Enter your city"
-                        name="city" value={data.companyLocation.city}
+                        name="city" value={item.companyLocation.city}
                         onChangeInput={handleCompanyLocation}>
                         <LocationCityIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
                         placeholder="Postal Code"
-                        name="postalCode" value={data.companyLocation.postalCode}
+                        name="postalCode" value={item.companyLocation.postalCode}
                         onChangeInput={handleCompanyLocation}>
                         <MarkunreadMailboxIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <SelectOption
                         name="province"
-                        value={data.companyLocation.province}
+                        value={item.companyLocation.province}
                         onChange={handleCompanyLocation}
                         options={options}>
                         <LandscapeIcon sx={{ color: "#84BD00" }}/>
@@ -151,15 +198,15 @@ function CompanyPostInfo({ onSubmit, data }: any) {
                     <Input
                         type="textarea"
                         placeholder="Enter your Desctiption"
-                        name="companyAbout" value={data.companyAbout}
+                        name="companyAbout" value={item.companyAbout}
                         rows={4}
                         onChangeTextArea={handleChange}>
                         <DescriptionIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                 </div>
                 <Button
-                    type="submit"
-                    onClick={() => onSubmit(data, true)}
+                    type="button"
+                    onClick={ () => onSubmit(item, true)}
                     className={styles.submit}>
                     Next
                 </Button>
@@ -172,11 +219,11 @@ function CompanyPostInfo({ onSubmit, data }: any) {
                     </Button>
                 </div>
             </div>
-        </form>
+        </div>
     );
 };
 
-function JobPostInfo({ onSubmit, data }: any) {
+function JobPostInfo({ onSubmit, item }: any) {
     const jobTypeOptions: JobType[] = Object.keys(JobPosting.JobTitleType).map(key => {
         return {
             value: key,
@@ -192,8 +239,8 @@ function JobPostInfo({ onSubmit, data }: any) {
     }) as Employment[];
 
     function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
-        onSubmit({ ...data, [event.target.name]: event.target.value });
-        console.log(data);
+        onSubmit({ ...item, [event.target.name]: event.target.value });
+        console.log(item);
     }
 
     return (
@@ -204,13 +251,13 @@ function JobPostInfo({ onSubmit, data }: any) {
                         type="text"
                         label="Job Title"
                         placeholder="Job Title"
-                        name="jobTitle" value={data.jobTitle}
+                        name="jobTitle" value={item.jobTitle}
                         onChangeInput={handleChange}>
                         <BusinessIcon sx={{ color: "#84BD00" }} />
                     </Input>
                     <SelectOption
                         name="jobType"
-                        value={data.jobType}
+                        value={item.jobType}
                         onChange={handleChange}
                         options={jobTypeOptions}
                     >
@@ -218,7 +265,7 @@ function JobPostInfo({ onSubmit, data }: any) {
                     </SelectOption>
                     <SelectOption
                         name="employment"
-                        value={data.employment}
+                        value={item.employment}
                         onChange={handleChange}
                         options={employmentOptions}
                     >
@@ -227,7 +274,7 @@ function JobPostInfo({ onSubmit, data }: any) {
                     <Input
                         type="textarea"
                         placeholder="Enter your Desctiption"
-                        name="jobDescription" value={data.jobDescription}
+                        name="jobDescription" value={item.jobDescription}
                         rows={4}
                         onChangeTextArea={handleChange}
                     >
@@ -235,8 +282,8 @@ function JobPostInfo({ onSubmit, data }: any) {
                     </Input>
                 </div>
                 <Button
-                    type="submit"
-                    onClick={() => onSubmit(data, true)}
+                    type="button"
+                    onClick={() => onSubmit(item,true)}
                     className={styles.submit}>
                     Next
                 </Button>
@@ -245,17 +292,17 @@ function JobPostInfo({ onSubmit, data }: any) {
     );
 };
 
-function PostCoop({ onSubmit, data }: any) {
+function PostCoop({ onSubmit, item }: any) {
     const [value, setValue] = useState(1);
 
     return (
         <div>
             <div className={styles.submitform}>
                 <div className={styles.header}>
-                    <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={85} height={85} />
+                    <Image className={styles.logo} src={URL.createObjectURL(item.companyImage) } alt={"image"} width={85} height={85} />
                     <div className={styles.subheader}>
                         <div>
-                            <h1>{data.companyName}</h1>
+                            <h1>{item.companyName}</h1>
                             <p>status</p>
                         </div>
                     </div>
@@ -270,28 +317,28 @@ function PostCoop({ onSubmit, data }: any) {
                     {value === 1 ?
                         <div className={styles.overview}>
                             <h1>About</h1>
-                            <p>{data.companyAbout}</p>
+                            <p>{item.companyAbout}</p>
                             <h1>Location</h1>
-                            <p>{data.companyLocation.address}{data.companyLocation.city}{data.companyLocation.province}{data.companyLocation.postalCode}</p>
+                            <p>{item.companyLocation.address}{item.companyLocation.city}{item.companyLocation.province}{item.companyLocation.postalCode}</p>
                             <h1>Contact</h1>
-                            <p>{data.companyContact}</p>
+                            <p>{item.companyContact}</p>
                         </div>
                         :
                         <div className={styles.jobDetails}>
                             <h1>Job Name</h1>
-                            <p>{data.jobTitle}</p>
+                            <p>{item.jobTitle}</p>
                             <h1>Job Type</h1>
-                            <p>{data.jobType}</p>
+                            <p>{item.jobType}</p>
                             <h1>Job Employment</h1>
-                            <p>{data.employment}</p>
+                            <p>{item.employment}</p>
                             <h1>Job Description</h1>
-                            <p>{data.jobDescription}</p>
+                            <p>{item.jobDescription}</p>
                         </div>
                     }
                 </div>
             </div>
             <div className={styles.subheader2}>
-                <button onClick={() => onSubmit(data, false)}
+                <button onClick={() => onSubmit(item, false)}
                     className={styles.submit}>Submit</button>
             </div>
         </div>
@@ -301,9 +348,9 @@ function PostCoop({ onSubmit, data }: any) {
 export default function FormPages() {
     const [formPage, setFormPage] = useState<number>(1);
 
-    const [data, setData] = useState<CompanyJob>({
+    const [item, setItem] = useState<CompanyJob>({
 
-        // companyImage: null,
+        companyImage: null,
         companyName: "",
         companyContact: "",
         companyLocation: {
@@ -321,21 +368,21 @@ export default function FormPages() {
 
     function isCompanyValid() {
         return (
-            data.companyAbout !== "" &&
-            data.companyContact !== "" &&
-            data.companyLocation.address !== "" &&
-            data.companyLocation.city !== "" &&
-            data.companyLocation.postalCode !== "" &&
-            data.companyLocation.province !== "" &&
-            data.companyName !== ""
+            item.companyAbout !== "" &&
+            item.companyContact !== "" &&
+            item.companyLocation.address !== "" &&
+            item.companyLocation.city !== "" &&
+            item.companyLocation.postalCode !== "" &&
+            item.companyLocation.province !== "" &&
+            item.companyName !== ""
         );
     }
 
     function isJobValid() {
         return (
-            data.jobDescription != "" &&
-            data.jobTitle !== "" &&
-            data.jobType !== ""
+            item.jobDescription != "" &&
+            item.jobTitle !== "" &&
+            item.jobType !== ""
         );
     }
 
@@ -344,29 +391,42 @@ export default function FormPages() {
     };
 
     async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
-        setData({ ...data, ...datatest });
+        setItem({ ...item, ...datatest });
         if (formPage === 3) {
-
+            // const form = new FormData();
+            // form.append("files", item.companyImage!);
+    
+            // const img = {
+            //     method: "POST",
+            //     url: "cloudinary",
+            //     data: form
+            // };
+    
+            // const { data } = await instance.request(img);
+            // const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
+    
+            // console.log(data)
+    
             const jobPosting = {
 
-                // companyImage: data.companyImage,
-                companyName: data.companyName,
-                companyAbout: data.companyAbout,
+                companyImage: item.companyImage,
+                companyName: item.companyName,
+                companyAbout: item.companyAbout,
                 companyLocation: [
                     {
                         location: {
-                            address: data.companyLocation.address,
-                            city: data.companyLocation.city,
-                            province: data.companyLocation.province,
-                            postalCode: data.companyLocation.postalCode
+                            address: item.companyLocation.address,
+                            city: item.companyLocation.city,
+                            province: item.companyLocation.province,
+                            postalCode: item.companyLocation.postalCode
                         }
                     }
                 ],
-                companyContact: data.companyContact,
-                jobTitle: data.jobTitle,
-                jobType: data.jobType,
-                employment: data.employment,
-                jobDescription: data.jobDescription,
+                companyContact: item.companyContact,
+                jobTitle: item.jobTitle,
+                jobType: item.jobType,
+                employment: item.employment,
+                jobDescription: item.jobDescription,
 
             };
 
@@ -402,10 +462,9 @@ export default function FormPages() {
 
             </div>
 
-
-            { formPage === 1 && <CompanyPostInfo onSubmit={handleSubmit} data={data}/>
-            ||formPage === 2 && <JobPostInfo onSubmit={handleSubmit} data={data}/>
-            ||formPage === 3 && <PostCoop onSubmit={handleSubmit} data={data} />
+            { formPage === 1 && <CompanyPostInfo onSubmit={handleSubmit} item={item}/>
+            ||formPage === 2 && <JobPostInfo onSubmit={handleSubmit} item={item}/>
+            ||formPage === 3 && <PostCoop onSubmit={handleSubmit} item={item} />
             }
             {formPage > 1 && (
                 <div className={styles.back}>
