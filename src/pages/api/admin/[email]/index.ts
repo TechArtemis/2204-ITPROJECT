@@ -52,7 +52,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
             );
         }
         try {
-
+            const { email, password, newPassword } = req.query;
+            console.log(email);
+            console.log(password);
+            console.log(newPassword);
+            res.status(200).json(
+                {
+                    message: "Password Change Success"
+                }
+            );
         } catch (error: any) {
             const { code = 500, message } = error;
             res.status(code).json(

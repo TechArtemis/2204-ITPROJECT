@@ -1,9 +1,10 @@
 import handler from "@/pages/api/admin";
+import emailHandler from "@/pages/api/admin/[email]";
 import { NextApiRequest } from "next";
 import { Model as adminModel } from "@/backend/database/ODM/Admin";
 import Database from "@/backend/database";
-import { Admin } from "@/interface/Admin";
-import { createAdmin } from "@/backend/actions/admin";
+import { signIn } from "next-auth/react";
+import { Session } from "next-auth";
 
 describe("createUser API", () => {
 
@@ -67,6 +68,32 @@ describe("createUser API", () => {
         });
     });
 
+    // it("Should return a code 200 if password change is successful", async () => {
+    //     const email = "test@mail.com";
+    //     const password = "Test12345!";
+    //     const newPassword = "Test.123";
+    //     await signIn("credentials", { redirect: false, email, password });
+    //     const req = {
+    //         method: "PUT",
+    //         query: {
+    //             email,
+    //             password,
+    //             newPassword
+    //         }
+    //     } as unknown as NextApiRequest;
+    //     const res: any = {
+    //         status: jest.fn().mockReturnThis(),
+    //         json: jest.fn(),
+    //     };
+    //     await emailHandler(req, res);
+    //     expect(res.status).toHaveBeenCalledWith(200);
+    //     expect(res.json).toHaveBeenCalledWith(
+
+    //         {
+    //             message: "Password Change Success"
+    //         }
+    //     );
+    // });
 
     it("Should return code 400 if Admin already exists", async () => {
         const req = {
