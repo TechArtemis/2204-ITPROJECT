@@ -2,6 +2,7 @@
 import { Box, Flex, Card, CardHeader, CardBody } from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import { red } from "@mui/material/colors";
 
 // Local Imports
 import styles from "@/styles/JobPostings.module.sass";
@@ -9,7 +10,6 @@ import heartIcon from "@/../public/images/heartIcon.png";
 import companyIcon from "@/../public/images/companyDefaultIcon.png";
 import { useState } from "react";
 import { instance } from "@/shared/axiosInstance";
-
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
@@ -67,7 +67,7 @@ export default function JobCardComponent(props: Props) {
                         </Flex>
                     </Flex>
                 </CardHeader>
-                <CardBody ml={3} mt={-3}>
+                <CardBody ml={3} mt={-3} minH={"100px"}>
                     <h1 className={styles.jobCardTitle}>{props.job}</h1>
                     <p className={styles.jobCardType}>{props.type}</p>
                     {/* <p className={styles.jobCardPublished}>2d ago</p> */}
@@ -77,13 +77,13 @@ export default function JobCardComponent(props: Props) {
                         { !liked ?
                             <div>
                                 <button onClick={() => handleAddToLiked(props.id as string, "add")}>
-                                    <FavoriteBorderIcon/>
+                                    <FavoriteBorderIcon fontSize="large" />
                                 </button>
                             </div>
                             :
                             <div>
                                 <button onClick={() => handleAddToLiked(props.id as string, "remove")}>
-                                    <FavoriteIcon/>
+                                    <FavoriteIcon fontSize="large" sx={{ color: red[500] }}/>
                                 </button>
                             </div>
                         }

@@ -4,7 +4,7 @@ import { SessionProvider } from "next-auth/react";
 import type { AppProps } from "next/app";
 
 const breakpoints = {
-    "2xl": "96em",
+    "2xl": "100em",
 };
 
 const theme = extendTheme({
