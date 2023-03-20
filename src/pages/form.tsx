@@ -3,6 +3,7 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
+import axios from "axios"
 
 //local imports
 import styles from "@/styles/form.module.sass";
@@ -100,20 +101,24 @@ function CompanyPostInfo({ onSubmit, item }: any) {
     }
 
     async function handleImgUpload (event: ChangeEvent<HTMLInputElement>){
-        const val = event.target.files![0];
-        const form = new FormData();
-        form.append("files", val!);
+        const val = event.target.files?.[0];
+        // const form = new FormData();
+        // form.append("files", val!);
 
-        const setting = {
-            method: "POST",
-            url: "cloudinary",
-            data: form
-        };
+        // const setting = {
+        //     method: "POST",
+        //     url: "cloudinary",
+        //     data: form
+        // };
 
-        const { data } = await instance.request(setting);
+        // console.log(setting);
+
+        // const { data } = await instance.request(setting);
+
         // const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
 
-        onSubmit({ ...item, companyImage: data.data.url.public_id });
+        onSubmit({ ...item, companyImage: val });
+
         // const form = new FormData();
         // form.append("files", val!);
         // const setting = {
@@ -139,12 +144,12 @@ function CompanyPostInfo({ onSubmit, item }: any) {
             <div className={styles.form}>
                 <div className={styles.field}>
                     <div onClick={handleFileClick}>
-                        <input type="file" name="companyImage" ref={inputRef} onChange={handleImgUpload} accept="image" style={{display: "none"}}/>
+                        <input type="file" name="companyImage" ref={inputRef} onChange={handleImgUpload} accept="image" style={{ display: "none" }}/>
                         {
                             item.companyImage ? <Image src={URL.createObjectURL(item.companyImage)} width={100} height={100} alt="Image"/> :
-                            <button>
-                                <Image src={"/images/vcc.png"} width={100} height={75} alt="Logo"/>
-                            </button>
+                                <button>
+                                    <Image src={"/images/vcc.png"} width={100} height={75} alt="Logo"/>
+                                </button>
                         }
                     </div>
                     {/* <Input
@@ -391,25 +396,26 @@ export default function FormPages() {
     };
 
     async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
-        setItem({ ...item, ...datatest });
+        setItem({ ...datatest });
         if (formPage === 3) {
-            // const form = new FormData();
-            // form.append("files", item.companyImage!);
-    
-            // const img = {
-            //     method: "POST",
-            //     url: "cloudinary",
-            //     data: form
-            // };
-    
-            // const { data } = await instance.request(img);
-            // const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
-    
-            // console.log(data)
-    
+
+            const form = new FormData();
+            form.append("files", item.companyImage!);
+
+            const img = {
+                method: "POST",
+                url: "cloudinary",
+                data: form
+            };
+
+            const { data } = await instance.request(img);
+            const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
+
+            console.log(url.public_id)
+
             const jobPosting = {
 
-                companyImage: item.companyImage,
+                companyImage: url.public_id,
                 companyName: item.companyName,
                 companyAbout: item.companyAbout,
                 companyLocation: [

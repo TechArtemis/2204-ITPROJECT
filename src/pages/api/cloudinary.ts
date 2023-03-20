@@ -6,12 +6,13 @@ import multer from "multer";
 // Local imports
 import { uploadFile } from "@/backend/actions/cloudinary";
 
+
 /**
  * @description saves the file locally
  */
 const upload = multer({
     storage: multer.diskStorage({
-        destination: "/tmp",
+        destination: "C:\\Users\\owner\\Downloads",
         filename(req, file, callback) {
             callback(null, `${Date.now()}.${file.mimetype.substring(6)}`);
         },
@@ -87,7 +88,8 @@ handler
                 {
                     code,
                     message,
-                    cause
+                    cause,
+                    error
                 }
             );
         }
