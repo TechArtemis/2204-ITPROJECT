@@ -111,8 +111,6 @@ export default function SignupCard() {
         }
     };
 
-    const isError = input === "";
-
     return (
         <>
             <div>

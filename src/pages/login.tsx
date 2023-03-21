@@ -74,8 +74,6 @@ export default function LogIn() {
         }
     };
 
-    const isError = input === "";
-
     return (
         <>
             <div>
@@ -86,7 +84,7 @@ export default function LogIn() {
                             <FormControl id="email" isInvalid={isEmailInvalid}>
                                 <FormLabel>Email address</FormLabel>
                                 <Input type='email' onChange={handleEmailChange} />
-                                {!isError ? (
+                                {!isEmailInvalid ? (
                                     <FormHelperText>
                                         Enter your VCC student email or personal CST alumni email
                                     </FormHelperText>
@@ -110,7 +108,7 @@ export default function LogIn() {
                                         </Button>
                                     </InputRightElement>
                                 </InputGroup>
-                                {isError &&
+                                {isPasswordInvalid &&
                                     <FormErrorMessage>
                                         Incorrect password
                                     </FormErrorMessage>
