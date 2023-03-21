@@ -1,15 +1,13 @@
 import { getFavorites, updateFavorites } from "@/backend/actions/user";
 import { STUDENT_EMAIL_REGEX } from "@/shared/regex";
 import { NextApiRequest, NextApiResponse } from "next";
-import { getServerSession } from "next-auth";
 import { getSession } from "next-auth/react";
-import { authOptions } from "../auth/[...nextauth]";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const session = await getSession({ req });
-    if(req.method === "GET") {
+    if (req.method === "GET") {
         try {
-            if(!session) {
+            if (!session) {
                 throw {
                     code: 400,
                     message: "You are not logged in"
@@ -24,7 +22,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 };
             }
             const response = await getFavorites(email as string);
-            if(response.code !== 200) {
+            if (response.code !== 200) {
                 throw {
                     code: response.code,
                     message: response.message
@@ -36,15 +34,16 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 }
             );
 
-        } catch (error:any) {
+        } catch (error: any) {
             const { code = 500, message } = error;
-            res.status(500).json(
+            res.status(code).json(
                 {
                     message
                 }
             );
         }
     }
+
     // else if (req.method === "POST") {
     //     try {
     //         const { email } = req.query;
@@ -65,10 +64,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     //     }
     // }
     else if (req.method === "POST") {
-
-        console.log("Entered");
         try {
-            if(!session) {
+            if (!session) {
                 throw {
                     code: 400,
                     message: "You are not logged in"
@@ -77,13 +74,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const { action, id } = req.body;
 
-            console.log(id);
-            console.log(action);
-            console.log(session.user?.email);
-
-
             const response = await updateFavorites(session.user?.email as string, id as string, action);
-            if(response?.code !== 200) {
+            if (response?.code !== 200) {
                 throw {
                     code: response?.code,
                     message: response?.message

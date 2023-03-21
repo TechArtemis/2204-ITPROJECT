@@ -1,10 +1,11 @@
+//third-party imports
 import React from "react";
+import NextLink from "next/link";
 import { Box, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
 import { IconType } from "react-icons";
 import { FaSignInAlt } from "react-icons/fa";
-import NextLink from "next/link";
 
-export const ServiceCard = ({
+export default function ServiceCard ({
     icon,
     heading,
     description,
@@ -12,7 +13,7 @@ export const ServiceCard = ({
     icon: IconType;
     heading: string;
     description: string;
-}) => {
+}) {
     return (<Flex flexDirection="column" bg="yellow.50" p="40px" w="full" height="380px" justifyContent="space-between">
         <Icon color="green.900" h={20} w={20} as={icon} />
         <Box>

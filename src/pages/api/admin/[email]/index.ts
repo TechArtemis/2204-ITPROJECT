@@ -8,6 +8,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     if (req.method === "GET") {
         try {
             const { email } = req.query;
+
             // validation
             if (!EMAIL_REGEX.test(email as string)) {
                 throw {
@@ -15,6 +16,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Email"
                 };
             }
+
             // gets the admin account
             const response = await getAdmin(email as string);
             if (response.code !== 200) {
@@ -23,6 +25,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: response.message
                 };
             }
+
             // sends the response to front end
             res.status(response.code).json(
                 {
@@ -41,7 +44,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     else if (req.method === "PUT") {
         const session = await getServerSession(req, res, authOptions);
 
-        if(!session) {
+        if (!session) {
             res.status(500).json(
                 {
                     message: "Not logged in"

@@ -1,20 +1,28 @@
 // 3rd Party Imports
 import { Card, CardHeader, CardBody } from "@chakra-ui/react";
+
 // Local Imports
 import styles from "@/styles/JobPostings.module.sass";
 
-const EventCardComponent = () => {
+interface Props {
+    name: string,
+    description: string,
+    link: string
+}
+
+export default function EventCardComponent (props: Props) {
     return (
         <Card bg={"#566157"} maxW={"300px"} maxH={"200px"} p={"1vh"} borderRadius={"3xl"} my={"30px"}>
             <CardHeader>
-                <h1 className={styles.announcementDate}>JAN 23</h1>
+                <h1 className={styles.announcementDate}>{props.name}</h1>
             </CardHeader>
             <CardBody>
-                <p className={styles.announcementTitle}>VCC Alumni Week -Songwriter&apos;s Circle</p>
-                <p className={styles.announcementDesc}>Join two music professionals for this free public event {">"}</p>
+                <a href={props.link}>
+                    <p className={styles.announcementTitle}>{props.description} {">"}</p>
+                </a>
             </CardBody>
         </Card>
     );
 };
 
-export default EventCardComponent;
+

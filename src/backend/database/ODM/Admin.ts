@@ -1,5 +1,6 @@
 // Third-party imports
 import { model, models, Schema, Types } from "mongoose";
+
 /**
  * Schema for Admin
  */

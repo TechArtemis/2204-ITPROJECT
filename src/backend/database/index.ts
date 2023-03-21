@@ -13,6 +13,7 @@ export default class Database {
                 throw new Error("Error setting up mongoose connection", { cause: error });
             });
         }
+
         return this.moongoseClient;
     }
 
@@ -23,6 +24,13 @@ export default class Database {
                 throw new Error("Error setting up mongodb-adapter connection", { cause: error });
             });
         }
+
         return this.MongoClientPromise;
+    }
+
+    static async disconnect(): Promise<void> {
+        if (this.moongoseClient) {
+            await this.moongoseClient.disconnect();
+        }
     }
 }

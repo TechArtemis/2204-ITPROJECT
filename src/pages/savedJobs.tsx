@@ -1,20 +1,30 @@
+//third-party imports
+import { getToken } from "next-auth/jwt";
+import { useState } from "react";
+
+//local imports
 import { getFavorites } from "@/backend/actions/user";
 import Card from "@/components/cards";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import styles from "@/styles/displayJobs.module.sass";
-import { getToken } from "next-auth/jwt";
 
-
+/**
+ * @param {jobPostings} JobPosting[] - array of job postings
+ *
+ */
 interface Props {
     data: JobPosting[]
 }
 
 
-export default function savedJobs({ data }: Props){
+export default function SavedJobs({ data }: Props) {
+
+    const [jobs, setJobs] = useState<JobPosting[]>(data);
+
     return (
         <div>
-            <Navbar/>
+            <Navbar />
             <div>
 
                 <div className={styles.title}>
@@ -23,18 +33,24 @@ export default function savedJobs({ data }: Props){
 
                 <div className={styles.cardArr}>
 
-                    {(data.length === 0 && (
-                        <div className={styles.nocontent}>No Jobs have been saved ⚠️</div>
+                    {(jobs.length === 0 && (
+                        <div className={styles.nocontent}>No Jobs have been saved yet</div>
                     ))}
 
-                    {data.map((post: JobPosting, idx) => (
+                    {jobs.map((post: JobPosting, idx) => (
                         <div key={idx} className={styles.cardWrapper}>
                             <Card
-                                image={post.companyImage}
+
+                                // image={post.companyImage}
                                 name={post.companyName}
                                 address={post.companyLocation[0].location.city}
                                 job={post.jobTitle}
                                 type={post.jobType} id={post._id as string}
+                                extraFunction={(jobPosting) => {
+                                    console.info("here");
+                                    setJobs([...jobs.filter(job => job._id !== jobPosting)]);
+                                }}
+                                liked
                             />
                         </div>
                     ))}
@@ -45,7 +61,7 @@ export default function savedJobs({ data }: Props){
 };
 
 export async function getServerSideProps(context: { [key: string]: any }) {
-    try{
+    try {
         const secret = process.env.NEXTAUTH_SECRET;
         const token = await getToken(
             {
@@ -57,28 +73,16 @@ export async function getServerSideProps(context: { [key: string]: any }) {
         // If the user is already logged in, redirect.
         // Note: Make sure not to redirect to the same page
         // To avoid an infinite loop!
-        console.log(token);
+
         if (!token) {
             return { redirect: { destination: "/login", permanent: false } };
         }
 
         const form = await getFavorites(token.email as string);
 
-        console.log(token.email);
-        console.log(form);
-
-        if (form.message.length === 0) {
-            return {
-                props: {
-                    data: []
-                }
-            };
-        }
-
-
         return {
             props: {
-                data: JSON.parse(JSON.stringify(form.message)),
+                data: JSON.parse(JSON.stringify(form.message))
             },
         };
     } catch (error) {

@@ -1,7 +1,12 @@
-
+//third-party import
 import { ReactNode } from "react";
-import styles from "@/styles/components.module.sass";
 
+/**
+ * @param {ReactNode} children - The content of the button
+ * @param {() => void} onClick - The function to be called when the button is clicked
+ * @param {"button" | "submit"} type - The type of the button
+ * @param {string} className - The class name of the button
+ */
 interface Props {
     children?: ReactNode;
     onClick?: () => void;
@@ -9,6 +14,7 @@ interface Props {
     className?: string;
 }
 
+// Button component
 export default function Button(props: Props) {
     return (
         <button
