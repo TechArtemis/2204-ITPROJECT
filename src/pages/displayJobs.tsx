@@ -81,7 +81,9 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
                     {jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
                         || card.jobTitle.toLowerCase().includes(search.toLowerCase())
                         || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
-                        || card.jobType.toLowerCase().includes(search.toLowerCase()))
+                        || card.jobType.toLowerCase().includes(search.toLowerCase())
+                        || card.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())))
+
                         .map((post: JobPosting, idx) => (
                             <div key={idx} className={styles.cardWrapper}>
                                 <Card

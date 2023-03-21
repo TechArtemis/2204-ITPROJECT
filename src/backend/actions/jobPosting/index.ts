@@ -26,7 +26,8 @@ export async function createJobPosting(jobPosting: JobPosting) {
                 jobType: jobPosting.jobType,
                 jobTitle: jobPosting.jobTitle,
                 employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted
+                datePosted: jobPosting.datePosted,
+                tags: jobPosting.tags
             }
         );
         await jobPost.save();
@@ -121,7 +122,8 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
                 jobType: jobPosting.jobType,
                 jobTitle: jobPosting.jobTitle,
                 employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted
+                datePosted: jobPosting.datePosted,
+                tags: jobPosting.tags
             },
             { new: true });
 

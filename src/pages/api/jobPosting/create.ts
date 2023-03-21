@@ -54,19 +54,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                     message: "Invalid Job Type"
                 };
             }
-
             if (!isValidStr(jobPosting.jobTitle)) {
                 throw {
                     code: 400,
                     message: "Invalid Job Title"
                 };
             }
-
             if (!employmentArr.includes(jobPosting.employment)) {
                 throw {
                     code: 400,
                     message: "Invalid Employment Type"
                 };
+            }
+            for(let i = 0; i < jobPosting.tags.length; i++) {
+                if (!isValidStr(jobPosting.tags[i])) {
+                    throw {
+                        code: 400,
+                        message: "Invalid Tag"
+                    };
+                }
             }
 
             // Creates a JobPosting object to be created
@@ -81,7 +87,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 jobTitle: jobPosting.jobTitle,
                 jobType: jobPosting.jobType,
                 employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted
+                datePosted: jobPosting.datePosted,
+                tags: jobPosting.tags
             };
 
             // Creates the job posting in the database and stores the response

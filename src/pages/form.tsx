@@ -41,7 +41,7 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
  * @param {string} jobType - type of the job
  * @param {string} employment - employment of the job
  * @param {string} jobDescription - description of the job
- *
+ * @param {string} tags - tags of the job
  */
 
 
@@ -62,6 +62,7 @@ interface CompanyJob {
     jobType: string;
     employment: string;
     jobDescription: string;
+    tags: string
 }
 
 //interface for province
@@ -264,6 +265,13 @@ function JobPostInfo({ onSubmit, data }: any) {
                         <WorkIcon sx={{ color: "#84BD00" }} />
                     </SelectOption>
                     <Input
+                        type="text"
+                        placeholder="Enter tags"
+                        name="tags"
+                        value={data.tags}
+                        onChangeInput={handleChange}
+                    />
+                    <Input
                         type="textarea"
                         placeholder="Enter your Desctiption"
                         name="jobDescription" value={data.jobDescription}
@@ -332,6 +340,8 @@ function PostCoop({ onSubmit, data }: any) {
                             <p>{data.employment}</p>
                             <h1>Job Description</h1>
                             <p>{data.jobDescription}</p>
+                            <h1>Job Tags</h1>
+                            <p>{data.tags}</p>
                         </div>
                     }
                 </div>
@@ -358,7 +368,8 @@ export default function FormPages() {
         jobTitle: "",
         jobType: JobPosting.JobTitleType.PartTime,
         employment: JobPosting.EmploymentType.Hybrid,
-        jobDescription: ""
+        jobDescription: "",
+        tags: ""
     });
 
     function isCompanyValid() {
@@ -379,7 +390,8 @@ export default function FormPages() {
         return (
             data.jobDescription != "" &&
             data.jobTitle !== "" &&
-            data.jobType !== ""
+            data.jobType !== "" &&
+            data.tags !== ""
         );
     }
 
@@ -389,6 +401,9 @@ export default function FormPages() {
 
     async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
         setData({ ...data, ...datatest });
+        const tags = data.tags.split(",");
+        console.log(tags);
+        console.log(data.tags);
         if (formPage === 3) {
 
             const jobPosting = {
@@ -411,7 +426,7 @@ export default function FormPages() {
                 jobType: data.jobType,
                 employment: data.employment,
                 jobDescription: data.jobDescription,
-
+                tags: tags
             };
 
             const obj = {

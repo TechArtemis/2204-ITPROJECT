@@ -51,10 +51,14 @@ const jobPostingSchema = new Schema (
             default: JobPosting.EmploymentType.OnSite,
             required: true
         },
-
         datePosted: {
             type: Date,
             default: Date.now()
+        },
+        tags: {
+            type: [String],
+            default: [],
+            required: true
         }
     }
 );
