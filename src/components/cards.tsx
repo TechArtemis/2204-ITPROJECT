@@ -9,7 +9,7 @@ import router from "next/router";
 // Local imports
 import styles from "@/styles/components.module.sass";
 
-//dynamic imports
+// Dynamic imports
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
 

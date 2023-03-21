@@ -1,4 +1,4 @@
-//third-party imports
+// Third-party imports
 import React from "react";
 import { Avatar, Box, Flex, Heading, Text } from "@chakra-ui/react";
 
@@ -9,7 +9,7 @@ export default function TestimonialCard(){
             <Flex alignItems="center" pb="30px">
                 <Avatar src='https://bit.ly/dan-abramov' mr="20px"></Avatar>
                 <Box>
-                    <Heading fontSize={16} color="green.900" mb="2px">
+                    <Heading fontSize={16} fontFamily={"Lato-Bold"} color="green.900" mb="2px">
                         Dan Abramov
                     </Heading>
                     <Text fontSize={12} color="gray.500">

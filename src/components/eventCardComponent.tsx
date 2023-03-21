@@ -1,7 +1,7 @@
-// 3rd Party Imports
+// Third-party imports
 import { Card, CardHeader, CardBody } from "@chakra-ui/react";
 
-// Local Imports
+// Local imports
 import styles from "@/styles/JobPostings.module.sass";
 
 interface Props {

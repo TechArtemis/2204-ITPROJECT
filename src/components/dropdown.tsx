@@ -1,10 +1,10 @@
-//third-party imports
+// Third-party imports
 import { ReactNode, ChangeEvent } from "react";
+
+// Local imports
+import styles from "@/styles/components.module.sass";
 import { Location } from "@/interface/Location";
 import { JobPosting } from "@/interface/JobPosting";
-
-//local imports
-import styles from "@/styles/components.module.sass";
 
 
 /**

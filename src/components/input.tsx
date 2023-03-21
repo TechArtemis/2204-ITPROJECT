@@ -1,7 +1,7 @@
-//third-party imports
+// Third-party imports
 import { ReactNode, ChangeEvent } from "react";
 
-//local imports
+// Local imports
 import styles from "@/styles/components.module.sass";
 
 /**
