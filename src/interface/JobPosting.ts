@@ -39,8 +39,8 @@ export namespace JobPosting {
 
     // Enum for Job Title Type
     export enum JobTitleType {
-        PartTime = "PartTime",
-        FullTime = "FullTime",
+        PartTime = "Part-Time",
+        FullTime = "Full-Time",
         Contracted = "Contracted",
         Seasonal = "Seasonal"
     }
@@ -49,7 +49,7 @@ export namespace JobPosting {
     export enum EmploymentType {
         Remote = "Remote",
         Hybrid = "Hybrid",
-        OnSite = "OnSite"
+        OnSite = "On Site"
     }
 }
 

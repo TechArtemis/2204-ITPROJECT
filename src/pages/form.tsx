@@ -318,7 +318,7 @@ export default function FormPages() {
         companyLocation: {
             address: "",
             city: "",
-            province: "AB",
+            province: "BC",
             postalCode: ""
         },
         companyAbout: "",
@@ -383,7 +383,7 @@ export default function FormPages() {
                 jobPosting
             };
 
-            console.log("test",obj);
+            console.log("test", obj);
 
             await instance.post("/jobPosting/create", obj);
             router.push("/");
