@@ -1,10 +1,10 @@
-//third-party imports
+// Third-party imports
 import React, { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
 
-//local imports
+// Local imports
 import styles from "@/styles/form.module.sass";
 import Button from "@/components/button";
 import Input from "@/components/input";
@@ -13,8 +13,6 @@ import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
 import Navbar from "@/components/navbar";
-
-
 
 //dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -152,7 +150,7 @@ function CompanyPostInfo({ onSubmit, data }: any) {
                         type="textarea"
                         placeholder="Enter your Desctiption"
                         name="companyAbout" value={data.companyAbout}
-                        rows={4}
+                        rows={6}
                         onChangeTextArea={handleChange}>
                         <DescriptionIcon sx={{ color: "#84BD00" }}/>
                     </Input>
@@ -168,7 +166,7 @@ function CompanyPostInfo({ onSubmit, data }: any) {
                         type="button"
                         onClick={() => handleRouteToJobs()}
                         className={styles.backbutton}>
-                    Return to home
+                        Return to home
                     </Button>
                 </div>
             </div>
@@ -226,9 +224,9 @@ function JobPostInfo({ onSubmit, data }: any) {
                     </SelectOption>
                     <Input
                         type="textarea"
-                        placeholder="Enter your Desctiption"
+                        placeholder="Enter your Description"
                         name="jobDescription" value={data.jobDescription}
-                        rows={4}
+                        rows={8}
                         onChangeTextArea={handleChange}
                     >
                         <DescriptionIcon sx={{ color: "#84BD00" }} />
@@ -256,15 +254,24 @@ function PostCoop({ onSubmit, data }: any) {
                     <div className={styles.subheader}>
                         <div>
                             <h1>{data.companyName}</h1>
-                            <p>status</p>
+                            <p>Status</p>
                         </div>
                     </div>
                 </div>
                 <div className={styles.content}>
-
                     <div className={styles.subcontent}>
-                        <button onClick={() => setValue(1)}>Overview</button>
-                        <button onClick={() => setValue(0)}>Job Details</button>
+                        {value === 1 ?
+                            <button className={styles.clickedButton} onClick={() => setValue(1)}>Overview</button>
+                            :
+                            <button onClick={() => setValue(1)}>Overview</button>
+                        }
+
+                        {value === 0 ?
+                            <button className={styles.clickedButton} onClick={() => setValue(0)}>Job Details</button>
+                            :
+                            <button onClick={() => setValue(0)}>Job Details</button>
+                        }
+
                     </div>
 
                     {value === 1 ?
@@ -272,7 +279,9 @@ function PostCoop({ onSubmit, data }: any) {
                             <h1>About</h1>
                             <p>{data.companyAbout}</p>
                             <h1>Location</h1>
-                            <p>{data.companyLocation.address}{data.companyLocation.city}{data.companyLocation.province}{data.companyLocation.postalCode}</p>
+                            <p>{data.companyLocation.address}</p>
+                            <p>{data.companyLocation.city}, {data.companyLocation.province}</p>
+                            <p>{data.companyLocation.postalCode}</p>
                             <h1>Contact</h1>
                             <p>{data.companyContact}</p>
                         </div>

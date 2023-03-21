@@ -1,4 +1,6 @@
-//global styles
+$primary: #84BD00
+    
+// Global styles
 .container
     display: flex
     flex-direction: column
@@ -16,27 +18,43 @@
     display: grid
     justify-content: space-evenly
 
-//Post Co-op Styles
+// Post Co-op Styles
 
 .submitform
     display: flex
     flex-direction: column
     border: 1px solid #9c9c9c
-    margin-top: 50px
-    margin-left: 50px
-    margin-right: 50px
+    margin: 50px 150px 0px 150px
+    padding-bottom: 100px
     border-radius: 2px
+
+    @media (max-width: 62em)
+        margin: 50px 50px 0px 50px
+
+    @media (max-width: 48em)
+        margin: 50px 10px 0px 10px
 
 .logo
     object-fit: cover
     border-radius: 100px
-    width: 200px
-    height: 170px
+    width: 180px
+    height: 180px
+
+    @media (max-width: 62em)
+        width: 150px
+        height: 150px
+
+    @media (max-width: 48em)
+        width: 100px
+        height: 100px
 
 .header
     display: flex
     margin-left: 100px
-    padding: 150px 0px 50px 50px
+    padding: 75px 0px 50px 50px
+
+    @media (max-width: 48em)
+        margin-left: 0px
 
     div
         margin-left: 50px
@@ -51,9 +69,11 @@
         color: #000000
 
     h1
+        font-family: "Lato-Bold"
         font-size: 32px
 
     p
+        font-family: "Lato-Regular"
         font-size: 20px
         font-weight: 300
         color: #9c9c9c
@@ -67,12 +87,14 @@
     justify-content: center
     padding-top: 50px
 
-   
 .content
     display: flex
     flex-direction: column
     padding-left: 100px
     line-height: 90px
+
+    @media (max-width: 48em)
+        padding-left: 10px
 
     h1
         font-size: 32px
@@ -86,35 +108,63 @@
     display: flex
     flex-direction: row
     border-bottom: 1px solid #c2c2c2
-    width: 1200px
-    margin-bottom: 50px
+    width: 90%
 
     button
         display: flex
         font-size: 20px
         font-weight: 300
-        color: #000000
         padding-left: 50px
 
     :hover
-        color: #84BD00
+        color: $primary
 
     :focus
-        color: #84BD00
+        color: $primary
+
+.clickedButton
+    color: $primary
 
 .jobDetails
     display: flex
     flex-direction: column
-    padding-left: 50px
+    margin-top: -40px
+    width: 90%
+    h1    
+        font-family: "Lato-Bold"
+        padding-left: 50px
+        margin-top: 50px
+        line-height: 2.5
+    p
+        font-family: "Lato-Light"
+        padding-left: 60px
+        line-height: 1.6
 
 .overview
     display: flex
     flex-direction: column
+    margin-top: -40px
+    width: 90%
+    h1    
+        font-family: "Lato-Bold"
+        padding-left: 50px
+        margin-top: 50px
+        line-height: 2.5
+    p
+        font-family: "Lato-Light"
+        padding-left: 60px
+        line-height: 1.6
+
+
+.overviewStart
     padding-left: 50px
-    padding-bottom: 100px
+    font-family: "Lato-Bold"
+    margin-top: -50px
+    margin-bottom: -40px
+        
 
 .submit
-    background: #84BD00
+    background: $primary
     border-radius: 10px
     width: 350px
     height: 60px
@@ -168,7 +218,7 @@ $transition-duration: 0.3s // Define the duration of the animation
             color: #aaa
 
         &.selected
-            background-color: #84BD00
+            background-color: $primary
             color: #fff
 
         &.error
