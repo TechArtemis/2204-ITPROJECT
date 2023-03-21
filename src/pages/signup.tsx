@@ -180,7 +180,7 @@ export default function SignupCard() {
                                                 </Button>
                                             </InputRightElement>
                                         </InputGroup>
-                                        {!isPasswordInvalid &&
+                                        {isPasswordInvalid &&
                                             <FormErrorMessage>
                                                 Password is required
                                             </FormErrorMessage>
