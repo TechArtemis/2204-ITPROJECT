@@ -1,11 +1,12 @@
-//third-party imports
+// Third-party imports
 import Image from "next/image";
 import { ReactNode, useState } from "react";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
+import { red } from "@mui/material/colors";
 import router from "next/router";
 
-//local imports
+// Local imports
 import styles from "@/styles/components.module.sass";
 
 //dynamic imports
@@ -47,19 +48,15 @@ export default function Card(props: Props) {
     async function handleAddToLiked(id: string, action: string) {
 
         if (props.extraFunction && action !== "add") {
-
             props.extraFunction(id);
         }
-
 
         if (action === "add") {
             setLiked(true);
             const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
-
         } else {
             setLiked(false);
             const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
-
         }
     }
 
@@ -67,12 +64,11 @@ export default function Card(props: Props) {
         router.push(`/view/${props.id}`);
     }
 
-
     return (
         <div className={styles.cards}>
             {props.children}
             <div className={styles.companyInfo} onClick={() => handleClick()}>
-                <div>
+                <div className={styles.companyLogo}>
                     {/* <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/> */}
                     <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
                 </div>
@@ -83,21 +79,20 @@ export default function Card(props: Props) {
             </div>
 
             <div className={styles.jobInfo}>
-                <div>
-                    <h1>{props.job}</h1>
-                    <h2>{props.type}</h2>
-                </div>
-
+                <h1>{props.job}</h1>
+                <h2>{props.type}</h2>
+            </div>
+            <div>
                 {!liked ?
-                    <div>
+                    <div className={styles.heartIcon}>
                         <button onClick={() => handleAddToLiked(props.id as string, "add")}>
-                            <FavoriteBorderIcon />
+                            <FavoriteBorderIcon fontSize="large" />
                         </button>
                     </div>
                     :
-                    <div>
+                    <div className={styles.heartIcon}>
                         <button onClick={() => handleAddToLiked(props.id as string, "remove")}>
-                            <FavoriteIcon />
+                            <FavoriteIcon fontSize="large" sx={{ color: red[500] }}/>
                         </button>
                     </div>
                 }
