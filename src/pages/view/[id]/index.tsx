@@ -1,8 +1,9 @@
 // Third-party imports
+// import dynamic from "next/dynamic";
 import { useState } from "react";
 import Image from "next/image";
 import { getToken } from "next-auth/jwt";
-import dynamic from "next/dynamic";
+
 
 // Local imports
 import Navbar from "@/components/navbar";
