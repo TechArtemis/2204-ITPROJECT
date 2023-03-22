@@ -2,6 +2,7 @@
 import Database from "@/backend/database";
 import { Model as adminModel } from "@/backend/database/ODM/Admin";
 import { Admin } from "@/interface/Admin";
+import { Model } from "mongoose";
 
 /**
  * createAdmin function for creating an admin account in the database
@@ -11,7 +12,7 @@ import { Admin } from "@/interface/Admin";
 export async function createAdmin(admin: Admin) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const adminArr = await adminModel.find({});
+        const adminArr: Admin[] = await adminModel.find({});
         if (adminArr.length > 0) {
             return { code: 400, message: "Admin already exists" };
         }
@@ -39,7 +40,7 @@ export async function createAdmin(admin: Admin) {
 export async function getAdmin(email: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const getAdmin = await adminModel.findOne({ email });
+        const getAdmin: Admin | null = await adminModel.findOne({ email });
         if (!getAdmin) {
             return { code: 400, message: "Admin doesnt exist" };
         }
@@ -60,9 +61,8 @@ export async function getAdmin(email: string) {
 export async function changePassword(password: string, email: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const getAdmin = await adminModel.findOneAndUpdate({ email }, { password }, { new: true });
-
-
+        await adminModel.findOneAndUpdate({ email }, { password }, { new: true });
+        
         return { code: 200, message: "Password changed" };
     } catch (error: any) {
         return { code: 500, message: error.message };

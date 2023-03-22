@@ -46,7 +46,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
 export async function getJobPosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist = await jobPostingModel.findOne({ _id });
+        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
         if (!jobPostingExist) {
             return { code: 400, message: "Invalid Job Posting" };
         }
@@ -105,7 +105,7 @@ export async function getJobPosting(_id: String | Types.ObjectId) {
 export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting: JobPosting) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist = await jobPostingModel.findOne({ _id });
+        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
         if (!jobPostingExist) {
             return { code: 400, message: "Invalid Job Posting" };
         }
@@ -140,7 +140,7 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 export async function deletePosting(_id: String | Types.ObjectId) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist = await jobPostingModel.findOne({ _id });
+        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
         if (!jobPostingExist) {
             return { code: 400, message: "Job does not exist" };
         }
@@ -160,9 +160,8 @@ export async function deletePosting(_id: String | Types.ObjectId) {
 export async function getAllPosting() {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        const allPost = await jobPostingModel.find();
-
-
+        const allPost: JobPosting[] = await jobPostingModel.find({});
+        
         return { code: 200, message: allPost };
     } catch (error: any) {
         return { code: 500, message: error.message };
