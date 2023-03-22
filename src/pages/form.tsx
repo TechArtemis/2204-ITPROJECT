@@ -1,9 +1,8 @@
 //third-party imports
-import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
-import axios from "axios"
 
 //local imports
 import styles from "@/styles/form.module.sass";
@@ -13,7 +12,7 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
-import Navbar from "@/components/navbar";
+
 
 
 //dynamic imports
@@ -26,6 +25,8 @@ const MarkunreadMailboxIcon = dynamic(() => import("@mui/icons-material/Markunre
 const DescriptionIcon = dynamic(() => import("@mui/icons-material/DescriptionOutlined"));
 const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"));
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
+const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
+const Close = dynamic(() => import("@mui/icons-material/Close"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -42,7 +43,6 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 
 //interface for the form
 interface CompanyJob {
-
     companyImage: File | null;
     companyName: string;
     companyContact: string;
@@ -102,79 +102,72 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 
     async function handleImgUpload (event: ChangeEvent<HTMLInputElement>){
         const val = event.target.files?.[0];
-        // const form = new FormData();
-        // form.append("files", val!);
-
-        // const setting = {
-        //     method: "POST",
-        //     url: "cloudinary",
-        //     data: form
-        // };
-
-        // console.log(setting);
-
-        // const { data } = await instance.request(setting);
-
-        // const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
-
         onSubmit({ ...item, companyImage: val });
-
-        // const form = new FormData();
-        // form.append("files", val!);
-        // const setting = {
-        //     method: "POST",
-        //     url: "cloudinary",
-        //     data: form
-        // };
-        // try {
-        //     const { data } = await instance.request(setting);
-        //     console.log(data)
-        //     onSubmit({ ...item, companyImage: data.data.url.public_id });
-        // } catch (error: any) {
-        //     console.log("NETWORK ERROR", error);
-        // }
     };
 
     function handleFileClick() {
         inputRef.current?.click();
     }
 
+    function removeImage() {
+        onSubmit({ ...item, companyImage: null });
+    }
+
     return (
         <div className={styles.container}>
             <div className={styles.form}>
                 <div className={styles.field}>
-                    <div onClick={handleFileClick}>
-                        <input type="file" name="companyImage" ref={inputRef} onChange={handleImgUpload} accept="image" style={{ display: "none" }}/>
-                        {
-                            item.companyImage ? <Image src={URL.createObjectURL(item.companyImage)} width={100} height={100} alt="Image"/> :
-                                <button>
-                                    <Image src={"/images/vcc.png"} width={100} height={75} alt="Logo"/>
-                                </button>
-                        }
+                    <div className={styles.remove} onClick={() => removeImage()}>
+                        <button>
+                            <Close />
+                        </button>
                     </div>
-                    {/* <Input
-                        type="file"
-                        placeholder="Upload an Image"
-                        onChangeInput={handleImgUpload}>
-                        <BusinessIcon fontSize={"medium"} sx={{ color: "#84BD00" }} />
-                    </Input> */}
+                    <div className={styles.fileupload} onClick={handleFileClick}>
+                        <div className={styles.opt}>
+                            { item.companyImage ? (
+                                <Image
+                                    className={styles.img}
+                                    src={URL.createObjectURL(item.companyImage)}
+                                    width={100}
+                                    height={100}
+                                    alt="Image"
+                                />
+                            ) : (
+                                <CameraAlt />
+                            )
+                            }
+                        </div>
+
+                        <div style={{ display: "none" }}>
+                            <input
+                                type="file"
+                                ref={inputRef}
+                                name="companyImage"
+                                onChange={handleImgUpload}
+                                accept="image/png, image/jpeg"
+                            />
+                        </div>
+                    </div>
+
+
+
                     <Input
                         type="text"
-                        placeholder="Company Name"
+                        placeholder="Enter your company name"
                         name="companyName" value={item.companyName}
                         onChangeInput={handleChange}>
                         <BusinessIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
-                        placeholder="Contact"
+                        placeholder="Enter your contact email"
                         name="companyContact" value={item.companyContact}
                         onChangeInput={handleChange} >
                         <EmailIcon sx={{ color: "#84BD00" }}/>
                     </Input>
                     <Input
                         type="text"
-                        placeholder="Address"
+                        placeholder="Enter your street address"
                         name="address" value={item.companyLocation.address}
                         onChangeInput={handleCompanyLocation}>
                         <LocationOnIcon sx={{ color: "#84BD00" }}/>
@@ -188,7 +181,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
                     </Input>
                     <Input
                         type="text"
-                        placeholder="Postal Code"
+                        placeholder="Enter your postal code"
                         name="postalCode" value={item.companyLocation.postalCode}
                         onChangeInput={handleCompanyLocation}>
                         <MarkunreadMailboxIcon sx={{ color: "#84BD00" }}/>
@@ -202,7 +195,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
                     </SelectOption>
                     <Input
                         type="textarea"
-                        placeholder="Enter your Desctiption"
+                        placeholder="Enter your desctiption"
                         name="companyAbout" value={item.companyAbout}
                         rows={4}
                         onChangeTextArea={handleChange}>
@@ -304,11 +297,29 @@ function PostCoop({ onSubmit, item }: any) {
         <div>
             <div className={styles.submitform}>
                 <div className={styles.header}>
-                    <Image className={styles.logo} src={URL.createObjectURL(item.companyImage) } alt={"image"} width={85} height={85} />
+                    { item.companyImage ? (
+                        <Image
+                            className={styles.logo}
+                            src={URL.createObjectURL(item.companyImage)}
+                            width={85}
+                            height={85}
+                            alt="Image"
+                        />
+                    ) : (
+                        <Image
+                            className={styles.logo}
+                            src={"/images/imageplaceholder.png"}
+                            alt={"image"}
+                            width={85}
+                            height={85}
+                        />
+
+                    )
+                    }
                     <div className={styles.subheader}>
                         <div>
                             <h1>{item.companyName}</h1>
-                            <p>status</p>
+                            <p>{item.companyLocation[0].location.city}</p>
                         </div>
                     </div>
                 </div>
@@ -409,9 +420,9 @@ export default function FormPages() {
             };
 
             const { data } = await instance.request(img);
-            const { data: {data:{url:url} } } = await instance.post("/cloudinary", form)
+            const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
 
-            console.log(url.public_id)
+            console.log(url.public_id);
 
             const jobPosting = {
 
