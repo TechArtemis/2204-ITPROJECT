@@ -5,7 +5,7 @@ import { CoopWorkMethodCard } from "@/components/CoopWorkMethodCard";
 export const HowWeWork = () => {
     return (
         <Box w="full" px="200px" py="60px">
-            <Heading fontSize={42} letterSpacing="4px" color="green.900" pb="80px">
+            <Heading fontSize={42} fontFamily={"Lato-Bold"} letterSpacing="3px" color="green.900" pb="80px">
                 How does CO-OP work?
             </Heading>
             <HStack w="full" alignItems="flex-Start" spacing="75px">

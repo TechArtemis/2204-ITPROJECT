@@ -14,7 +14,6 @@ export default class Database {
             });
         }
 
-
         return this.moongoseClient;
     }
 
@@ -26,7 +25,12 @@ export default class Database {
             });
         }
 
-
         return this.MongoClientPromise;
+    }
+
+    static async disconnect(): Promise<void> {
+        if (this.moongoseClient) {
+            await this.moongoseClient.disconnect();
+        }
     }
 }

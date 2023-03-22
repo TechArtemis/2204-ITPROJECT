@@ -1,10 +1,10 @@
-//third-party imports
+// Third-party imports
 import { NextApiRequest, NextApiResponse } from "next";
 import bcrypt from "bcrypt";
 
-// local imports
+// Local imports
 import { User } from "@/interface/User";
-import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX, PHONE_REGEX, STUDENTID_REGEX } from "@/shared/regex";
+import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { isValidStr } from "@/shared/stringCheck";
 import { createUser } from "@/backend/actions/user";
 

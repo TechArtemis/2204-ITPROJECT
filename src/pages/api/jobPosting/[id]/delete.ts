@@ -20,10 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
             const response = await deletePosting(id as string);
 
-
-
-
-
             if( response.code !== 200) {
                 throw {
                     code: response.code,

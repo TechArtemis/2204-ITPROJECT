@@ -1,22 +1,21 @@
-//third-party imports
+// Third-party imports
+// import dynamic from "next/dynamic";
 import { useState } from "react";
 import Image from "next/image";
 import { getToken } from "next-auth/jwt";
-import dynamic from "next/dynamic";
 
-//local imports
+
+// Local imports
 import Navbar from "@/components/navbar";
 import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
-import button from "@/components/button";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 
-
-//dynamic imports
-const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
-const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
-const CheckIcon = dynamic(() => import("@mui/icons-material/Check"));
+// Dynamic imports
+// const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
+// const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
+// const CheckIcon = dynamic(() => import("@mui/icons-material/Check"));
 
 
 export default function PostCoop({ onSubmit, data }: any) {
@@ -35,7 +34,6 @@ export default function PostCoop({ onSubmit, data }: any) {
             console.log(error);
         }
     }
-
 
     return (
         <div>

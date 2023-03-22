@@ -17,7 +17,7 @@ export async function createUser(user: User) {
         await Database.setup(process.env.MONGODB_URI);
         const existingUser = await userModel.findOne({ email: user.email });
         if (existingUser) {
-            return { code: 400, message: "Alumni already exists" };
+            return { code: 409, message: "User already exists" };
         }
         const newUser = new userModel(
             {
@@ -30,7 +30,7 @@ export async function createUser(user: User) {
         await newUser.save();
 
 
-        return { code: 200, message: "User created" };
+        return { code: 201, message: "User created" };
     } catch (error: any) {
         return { code: 500, message: error.message };
     }
@@ -49,7 +49,7 @@ export async function updateName(user: User, currentPassword: string, newName: s
         const verifyPassword = await userModel.findOne({ email: user.email });
         const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
         if (!isValid) {
-            return { code: 400, message: "Invalid" };
+            return { code: 400, message: "Invalid Password" };
         }
         await userModel.findOneAndUpdate({ email: user.email }, { name: newName }, { new: true });
 
@@ -73,7 +73,7 @@ export async function updatePassword(email: string, currentPassword: string, new
         const verifyPassword = await userModel.findOne({ email });
         const isValid = await bcrypt.compare(verifyPassword.password, currentPassword);
         if (!isValid) {
-            return { code: 400, message: "Invalid" };
+            return { code: 400, message: "Invalid Password" };
         }
         await userModel.findOneAndUpdate({ email }, { password: newPassword }, { new: true });
 
@@ -172,7 +172,6 @@ export async function getFavorites(email: string) {
         if (!user) {
             return { code: 400, message: "User not found." };
         }
-
 
         return { code: 200, message: user.favorites };
 

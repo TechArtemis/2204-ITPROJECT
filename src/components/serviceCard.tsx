@@ -1,4 +1,4 @@
-//third-party imports
+// Third-party imports
 import React from "react";
 import NextLink from "next/link";
 import { Box, Flex, Heading, Icon, Link, Text } from "@chakra-ui/react";
@@ -17,8 +17,8 @@ export default function ServiceCard ({
     return (<Flex flexDirection="column" bg="yellow.50" p="40px" w="full" height="380px" justifyContent="space-between">
         <Icon color="green.900" h={20} w={20} as={icon} />
         <Box>
-            <Heading color="green.900" fontSize={28} letterSpacing="3px">{heading}</Heading>
-            <Text color="green.700">{description}</Text>
+            <Heading color="green.900" fontSize={28} fontFamily={"Lato-Bold"} letterSpacing="3px">{heading}</Heading>
+            <Text color="green.700" >{description}</Text>
         </Box>
         <Link as={NextLink} href='./login' color="green.800">
             Explore more

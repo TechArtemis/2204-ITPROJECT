@@ -1,4 +1,4 @@
-//third-party imports
+// Third-party imports
 import axios from "axios";
 
 export const instance = axios.create(
