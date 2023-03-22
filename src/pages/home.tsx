@@ -1,15 +1,13 @@
-/* eslint-disable react/jsx-key */
-
 // Third-party imports
-import { Box, Flex, Grid, GridItem, Divider, Center, Button, Text, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Divider, Center, SimpleGrid } from "@chakra-ui/react";
 import Image from "next/image";
+import { getToken } from "next-auth/jwt";
 
-// local Imports
+// Local imports
 import EventCardComponent from "@/components/eventCardComponent";
 import JobCardComponent from "@/components/jobCardComponent";
 import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
-import { getToken } from "next-auth/jwt";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import { getAllPosting } from "@/backend/actions/jobPosting";

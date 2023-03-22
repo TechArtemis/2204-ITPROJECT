@@ -3,12 +3,11 @@ import { Box, Flex, Card, CardHeader, CardBody } from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { red } from "@mui/material/colors";
-
-// Local Imports
-import styles from "@/styles/JobPostings.module.sass";
-import heartIcon from "@/../public/images/heartIcon.png";
-import companyIcon from "@/../public/images/companyDefaultIcon.png";
 import { useState } from "react";
+
+// Local imports
+import styles from "@/styles/JobPostings.module.sass";
+import companyIcon from "@/../public/images/companyDefaultIcon.png";
 import { instance } from "@/shared/axiosInstance";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));

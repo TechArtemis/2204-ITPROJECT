@@ -12,9 +12,8 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
-import Navbar from "@/components/navbar";
 
-//dynamic imports
+// Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
 const EmailIcon = dynamic(() => import("@mui/icons-material/EmailOutlined"));
 const LocationOnIcon = dynamic(() => import("@mui/icons-material/LocationOnOutlined"));

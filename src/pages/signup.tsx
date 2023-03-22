@@ -35,6 +35,10 @@ export default function SignupCard() {
     const [password, setPassword] = useState("");
     const [fName, setFName] = useState("");
     const [lName, setLName] = useState("");
+    const [isFNameInvalid, setIsFNameInvalid] = useState(false);
+    const [isLNameInvalid, setIsLNameInvalid] = useState(false);
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+    const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
 
     const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => setInput(e.target.value);
 
@@ -64,14 +68,27 @@ export default function SignupCard() {
 
     const handleSubmit = async () => {
         if (!STUDENT_EMAIL_REGEX.test(email)) {
-
+            setIsEmailInvalid(true);
+        } else {
+            setIsEmailInvalid(false);
         }
         if (!PASSWORD_REGEX.test(password)) {
-
+            setIsPasswordInvalid(true);
+        } else {
+            setIsPasswordInvalid(false);
         }
-        if (!isValidStr(fName) || !isValidStr(lName)) {
-
+        if (!isValidStr(fName)) {
+            setIsFNameInvalid(true);
+        } else {
+            setIsFNameInvalid(false);
         }
+
+        if (!isValidStr(lName)) {
+            setIsLNameInvalid(true);
+        } else {
+            setIsLNameInvalid(false);
+        }
+
         const name = fName + " " + lName;
         const user: User = {
             name,
@@ -94,8 +111,6 @@ export default function SignupCard() {
         }
     };
 
-    const isError = input === "";
-
     return (
         <>
             <div>
@@ -109,7 +124,7 @@ export default function SignupCard() {
                         bg={useColorModeValue("gray.50", "gray.800")}>
                         <Stack spacing={8} mx={"auto"} w={"full"} maxW={"lg"} py={12} px={6}>
                             <Stack align={"center"}>
-                                <Heading fontSize={"4xl"} textAlign={"center"}>
+                                <Heading fontSize={"4xl"} textAlign={"center"} fontFamily={"Lato-Bold"}>
                                     Sign up
                                 </Heading>
                                 <Text fontSize={"lg"} color={"gray.600"}>
@@ -124,40 +139,35 @@ export default function SignupCard() {
                                 <Stack spacing={4}>
                                     <HStack>
                                         <Box>
-                                            <FormControl id="firstName" isRequired>
+                                            <FormControl id="firstName" isInvalid={isFNameInvalid} isRequired>
                                                 <FormLabel>First Name</FormLabel>
                                                 <Input type="text" onChange={handleFNameChange} />
                                             </FormControl>
                                         </Box>
                                         <Box>
-                                            <FormControl id="lastName" isRequired>
+                                            <FormControl id="lastName" isInvalid={isLNameInvalid} isRequired>
                                                 <FormLabel>Last Name</FormLabel>
                                                 <Input type="text" onChange={handleLNameChange} />
                                             </FormControl>
                                         </Box>
                                     </HStack>
-                                    <FormControl id="email" isInvalid={isError}>
+                                    <FormControl id="email" isInvalid={isEmailInvalid} isRequired>
                                         <FormLabel>Email address</FormLabel>
                                         <Input type='email' onChange={handleEmailChange} />
-                                        {!isError ? (
+                                        {!isEmailInvalid ? (
                                             <FormHelperText>
                                                 Enter your VCC student email or personal CST alumni email
                                             </FormHelperText>
                                         ) : (
-                                            <FormErrorMessage>Email is required.</FormErrorMessage>
+                                            <FormErrorMessage>
+                                                Invalid e-mail, please use a valid VCC e-mail
+                                            </FormErrorMessage>
                                         )}
                                     </FormControl>
-                                    <FormControl id="password" isInvalid={isError}>
+                                    <FormControl id="password" isInvalid={isPasswordInvalid} isRequired>
                                         <FormLabel>Password</FormLabel>
                                         <InputGroup>
                                             <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
-                                            {!isError ? (
-                                                <FormHelperText>
-                                                    Enter Password
-                                                </FormHelperText>
-                                            ) : (
-                                                <FormErrorMessage>Password is required.</FormErrorMessage>
-                                            )}
                                             <InputRightElement h={"full"}>
                                                 <Button
                                                     variant={"ghost"}
@@ -168,6 +178,11 @@ export default function SignupCard() {
                                                 </Button>
                                             </InputRightElement>
                                         </InputGroup>
+                                        {isPasswordInvalid &&
+                                            <FormErrorMessage>
+                                                Password is required
+                                            </FormErrorMessage>
+                                        }
                                     </FormControl>
                                     <Stack spacing={10} pt={2}>
                                         <Button

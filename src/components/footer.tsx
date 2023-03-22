@@ -1,9 +1,7 @@
-//third-party imports
+// Third-party imports
 import React from "react";
 import { Box, Heading, Icon, Link } from "@chakra-ui/react";
 import { FaSignInAlt } from "react-icons/fa";
-
-
 
 export default function Footer() {
     return (
@@ -11,9 +9,10 @@ export default function Footer() {
             <Heading
                 color="white"
                 fontSize={46}
-                letterSpacing="6px"
+                letterSpacing="3px"
                 textAlign="center"
                 pb="80px"
+                fontFamily={"Lato-Bold"}
             >
                 Want to take the next step in your Career? <br /> Join the VCC Co op
             </Heading>

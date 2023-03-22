@@ -1,5 +1,4 @@
-
-//third-party imports
+// Third-party imports
 import { Flex, Heading, HStack, Icon, Link } from "@chakra-ui/react";
 import { FaSignInAlt } from "react-icons/fa";
 import NextLink from "next/link";
@@ -8,7 +7,7 @@ export default function Header(){
     return (
         <Flex
             px="200px"
-            py="20px"
+            py="30px"
             width="full"
             bg="green.900"
             alignItems="flex-end"
@@ -16,10 +15,10 @@ export default function Header(){
         >
 
             <Flex alignItems="flex-end">
-                <Heading color="whiteAlpha.900" mr="40px" fontSize={15} letterSpacing="1.5px">
-                    Vancouver Community College
-                </Heading>
                 <HStack color="whiteAlpha.700" spacing="40px">
+                    <Heading color="whiteAlpha.900" mr="30px" fontFamily={"Lato-Bold"} fontSize={20} letterSpacing="1.5px">
+                    Vancouver Community College
+                    </Heading>
                     <Link as={NextLink} href='./'>Home</Link>
                     <Link href='https://www.vcc.ca/programs/computer-systems-technology/' isExternal>Programs and Courses</Link>
                     <Link as={NextLink} href='./login'>Job Postings</Link>

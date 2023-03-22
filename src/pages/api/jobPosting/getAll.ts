@@ -1,7 +1,7 @@
-// third-party imports
+// Third-party imports
 import { NextApiRequest, NextApiResponse } from "next";
 
-// local import
+// Local imports
 import { getAllPosting } from "@/backend/actions/jobPosting";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {

@@ -22,6 +22,8 @@ import { getToken } from "next-auth/jwt";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
 import Navbar from "@/components/navbar";
+import styles from "@/styles/components.module.sass";
+import { PASSWORD_REGEX, STUDENT_EMAIL_REGEX } from "@/shared/regex";
 
 
 export default function LogIn() {
@@ -30,6 +32,8 @@ export default function LogIn() {
     const [input, setInput] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+    const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
 
     const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => setInput(e.target.value);
 
@@ -46,6 +50,17 @@ export default function LogIn() {
     };
 
     const handleLogin = async () => {
+        if (!STUDENT_EMAIL_REGEX.test(email)) {
+            setIsEmailInvalid(true);
+        } else {
+            setIsEmailInvalid(false);
+        }
+        if (!PASSWORD_REGEX.test(password)) {
+            setIsPasswordInvalid(true);
+        } else {
+            setIsPasswordInvalid(false);
+        }
+
         try {
             const response = await signIn("credentials", { redirect: false, email, password });
 
@@ -59,37 +74,30 @@ export default function LogIn() {
         }
     };
 
-    const isError = input === "";
-
     return (
         <>
             <div>
                 <Stack minH={"100vh"} direction={{ base: "column", md: "row" }}>
                     <Flex p={8} flex={1} align={"center"} justify={"center"}>
                         <Stack spacing={4} w={"full"} maxW={"md"}>
-                            <Heading fontSize={"2xl"}>Sign in to your account</Heading>
-                            <FormControl id="email" isInvalid={isError}>
+                            <Heading fontSize={"2xl"} fontFamily={"Lato-Bold"}>Sign in to your account</Heading>
+                            <FormControl id="email" isInvalid={isEmailInvalid}>
                                 <FormLabel>Email address</FormLabel>
                                 <Input type='email' onChange={handleEmailChange} />
-                                {!isError ? (
+                                {!isEmailInvalid ? (
                                     <FormHelperText>
                                         Enter your VCC student email or personal CST alumni email
                                     </FormHelperText>
                                 ) : (
-                                    <FormErrorMessage>Email is required.</FormErrorMessage>
+                                    <FormErrorMessage>
+                                        Invalid e-mail, please use a valid VCC e-mail
+                                    </FormErrorMessage>
                                 )}
                             </FormControl>
-                            <FormControl id="password" isRequired isInvalid={isError}>
+                            <FormControl id="password" isInvalid={isPasswordInvalid}>
                                 <FormLabel>Password</FormLabel>
                                 <InputGroup>
                                     <Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
-                                    {!isError ? (
-                                        <FormHelperText>
-                                            Enter Password
-                                        </FormHelperText>
-                                    ) : (
-                                        <FormErrorMessage></FormErrorMessage>
-                                    )}
                                     <InputRightElement h={"full"}>
                                         <Button
                                             variant={"ghost"}
@@ -100,6 +108,11 @@ export default function LogIn() {
                                         </Button>
                                     </InputRightElement>
                                 </InputGroup>
+                                {isPasswordInvalid &&
+                                    <FormErrorMessage>
+                                        Incorrect password
+                                    </FormErrorMessage>
+                                }
                             </FormControl>
                             <Stack spacing={8}>
                                 <Stack

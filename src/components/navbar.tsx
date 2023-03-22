@@ -1,9 +1,8 @@
-//third-party imports
+// Third-party imports
 import Link from "next/link";
-import router, { useRouter } from "next/router";
 import Image from "next/image";
 
-// Local Imports
+// Local imports
 import styles from "@/styles/components.module.sass";
 import Profile from "@/components/profile";
 

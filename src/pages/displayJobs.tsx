@@ -1,11 +1,11 @@
-//third-party imports
+// Third-party imports
 import { getToken } from "next-auth/jwt";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import router from "next/router";
-import { Grid, GridItem, Input, InputGroup, InputRightElement, SimpleGrid } from "@chakra-ui/react";
+import { Grid, GridItem, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
 
-//local imports
+// Local imports
 import { getFavorites } from "@/backend/actions/user";
 import { getAllPosting } from "@/backend/actions/jobPosting";
 import styles from "@/styles/displayJobs.module.sass";
