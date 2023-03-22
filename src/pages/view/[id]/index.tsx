@@ -81,6 +81,8 @@ export default function PostCoop({ onSubmit, data }: any) {
                             <p>{data.employment}</p>
                             <h1>Job Description</h1>
                             <p>{data.jobDescription}</p>
+                            <h1>Job Tags</h1>
+                            <p>{ data.tags.join(", ") }</p>
                         </div>
                     }
                 </div>

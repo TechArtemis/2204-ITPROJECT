@@ -32,6 +32,7 @@ export interface JobPosting {
     jobTitle: string;
     employment: JobPosting.EmploymentType;
     datePosted: Date;
+    tags: string[];
 }
 
 //namespace for JobPosting

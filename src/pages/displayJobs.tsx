@@ -105,18 +105,21 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
                         {jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
                         || card.jobTitle.toLowerCase().includes(search.toLowerCase())
                         || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
-                        || card.jobType.toLowerCase().includes(search.toLowerCase()))
-                            .map((post: JobPosting, idx) => (
-                                <div key={idx} className={styles.cardWrapper}>
-                                    <Card
-                                        name={post.companyName}
-                                        address={post.companyLocation[0].location.city}
-                                        job={post.jobTitle}
-                                        type={post.jobType} id={post._id as string}
-                                        liked={favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
-                                    />
-                                </div>
-                            ))}
+                        || card.jobType.toLowerCase().includes(search.toLowerCase())
+                        || card.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())))
+
+                        .map((post: JobPosting, idx) => (
+                            <div key={idx} className={styles.cardWrapper}>
+                                <Card
+                                    image={post.companyImage}
+                                    name={post.companyName}
+                                    address={post.companyLocation[0].location.city}
+                                    job={post.jobTitle}
+                                    type={post.jobType} id={post._id as string}
+                                    liked={favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+                                />
+                            </div>
+                        ))} 
                     </Grid>
                 </div>
             </div>
