@@ -1,14 +1,15 @@
+// Third-party imports
 import React from "react";
-import { AspectRatio, Box, Flex, Heading, Icon, Img, VStack } from "@chakra-ui/react";
-import { BiCheckDouble } from "react-icons/bi";
+import { AspectRatio, Box, Flex, Heading, Img, VStack } from "@chakra-ui/react";
+
+// Local imports
 import { Commitment } from "@/components/commitments";
-import studentBanner from "@/public/images/studentsBanner.png";
 
 export const Commitments = () => {
     return (
         <Flex pl="200px" background="green.900" justifyContent="space-between" alignItems="center">
             <Box py="60px" pr="140px">
-                <Heading fontSize={42} letterSpacing="4px" color="whiteAlpha.900" pb="60px">
+                <Heading fontSize={42} fontFamily={"Lato-Bold"} letterSpacing="3px" color="whiteAlpha.900" pb="60px">
                     Committed to your
                     <br /> success
                 </Heading>

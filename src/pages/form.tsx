@@ -1,10 +1,10 @@
-//third-party imports
+// Third-party imports
 import React, { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
 
-//local imports
+// Local imports
 import styles from "@/styles/form.module.sass";
 import Button from "@/components/button";
 import Input from "@/components/input";
@@ -13,9 +13,7 @@ import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
 
-
-
-//dynamic imports
+// Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
 const EmailIcon = dynamic(() => import("@mui/icons-material/EmailOutlined"));
 const LocationOnIcon = dynamic(() => import("@mui/icons-material/LocationOnOutlined"));
@@ -195,9 +193,9 @@ function CompanyPostInfo({ onSubmit, item }: any) {
                     </SelectOption>
                     <Input
                         type="textarea"
-                        placeholder="Enter your desctiption"
-                        name="companyAbout" value={item.companyAbout}
-                        rows={4}
+                        placeholder="Enter your Description"
+                        name="companyAbout" value={data.companyAbout}
+                        rows={6}
                         onChangeTextArea={handleChange}>
                         <DescriptionIcon sx={{ color: "#84BD00" }}/>
                     </Input>
@@ -213,7 +211,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
                         type="button"
                         onClick={() => handleRouteToJobs()}
                         className={styles.backbutton}>
-                    Return to home
+                        Return to home
                     </Button>
                 </div>
             </div>
@@ -271,9 +269,9 @@ function JobPostInfo({ onSubmit, item }: any) {
                     </SelectOption>
                     <Input
                         type="textarea"
-                        placeholder="Enter your Desctiption"
-                        name="jobDescription" value={item.jobDescription}
-                        rows={4}
+                        placeholder="Enter your Description"
+                        name="jobDescription" value={data.jobDescription}
+                        rows={8}
                         onChangeTextArea={handleChange}
                     >
                         <DescriptionIcon sx={{ color: "#84BD00" }} />
@@ -324,10 +322,19 @@ function PostCoop({ onSubmit, item }: any) {
                     </div>
                 </div>
                 <div className={styles.content}>
-
                     <div className={styles.subcontent}>
-                        <button onClick={() => setValue(1)}>Overview</button>
-                        <button onClick={() => setValue(0)}>Job Details</button>
+                        {value === 1 ?
+                            <button className={styles.clickedButton} onClick={() => setValue(1)}>Overview</button>
+                            :
+                            <button onClick={() => setValue(1)}>Overview</button>
+                        }
+
+                        {value === 0 ?
+                            <button className={styles.clickedButton} onClick={() => setValue(0)}>Job Details</button>
+                            :
+                            <button onClick={() => setValue(0)}>Job Details</button>
+                        }
+
                     </div>
 
                     {value === 1 ?
@@ -335,7 +342,9 @@ function PostCoop({ onSubmit, item }: any) {
                             <h1>About</h1>
                             <p>{item.companyAbout}</p>
                             <h1>Location</h1>
-                            <p>{item.companyLocation.address}{item.companyLocation.city}{item.companyLocation.province}{item.companyLocation.postalCode}</p>
+                            <p>{data.companyLocation.address}</p>
+                            <p>{data.companyLocation.city}, {data.companyLocation.province}</p>
+                            <p>{data.companyLocation.postalCode}</p>
                             <h1>Contact</h1>
                             <p>{item.companyContact}</p>
                         </div>
@@ -372,7 +381,7 @@ export default function FormPages() {
         companyLocation: {
             address: "",
             city: "",
-            province: "AB",
+            province: "BC",
             postalCode: ""
         },
         companyAbout: "",
@@ -451,7 +460,7 @@ export default function FormPages() {
                 jobPosting
             };
 
-            console.log("test",obj);
+            console.log("test", obj);
 
             await instance.post("/jobPosting/create", obj);
             router.push("/");

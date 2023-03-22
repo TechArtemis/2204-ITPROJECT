@@ -2,14 +2,13 @@
 import { Box, Flex, Card, CardHeader, CardBody } from "@chakra-ui/react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-
-// Local Imports
-import styles from "@/styles/JobPostings.module.sass";
-import heartIcon from "@/../public/images/heartIcon.png";
-import companyIcon from "@/../public/images/companyDefaultIcon.png";
+import { red } from "@mui/material/colors";
 import { useState } from "react";
-import { instance } from "@/shared/axiosInstance";
 
+// Local imports
+import styles from "@/styles/JobPostings.module.sass";
+import companyIcon from "@/../public/images/companyDefaultIcon.png";
+import { instance } from "@/shared/axiosInstance";
 
 const FavoriteBorderIcon = dynamic(() => import("@mui/icons-material/FavoriteBorder"));
 const FavoriteIcon = dynamic(() => import("@mui/icons-material/Favorite"));
@@ -50,7 +49,7 @@ export default function JobCardComponent(props: Props) {
 
     return (
         <>
-            <Card maxW={"330px"} minW={"280px"} borderRadius={"3xl"} boxShadow={"dark-lg"} my={"5vh"}>
+            <Card maxW={"330px"} minW={"280px"} minH={"300px"} maxH={"300px"} borderRadius={"3xl"} boxShadow={"dark-lg"} my={"5vh"}>
                 <CardHeader m={3}>
                     <Flex>
                         <Flex flex={"1"} gap={"6"} alignItems={"center"} flexWrap={"wrap"}>
@@ -67,7 +66,7 @@ export default function JobCardComponent(props: Props) {
                         </Flex>
                     </Flex>
                 </CardHeader>
-                <CardBody ml={3} mt={-3}>
+                <CardBody ml={3} mt={-3} minH={"100px"}>
                     <h1 className={styles.jobCardTitle}>{props.job}</h1>
                     <p className={styles.jobCardType}>{props.type}</p>
                     {/* <p className={styles.jobCardPublished}>2d ago</p> */}
@@ -77,13 +76,13 @@ export default function JobCardComponent(props: Props) {
                         { !liked ?
                             <div>
                                 <button onClick={() => handleAddToLiked(props.id as string, "add")}>
-                                    <FavoriteBorderIcon/>
+                                    <FavoriteBorderIcon fontSize="large" />
                                 </button>
                             </div>
                             :
                             <div>
                                 <button onClick={() => handleAddToLiked(props.id as string, "remove")}>
-                                    <FavoriteIcon/>
+                                    <FavoriteIcon fontSize="large" sx={{ color: red[500] }}/>
                                 </button>
                             </div>
                         }

@@ -1,8 +1,9 @@
-//third-party imports
+// Third-party imports
 import { getToken } from "next-auth/jwt";
 import { useState } from "react";
+import { Grid } from "@chakra-ui/react";
 
-//local imports
+// Local imports
 import { getFavorites } from "@/backend/actions/user";
 import Card from "@/components/cards";
 import Navbar from "@/components/navbar";
@@ -36,24 +37,25 @@ export default function SavedJobs({ data }: Props) {
                     {(jobs.length === 0 && (
                         <div className={styles.nocontent}>No Jobs have been saved yet</div>
                     ))}
+                    <Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(3, 1fr)" }} ml={"5vh"} gap={2}>
+                        {jobs.map((post: JobPosting, idx) => (
+                            <div key={idx} className={styles.cardWrapper}>
+                                <Card
 
-                    {jobs.map((post: JobPosting, idx) => (
-                        <div key={idx} className={styles.cardWrapper}>
-                            <Card
-
-                                // image={post.companyImage}
-                                name={post.companyName}
-                                address={post.companyLocation[0].location.city}
-                                job={post.jobTitle}
-                                type={post.jobType} id={post._id as string}
-                                extraFunction={(jobPosting) => {
-                                    console.info("here");
-                                    setJobs([...jobs.filter(job => job._id !== jobPosting)]);
-                                }}
-                                liked
-                            />
-                        </div>
-                    ))}
+                                    // image={post.companyImage}
+                                    name={post.companyName}
+                                    address={post.companyLocation[0].location.city}
+                                    job={post.jobTitle}
+                                    type={post.jobType} id={post._id as string}
+                                    extraFunction={(jobPosting) => {
+                                        console.info("here");
+                                        setJobs([...jobs.filter(job => job._id !== jobPosting)]);
+                                    }}
+                                    liked
+                                />
+                            </div>
+                        ))}
+                    </Grid>
                 </div>
             </div>
         </div>

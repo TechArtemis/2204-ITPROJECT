@@ -1,7 +1,7 @@
-// third-party imports
+// Third-party imports
 import { NextApiRequest, NextApiResponse } from "next";
 
-// local imports
+// Local imports
 import { getUser, updatePassword } from "@/backend/actions/user";
 import { STUDENT_EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
 import { authOptions } from "../../auth/[...nextauth]";

@@ -81,7 +81,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 jobTitle: jobPosting.jobTitle,
                 jobType: jobPosting.jobType,
                 employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted
+                datePosted: jobPosting.datePosted,
+                companyImage: ""
             };
 
             // Creates the job posting in the database and stores the response

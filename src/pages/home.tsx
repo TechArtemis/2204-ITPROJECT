@@ -1,15 +1,13 @@
-/* eslint-disable react/jsx-key */
-
 // Third-party imports
-import { Box, Flex, Grid, GridItem, Divider, Center, Button, Text, SimpleGrid } from "@chakra-ui/react";
+import { Box, Flex, Grid, GridItem, Divider, Center, SimpleGrid } from "@chakra-ui/react";
 import Image from "next/image";
+import { getToken } from "next-auth/jwt";
 
-// local Imports
+// Local imports
 import EventCardComponent from "@/components/eventCardComponent";
 import JobCardComponent from "@/components/jobCardComponent";
 import StudentsBanner from "@/../public/images/studentsBanner.png";
 import styles from "@/styles/JobPostings.module.sass";
-import { getToken } from "next-auth/jwt";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import { getAllPosting } from "@/backend/actions/jobPosting";
@@ -46,7 +44,7 @@ export default function JobPostings(props: Props) {
     return (
         <>
             <Navbar/>
-            <Box bg={"gray.500"} w={"100%"} h={"50vh"} mt={180} color={"white"}>
+            <Box bg={"gray.500"} w={"100%"} h={"50vh"} mt={50} color={"white"}>
                 <div className={styles.bannerContainer}>
                     <Image className={styles.bannerImage} src={StudentsBanner} alt="Students banner" />
                     <h1 className={styles.bannerTitle}>VCC Co-op<br/>
@@ -58,7 +56,7 @@ export default function JobPostings(props: Props) {
             </Box>
             <Flex>
                 <Flex display={["none", "none", "flex", "flex"]}>
-                    <Box bg={"#485049"} minW={"380px"} h={"1350px"} color={"white"}>
+                    <Box bg={"#485049"} minW={"380px"} h={"100%"} color={"white"}>
                         <Grid>
                             <GridItem>
                                 <Center>
@@ -115,30 +113,12 @@ export default function JobPostings(props: Props) {
                     </Box>
                 </Flex>
 
-                <Box bg={"white"} w={"100%"} h={"125vh"}>
+                <Box bg={"white"} w={"100%"}>
                     <h1 className={styles.jobListTitle}>Latest Jobs</h1>
 
-                    {/* <Slider {...settings}>
+                    <SimpleGrid columns={{ sm: 1, lg: 2, xl: 3, "2xl": 4 }} spacing={2} ml={"5vh"}>
                         {
-                            props.jobs.map((post: JobPosting, idx) => (
-                                <div>
-                                    <JobCardComponent
-                                        id={post._id as string}
-                                        image={post.companyImage}
-                                        name={post.companyName}
-                                        address={post.companyLocation[0].location.city}
-                                        job={post.jobTitle}
-                                        type={post.jobType}
-                                        liked={props.favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
-                                    />
-                                </div>
-                            ))
-                        }
-                    </Slider> */}
-
-                    <SimpleGrid columns={3} spacing={0} ml={"5vh"}>
-                        {
-                            props.jobs.slice(-3).map((post: JobPosting, idx) => (
+                            props.jobs.slice(-4).map((post: JobPosting, idx) => (
                                 <GridItem key={idx}>
                                     <JobCardComponent
                                         id={post._id as string}
@@ -156,9 +136,9 @@ export default function JobPostings(props: Props) {
 
 
                     <h1 className={styles.jobListTitle}>Based on your career interests</h1>
-                    <SimpleGrid columns={3} spacing={0} ml={"5vh"}>
+                    <SimpleGrid columns={{ sm: 1, lg: 2, xl: 3, "2xl": 4 }} spacing={2} ml={"5vh"}>
                         {
-                            props.jobs.slice(-3).map((post: JobPosting, idx) => (
+                            props.jobs.slice(-4).map((post: JobPosting, idx) => (
                                 <GridItem key={idx}>
                                     <JobCardComponent
                                         id={post._id as string}
