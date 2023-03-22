@@ -61,8 +61,7 @@ export async function getAdmin(email: string) {
 export async function changePassword(password: string, email: string) {
     try {
         await Database.setup(process.env.MONGODB_URI);
-        await adminModel.findOneAndUpdate({ email }, { password }, { new: true });
-        
+        const getAdmin = await adminModel.findOneAndUpdate({ email }, { password }, { new: true });
         return { code: 200, message: "Password changed" };
     } catch (error: any) {
         return { code: 500, message: error.message };

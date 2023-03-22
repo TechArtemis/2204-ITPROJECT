@@ -6,6 +6,7 @@ import multer from "multer";
 // Local imports
 import { uploadFile } from "@/backend/actions/cloudinary";
 
+
 /**
  * @description saves the file locally
  */
@@ -87,7 +88,8 @@ handler
                 {
                     code,
                     message,
-                    cause
+                    cause,
+                    error
                 }
             );
         }

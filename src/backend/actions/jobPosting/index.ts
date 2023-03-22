@@ -18,7 +18,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
             {
                 companyName: jobPosting.companyName,
 
-                // companyImage: jobPosting.companyImage,
+                companyImage: jobPosting.companyImage,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,
                 companyAbout: jobPosting.companyAbout,
@@ -112,7 +112,7 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
         const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
             {
 
-                // companyImage: jobPosting.companyImage,
+                companyImage: jobPosting.companyImage,
                 companyName: jobPosting.companyName,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,

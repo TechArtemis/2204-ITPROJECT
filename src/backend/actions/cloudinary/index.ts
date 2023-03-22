@@ -4,6 +4,8 @@ const { uploader } = cloudinary;
 
 export async function uploadFile(path: string) {
     try {
+        console.log("Enter")
+        console.log(path)
         const response = await uploader.upload(
             path,
             {
@@ -11,7 +13,7 @@ export async function uploadFile(path: string) {
                 unique_filename: true
             }
         );
-
+        console.log("Enter1")
         if (!response) {
             throw {
                 code: 500,
