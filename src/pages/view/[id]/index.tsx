@@ -12,11 +12,6 @@ import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 
-// Dynamic imports
-// const EditIcon = dynamic(() => import("@mui/icons-material/Edit"));
-// const DeleteIcon = dynamic(() => import("@mui/icons-material/Delete"));
-// const CheckIcon = dynamic(() => import("@mui/icons-material/Check"));
-
 
 export default function PostCoop({ onSubmit, data }: any) {
     const [value, setValue] = useState(1);
@@ -40,9 +35,7 @@ export default function PostCoop({ onSubmit, data }: any) {
             <Navbar />
             <div className={styles.submitform}>
                 <div className={styles.header}>
-                    {/* <Image className={styles.logo} src={`https://res.cloudinary.com/honeydrew/${data.companyImage}`} alt={"image"} width={150} height={150} /> */}
                     <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={85} height={85} />
-
                     <div className={styles.subheader}>
                         <div>
                             <h1>{data.companyName}</h1>
@@ -67,7 +60,9 @@ export default function PostCoop({ onSubmit, data }: any) {
                             <h1>About</h1>
                             <p>{data.companyAbout}</p>
                             <h1>Location</h1>
-                            <p>{data.companyLocation.address}{data.companyLocation.city}{data.companyLocation.province}{data.companyLocation.postalCode}</p>
+                            <p>{data.companyLocation[0].location.address}</p>
+                            <p>{data.companyLocation[0].location.city}, {data.companyLocation[0].location.province}</p>
+                            <p>{data.companyLocation[0].location.postalCode}</p>
                             <h1>Contact</h1>
                             <p>{data.companyContact}</p>
                         </div>

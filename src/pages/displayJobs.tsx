@@ -31,135 +31,123 @@ interface Props {
 // This is page is used to display all the jobs posted by the company
 export default function DisplayJobs({ jobPostings, favorites }: Props) {
 
-    const [search, setSearch] = useState("");
+	const [search, setSearch] = useState("");
 
-    function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-        const val = event.target.value;
+	function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
+		const val = event.target.value;
 
-        setSearch(val);
-    };
+		setSearch(val);
+	};
 
-    function handleRouteToForm() {
-        router.push("/form");
-    }
+	function handleRouteToForm() {
+		router.push("/form");
+	}
 
-    return (
-        <div>
-            <Navbar />
-            <div className={styles.container}>
+	return (
+		<div>
+			<Navbar />
+			<div className={styles.container}>
+				<Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
+					<GridItem colSpan={{ sm: 3, md: 2 }}>
+						<InputGroup
+							className={styles.search}
+							alignContent="center">
+							<Input
+								type={"text"}
+								placeholder="Search companies, job name, keywords, etc." size="sm"
+								value={search}
+								className={styles.searchInput}
+								onChange={handleSearch}
+							/>
+							<InputRightElement className={styles.searchIcon}>
+								<Search fontSize="medium"/>
+							</InputRightElement>
+						</InputGroup>
+					</GridItem>
+					<GridItem colSpan={{ sm: 3, md: 1 }}>
+						<Button
+							type={"button"}
+							onClick={() => handleRouteToForm()}
+							className={styles.post}>
+							<div className={styles.postJobText}>
+								<p>Post Job</p>
+								<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+							</div>
+						</Button>
+					</GridItem>
+				</Grid>
+			</div>
 
+			<div className={styles.title}>
+				<h1>Explore Jobs</h1>
+			</div>
 
-                {/* <div className={styles.search}>
-                    <input
-                        type="text"
-                        placeholder="Search companies, job name, keywords,etc."
-                        value={search}
-                        onChange={handleSearch}>
-                    </input>
+			<div className={styles.cardContainer}>
+				<div className={styles.cardArr} >
 
-                </div> */}
+					{(jobPostings.length === 0 && (
+						<div className={styles.nocontent}>No Jobs have posted yet</div>
+					))}
 
-                <Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
-                    <GridItem colSpan={{ sm: 3, md: 2 }}>
-                        <InputGroup
-                            className={styles.search}
-                            alignContent="center">
-                            <Input
-                                type={"text"}
-                                placeholder="Search companies, job name, keywords, etc." size="sm"
-                                value={search}
-                                className={styles.searchInput}
-                                onChange={handleSearch}
-                            />
-                            <InputRightElement className={styles.searchIcon}>
-                                <Search fontSize="medium"/>
-                            </InputRightElement>
-                        </InputGroup>
-                    </GridItem>
-                    <GridItem colSpan={{ sm: 3, md: 1 }}>
-                        <Button
-                            type={"button"}
-                            onClick={() => handleRouteToForm()}
-                            className={styles.post}>
-                            <div className={styles.postJobText}>
-                                <p>Post Job</p>
-                                <AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-                            </div>
-                        </Button>
-                    </GridItem>
-                </Grid>
-            </div>
-
-            <div className={styles.title}>
-                <h1>Explore Jobs</h1>
-            </div>
-
-            <div className={styles.cardContainer}>
-                <div className={styles.cardArr} >
-
-                    {(jobPostings.length === 0 && (
-                        <div className={styles.nocontent}>No Jobs have posted yet</div>
-                    ))}
-
-                    <Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(3, 1fr)" }} ml={"5vh"} gap={2}>
-                        {jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
+					<Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(3, 1fr)" }} ml={"5vh"} gap={2}>
+						{jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
                         || card.jobTitle.toLowerCase().includes(search.toLowerCase())
                         || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
                         || card.jobType.toLowerCase().includes(search.toLowerCase())
                         || card.tags.some(tag => tag.toLowerCase().includes(search.toLowerCase())))
 
-                        .map((post: JobPosting, idx) => (
-                            <div key={idx} className={styles.cardWrapper}>
-                                <Card
-                                    image={post.companyImage}
-                                    name={post.companyName}
-                                    address={post.companyLocation[0].location.city}
-                                    job={post.jobTitle}
-                                    type={post.jobType} id={post._id as string}
-                                    liked={favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
-                                />
-                            </div>
-                        ))} 
-                    </Grid>
-                </div>
-            </div>
-        </div>
+							.map((post: JobPosting, idx) => (
+								<div key={idx} className={styles.cardWrapper}>
+									<Card
+										image={post.companyImage}
+										name={post.companyName}
+										address={post.companyLocation[0].location.city}
+										job={post.jobTitle}
+										type={post.jobType} id={post._id as string}
+										liked={favorites.filter((fav => fav._id as string === post._id as string)).length === 1}
+									/>
+								</div>
+							))}
+					</Grid>
+				</div>
+			</div>
+		</div>
 
-    );
+	);
 }
 
 
 export async function getServerSideProps(context: { [key: string]: any }) {
-    try {
-        const secret = process.env.NEXTAUTH_SECRET;
-        const token = await getToken(
-            {
-                req: context.req,
-                secret: secret
-            }
-        );
+	try {
+		const secret = process.env.NEXTAUTH_SECRET;
+		const token = await getToken(
+			{
+				req: context.req,
+				secret: secret
+			}
+		);
 
-        // If the user is already logged in, redirect.
-        // Note: Make sure not to redirect to the same page
-        // To avoid an infinite loop!
-        if (!token) {
-            return { redirect: { destination: "/login", permanent: false } };
-        }
+		// If the user is already logged in, redirect.
+		// Note: Make sure not to redirect to the same page
+		// To avoid an infinite loop!
+		if (!token) {
+			return { redirect: { destination: "/login", permanent: false } };
+		}
 
-        const form = await getAllPosting();
-        const { message: favorites } = await getFavorites(token.email as string);
+		const form = await getAllPosting();
+		const { message: favorites } = await getFavorites(token.email as string);
 
-        return {
-            props: {
-                jobPostings: JSON.parse(JSON.stringify(form.message)),
-                favorites: JSON.parse(JSON.stringify(favorites))
-            },
-        };
-    } catch (error) {
-        return {
-            redirect: {
-                destination: "/",
-            },
-        };
-    }
+		return {
+			props: {
+				jobPostings: JSON.parse(JSON.stringify(form.message)),
+				favorites: JSON.parse(JSON.stringify(favorites))
+			},
+		};
+	} catch (error) {
+		return {
+			redirect: {
+				destination: "/",
+			},
+		};
+	}
 }

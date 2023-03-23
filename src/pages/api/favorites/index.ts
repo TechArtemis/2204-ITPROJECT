@@ -14,6 +14,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
                 };
             }
             const { email } = req.query;
+
             // validation
             if (!STUDENT_EMAIL_REGEX.test(email as string)) {
                 throw {

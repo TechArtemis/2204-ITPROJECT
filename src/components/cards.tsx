@@ -65,11 +65,10 @@ export default function Card(props: Props) {
     }
 
     return (
-        <div className={styles.cards} onClick={() => handleClick()}>
+        <div className={styles.cards}>
             {props.children}
-            <div className={styles.companyInfo}>
+            <div className={styles.companyInfo} onClick={() => handleClick()}>
                 <div className={styles.companyLogo}>
-                    {/* <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/> */}
                     <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
                 </div>
                 <div>
@@ -78,7 +77,7 @@ export default function Card(props: Props) {
                 </div>
             </div>
 
-            <div className={styles.jobInfo}>
+            <div className={styles.jobInfo} onClick={() => handleClick()}>
                 <h1>{props.job}</h1>
                 <h2>{props.type}</h2>
             </div>

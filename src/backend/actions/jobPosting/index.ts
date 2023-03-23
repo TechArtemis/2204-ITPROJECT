@@ -17,7 +17,6 @@ export async function createJobPosting(jobPosting: JobPosting) {
         const jobPost = new jobPostingModel(
             {
                 companyName: jobPosting.companyName,
-
                 companyImage: jobPosting.companyImage,
                 companyContact: jobPosting.companyContact,
                 companyLocation: jobPosting.companyLocation,
@@ -163,7 +162,7 @@ export async function getAllPosting() {
     try {
         await Database.setup(process.env.MONGODB_URI);
         const allPost: JobPosting[] = await jobPostingModel.find({});
-        
+
         return { code: 200, message: allPost };
     } catch (error: any) {
         return { code: 500, message: error.message };
