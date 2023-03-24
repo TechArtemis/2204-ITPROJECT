@@ -1,85 +1,61 @@
-import React from "react";
-import { render, fireEvent } from "@testing-library/react";
-import LoginForm, { Props } from "@/pages/LoginForm";
+// tests/next-auth.test.ts
+import { Model as userModel } from "@/backend/database/ODM/User";
+import { authOptions } from "@/pages/api/auth/[...nextauth]";
+import bcrypt from "bcrypt";
+import { CredentialsConfig } from "next-auth/providers";
 
-// helper function for jest matchers
-function renderingLoginForm(props: Partial<Props>= {}) {
-    const defaultProps: Props = {
-        onPasswordChange() {
-            return;
-        },
-        onRememberChange() {
-            return;
-        },
-        onUsernameChange() {
-            return;
-        },
-        onSubmit() {
-            return;
-        },
-        shouldRemember: true
-    };
+jest.mock("@/backend/database/ODM/User");
 
-    return render(<LoginForm {...defaultProps} {...props} />);
-}
-
-
-describe("<LoginForm />", () => {
-    test("should display a blank login form, with remember checked by default", async () => {
-
-        const { findByTestId } = renderingLoginForm();
-        const loginForm = await findByTestId("login-form");
-
-        expect(loginForm).toHaveFormValues({
-            username: "",
-            password: "",
-            remember: true
-
-        });
+describe("NextAuth login", () => {
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
-    test("should allow entering a username", async () => {
-        const onUsernameChange = jest.fn();
-        const { findByTestId } = renderingLoginForm({ onUsernameChange });
-        const username = await findByTestId("username");
+    test("successfully logs in with correct credentials", async () => {
+        const email = "000444111@student.vcc";
+        const password = "password123@";
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const user = {
+            name: "Test Steven",
+            email,
+            password: hashedPassword,
+        };
 
-        fireEvent.change(username, { target: { value: "test" } });
+        userModel.findOne = jest.fn().mockResolvedValue(user);
 
-        expect(onUsernameChange).toHaveBeenCalledWith("test");
+        const credentialsProvider = authOptions.providers[0] as CredentialsConfig<any>;
+        const authorizedUser = await credentialsProvider.authorize({ email, password }, {});
+
+        expect(authorizedUser).toEqual({ name: user.name, email: user.email });
     });
 
+    test("fails to log in with incorrect password", async () => {
+        const email = "test@example.com";
+        const password = "wrong_password";
+        const hashedPassword = await bcrypt.hash("password123", 10);
+        const user = {
+            name: "Test User",
+            email,
+            password: hashedPassword,
+        };
 
-    test("should allow entering a password", async () => {
-        const onPasswordChange = jest.fn();
-        const { findByTestId } = renderingLoginForm({ onPasswordChange });
-        const username = await findByTestId("password");
+        userModel.findOne = jest.fn().mockResolvedValue(user);
 
-        fireEvent.change(username, { target: { value: "password " } });
+        const credentialsProvider = authOptions.providers[0] as CredentialsConfig<any>;
+        const authorizedUser = await credentialsProvider.authorize({ email, password }, {});
 
-        expect(onPasswordChange).toHaveBeencalledWith("password");
+        expect(authorizedUser).toBe(null);
     });
 
-    test("should submit the form with username, password, and remember", async () => {
-        const onSubmit = jest.fn();
-        const { findByTestId } = renderingLoginForm({
-            onSubmit,
-            shouldRemember: false
-        });
-        const username = await findByTestId("username");
-        const password = await findByTestId("password");
-        const remember = await findByTestId("remember");
-        const submit = await findByTestId("submit");
+    test("fails to log in with nonexistent email", async () => {
+        const email = "nonexistent@example.com";
+        const password = "password123";
 
-        fireEvent.change(username, { target: { value: "test" } });
-        fireEvent.change(password, { target: { value: "password " } });
-        fireEvent.click(remember);
-        fireEvent.click(submit);
+        userModel.findOne = jest.fn().mockResolvedValue(null);
 
-        expect(onSubmit).toHaveBeenCalledWith("test", "password", true);
+        const credentialsProvider = authOptions.providers[0] as CredentialsConfig<any>;
+        const authorizedUser = await credentialsProvider.authorize({ email, password }, {});
+
+        expect(authorizedUser).toBe(null);
     });
 });
-
-
-
-
-
