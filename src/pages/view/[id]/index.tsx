@@ -18,7 +18,7 @@ const Edit = dynamic(() => import("@mui/icons-material/Edit"));
 const Delete = dynamic(() => import("@mui/icons-material/Delete"));
 
 
-export default function PostCoop({ onSubmit, data }: any) {
+export default function PostCoop({ onSubmit, data, name }: any) {
 	const [value, setValue] = useState(1);
 
 
@@ -70,12 +70,18 @@ export default function PostCoop({ onSubmit, data }: any) {
 							<p>{data.companyLocation[0].location.city}</p>
 						</div>
 						<div className={styles.subheader2}>
-							<button onClick={() => handleEdit(data._id as string)}>
+							{
+								name === "Admin"
+									?
+									<button onClick={() => handleEdit(data._id as string)}>
 								<Edit sx={{ color: "#000" }} fontSize={"large"}/>
 							</button>
 							<button onClick={() => handleDelete(data._id as string)}>
 								<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
 							</button>
+									:
+									<></>
+							}
 						</div>
 					</div>
 				</div>
@@ -137,6 +143,15 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
 		const { id } = context.params;
 		const form = await getJobPosting(id);
+		if(token.name === "Admin") {
+			return {
+				props: {
+					name: token.name,
+					data: JSON.parse(JSON.stringify(form.message)),
+				},
+			};
+		}
+
 
 		return {
 			props: {

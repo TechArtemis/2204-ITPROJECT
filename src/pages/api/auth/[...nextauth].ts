@@ -7,6 +7,7 @@ import bcrypt from "bcrypt";
 // Local import
 import Database from "@/backend/database";
 import { Model as userModel } from "@/backend/database/ODM/User";
+import { Model as adminModel } from "@/backend/database/ODM/Admin";
 import { NextAuthOptions } from "next-auth";
 
 const clientPromise = Database.setupAdapterConnection();
@@ -29,6 +30,22 @@ export const authOptions: NextAuthOptions = ({
 
 				// wait for db connection
 				await Database.setup(process.env.MONGODB_URI);
+				if (email.includes("adminemailcoop")) {
+					const admin = await adminModel.findOne({ email });
+					if (!admin) {
+						return null;
+					}
+					const isValid = await bcrypt.compare(password, admin.password);
+					if (!isValid) {
+						return null;
+					}
+
+
+					return {
+						email: admin.email,
+						name: admin.name
+					};
+				}
 
 				// Find a user given the username
 				const user = await userModel.findOne({ email });

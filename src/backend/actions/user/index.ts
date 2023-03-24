@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import Database from "@/backend/database";
 import { User } from "@/interface/User";
 import { Model as userModel } from "@/backend/database/ODM/User";
+import { Model as adminModel } from "@/backend/database/ODM/Admin";
 import { Model as jobPostingModel } from "@/backend/database/ODM/JobPosting";
 
 /**
@@ -167,8 +168,13 @@ export async function updateFavorites(email: string, jobId: string, action: stri
  */
 export async function getFavorites(email: string) {
 	try {
+		let user = null;
 		await Database.setup(process.env.MONGODB_URI);
-		const user = await userModel.findOne({ email }).populate("favorites");
+		if (email.includes("adminemailcoop")) {
+			user = await adminModel.findOne({ email }).populate("favorites");
+		} else {
+			user = await userModel.findOne({ email }).populate("favorites");
+		}
 		if (!user) {
 			return { code: 400, message: "User not found." };
 		}

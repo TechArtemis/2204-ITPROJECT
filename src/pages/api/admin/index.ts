@@ -1,5 +1,6 @@
 // Third-party import
 import { NextApiRequest, NextApiResponse } from "next";
+import bcrypt from "bcrypt";
 
 // Local import
 import { Admin } from "@/interface/Admin";
@@ -26,9 +27,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					message: "Invalid Password"
 				};
 			}
+			const hashed= await bcrypt.hash(admin.password, 10);
 			const newAdmin: Admin = {
 				email: admin.email,
-				password: admin.password,
+				password: hashed,
 				name: "Admin"
 			};
 
