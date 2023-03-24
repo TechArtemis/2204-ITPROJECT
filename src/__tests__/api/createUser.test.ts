@@ -7,7 +7,7 @@ import Database from "@/backend/database";
 // Test Suite
 describe("Create User API", () => {
 
-    // Function that will run after the test is done
+	// Function that will run after the test is done
 	afterAll( async() => {
 		await userModel.findOneAndDelete({ email: "000451777@student.vcc.ca" });
 		await userModel.findOneAndDelete({ email: "000123456@student.vcc.ca" });
@@ -15,7 +15,7 @@ describe("Create User API", () => {
 		Database.disconnect();
 	});
 
-    // 1st test will check if name is invalid or empty and will receive a response code 400 and message Invalid Name
+	// 1st test will check if name is invalid or empty and will receive a response code 400 and message Invalid Name
 	it("Should return code 400 if name is missing or invalid", async () => {
 		const req = {
 			method: "POST",
@@ -40,7 +40,7 @@ describe("Create User API", () => {
 		});
 	});
 
-    // 2nd test will check if password is invalid or empty and will receive a response code 400 and message Invalid Password
+	// 2nd test will check if password is invalid or empty and will receive a response code 400 and message Invalid Password
 	it("Should return code 400 if password is missing or invalid", async () => {
 		const req = {
 			method: "POST",
@@ -65,7 +65,7 @@ describe("Create User API", () => {
 		});
 	});
 
-    // 3rd test will check if all fields are filled and followed the requirements and will receive a response code 201 and message User created
+	// 3rd test will check if all fields are filled and followed the requirements and will receive a response code 201 and message User created
 	it("Should return 200 if all fields are filled and passes the requirements", async () => {
 		const req = {
 			method: "POST",
@@ -91,7 +91,7 @@ describe("Create User API", () => {
 		});
 	});
 
-    // 4th test will check if the user already exists and will receive a response code of 409 and message User already exists
+	// 4th test will check if the user already exists and will receive a response code of 409 and message User already exists
 	it("Should return code 400 if user already exists", async () => {
 		const req = {
 			method: "POST",
