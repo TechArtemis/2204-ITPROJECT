@@ -12,31 +12,30 @@ import { Model as jobPostingModel } from "@/backend/database/ODM/JobPosting";
  * @returns a code and a message
  */
 export async function createJobPosting(jobPosting: JobPosting) {
-    try {
-        await Database.setup(process.env.MONGODB_URI);
-        const jobPost = new jobPostingModel(
-            {
-                companyName: jobPosting.companyName,
+	try {
+		await Database.setup(process.env.MONGODB_URI);
+		const jobPost = new jobPostingModel(
+			{
+				companyName: jobPosting.companyName,
+				companyImage: jobPosting.companyImage,
+				companyContact: jobPosting.companyContact,
+				companyLocation: jobPosting.companyLocation,
+				companyAbout: jobPosting.companyAbout,
+				jobDescription: jobPosting.jobDescription,
+				jobType: jobPosting.jobType,
+				jobTitle: jobPosting.jobTitle,
+				employment: jobPosting.employment,
+				datePosted: jobPosting.datePosted,
+				tags: jobPosting.tags
+			}
+		);
+		await jobPost.save();
 
-                companyImage: jobPosting.companyImage,
-                companyContact: jobPosting.companyContact,
-                companyLocation: jobPosting.companyLocation,
-                companyAbout: jobPosting.companyAbout,
-                jobDescription: jobPosting.jobDescription,
-                jobType: jobPosting.jobType,
-                jobTitle: jobPosting.jobTitle,
-                employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted,
-                tags: jobPosting.tags
-            }
-        );
-        await jobPost.save();
 
-
-        return { code: 200, message: jobPosting }; // use data from jobPosting to fill up info for email to admin
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+		return { code: 200, message: jobPosting }; // use data from jobPosting to fill up info for email to admin
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 /**
@@ -45,18 +44,18 @@ export async function createJobPosting(jobPosting: JobPosting) {
  * @returns the job posting that matches the ID
  */
 export async function getJobPosting(_id: String | Types.ObjectId) {
-    try {
-        await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
-        if (!jobPostingExist) {
-            return { code: 400, message: "Invalid Job Posting" };
-        }
+	try {
+		await Database.setup(process.env.MONGODB_URI);
+		const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
+		if (!jobPostingExist) {
+			return { code: 400, message: "Invalid Job Posting" };
+		}
 
 
-        return { code: 200, message: jobPostingExist };
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+		return { code: 200, message: jobPostingExist };
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 // /**
@@ -104,34 +103,34 @@ export async function getJobPosting(_id: String | Types.ObjectId) {
  * @returns the new job posting
  */
 export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting: JobPosting) {
-    try {
-        await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
-        if (!jobPostingExist) {
-            return { code: 400, message: "Invalid Job Posting" };
-        }
-        const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
-            {
+	try {
+		await Database.setup(process.env.MONGODB_URI);
+		const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
+		if (!jobPostingExist) {
+			return { code: 400, message: "Invalid Job Posting" };
+		}
+		const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
+			{
 
-                companyImage: jobPosting.companyImage,
-                companyName: jobPosting.companyName,
-                companyContact: jobPosting.companyContact,
-                companyLocation: jobPosting.companyLocation,
-                companyAbout: jobPosting.companyAbout,
-                jobDescription: jobPosting.jobDescription,
-                jobType: jobPosting.jobType,
-                jobTitle: jobPosting.jobTitle,
-                employment: jobPosting.employment,
-                datePosted: jobPosting.datePosted,
-                tags: jobPosting.tags
-            },
-            { new: true });
+				companyImage: jobPosting.companyImage,
+				companyName: jobPosting.companyName,
+				companyContact: jobPosting.companyContact,
+				companyLocation: jobPosting.companyLocation,
+				companyAbout: jobPosting.companyAbout,
+				jobDescription: jobPosting.jobDescription,
+				jobType: jobPosting.jobType,
+				jobTitle: jobPosting.jobTitle,
+				employment: jobPosting.employment,
+				datePosted: jobPosting.datePosted,
+				tags: jobPosting.tags
+			},
+			{ new: true });
 
 
-        return { code: 200, message: newJobPosting };
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+		return { code: 200, message: newJobPosting };
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 /**
@@ -140,19 +139,19 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
  * @returns a code and a message
  */
 export async function deletePosting(_id: String | Types.ObjectId) {
-    try {
-        await Database.setup(process.env.MONGODB_URI);
-        const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
-        if (!jobPostingExist) {
-            return { code: 400, message: "Job does not exist" };
-        }
-        await jobPostingModel.findOneAndDelete({ _id });
+	try {
+		await Database.setup(process.env.MONGODB_URI);
+		const jobPostingExist: JobPosting | null = await jobPostingModel.findOne({ _id });
+		if (!jobPostingExist) {
+			return { code: 400, message: "Job does not exist" };
+		}
+		await jobPostingModel.findOneAndDelete({ _id });
 
 
-        return { code: 200, message: "Success" };
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+		return { code: 200, message: "Success" };
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 /**
@@ -160,14 +159,14 @@ export async function deletePosting(_id: String | Types.ObjectId) {
  * @returns all job posts
  */
 export async function getAllPosting() {
-    try {
-        await Database.setup(process.env.MONGODB_URI);
-        const allPost: JobPosting[] = await jobPostingModel.find({});
-        
-        return { code: 200, message: allPost };
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+	try {
+		await Database.setup(process.env.MONGODB_URI);
+		const allPost: JobPosting[] = await jobPostingModel.find({});
+
+		return { code: 200, message: allPost };
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 /**
@@ -175,13 +174,13 @@ export async function getAllPosting() {
  * @returns a code and a message
  */
 export async function deleteExpired() {
-    try {
-        const today = new Date();
-        const date = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
-        await jobPostingModel.deleteMany({ datePosted: { $gt: date } }); // if this does not work, try LESS THAN (>)
-    } catch (error: any) {
-        return { code: 500, message: error.message };
-    }
+	try {
+		const today = new Date();
+		const date = new Date(today.getTime() - (30 * 24 * 60 * 60 * 1000));
+		await jobPostingModel.deleteMany({ datePosted: { $gt: date } }); // if this does not work, try LESS THAN (>)
+	} catch (error: any) {
+		return { code: 500, message: error.message };
+	}
 }
 
 

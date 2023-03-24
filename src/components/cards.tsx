@@ -35,6 +35,7 @@ interface Props {
     job: string,
     type: string,
     liked: boolean,
+	tags: string,
     children?: ReactNode;
     className?: string;
     extraFunction?: (jobID: string) => void;
@@ -43,62 +44,64 @@ interface Props {
 // Card component
 export default function Card(props: Props) {
 
-    const [liked, setLiked] = useState<boolean>(props.liked);
+	const [liked, setLiked] = useState<boolean>(props.liked);
 
-    async function handleAddToLiked(id: string, action: string) {
+	async function handleAddToLiked(id: string, action: string) {
 
-        if (props.extraFunction && action !== "add") {
-            props.extraFunction(id);
-        }
+		if (props.extraFunction && action !== "add") {
+			props.extraFunction(id);
+		}
 
-        if (action === "add") {
-            setLiked(true);
-            const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
-        } else {
-            setLiked(false);
-            const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
-        }
-    }
+		if (action === "add") {
+			setLiked(true);
+			const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
+		} else {
+			setLiked(false);
+			const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
+		}
+	}
 
-    function handleClick() {
-        router.push(`/view/${props.id}`);
-    }
+	function handleClick() {
+		router.push(`/view/${props.id}`);
+	}
 
-    return (
-        <div className={styles.cards} onClick={() => handleClick()}>
-            {props.children}
-            <div className={styles.companyInfo}>
-                <div className={styles.companyLogo}>
-                    {/* <Image className={styles.img} src={`https://res.cloudinary.com/honeydrew/${props.image}`} alt={"logo"} width={85} height={85}/> */}
-                    <Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
-                </div>
-                <div>
-                    <h3>{props.name}</h3>
-                    <h4>{props.address}</h4>
-                </div>
-            </div>
+	return (
+		<div className={styles.cards}>
+			{props.children}
+			<div className={styles.companyInfo} onClick={() => handleClick()}>
+				<div className={styles.companyLogo}>
+					<Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
+				</div>
+				<div>
+					<h3>{props.name}</h3>
+					<h4>{props.address}</h4>
+				</div>
+			</div>
 
-            <div className={styles.jobInfo}>
-                <h1>{props.job}</h1>
-                <h2>{props.type}</h2>
-            </div>
-            <div>
-                {!liked ?
-                    <div className={styles.heartIcon}>
-                        <button onClick={() => handleAddToLiked(props.id as string, "add")}>
-                            <FavoriteBorderIcon fontSize="large" />
-                        </button>
-                    </div>
-                    :
-                    <div className={styles.heartIcon}>
-                        <button onClick={() => handleAddToLiked(props.id as string, "remove")}>
-                            <FavoriteIcon fontSize="large" sx={{ color: red[500] }}/>
-                        </button>
-                    </div>
-                }
-            </div>
-        </div>
+			<div className={styles.jobInfo} onClick={() => handleClick()}>
+				<h1>{props.job}</h1>
+				<h2>{props.type}</h2>
+				<div className={styles.tags}>
+					<p>{props.tags}</p>
+				</div>
+			</div>
+			<div>
+				{!liked ?
+					<div className={styles.heartIcon}>
+						<button onClick={() => handleAddToLiked(props.id as string, "add")}>
+							<FavoriteBorderIcon fontSize="large" />
+						</button>
+					</div>
+					:
+					<div className={styles.heartIcon}>
+						<button onClick={() => handleAddToLiked(props.id as string, "remove")}>
+							<FavoriteIcon fontSize="large" sx={{ color: red[500] }}/>
+						</button>
+					</div>
+				}
+			</div>
+		</div>
 
-    );
+	);
 };
 
