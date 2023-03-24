@@ -32,7 +32,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
 		await jobPost.save();
 
 
-		return { code: 200, message: jobPosting }; // use data from jobPosting to fill up info for email to admin
+		return { code: 200, message: "Job Posting created" }; // use data from jobPosting to fill up info for email to admin
 	} catch (error: any) {
 		return { code: 500, message: error.message };
 	}
