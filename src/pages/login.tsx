@@ -50,10 +50,12 @@ export default function LogIn() {
 	};
 
 	const handleLogin = async () => {
-		if (!STUDENT_EMAIL_REGEX.test(email)) {
-			setIsEmailInvalid(true);
-		} else {
-			setIsEmailInvalid(false);
+		if (!email.includes("adminemailcoop")) {
+			if (!STUDENT_EMAIL_REGEX.test(email)) {
+				setIsEmailInvalid(true);
+			} else {
+				setIsEmailInvalid(false);
+			}
 		}
 		if (!PASSWORD_REGEX.test(password)) {
 			setIsPasswordInvalid(true);
