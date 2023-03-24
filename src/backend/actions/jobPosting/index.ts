@@ -111,9 +111,8 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 		}
 		const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
 			{
-
-				companyImage: jobPosting.companyImage,
 				companyName: jobPosting.companyName,
+				companyImage: jobPosting.companyImage,
 				companyContact: jobPosting.companyContact,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
@@ -125,6 +124,9 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 				tags: jobPosting.tags
 			},
 			{ new: true });
+
+
+		console.log(newJobPosting);
 
 
 		return { code: 200, message: newJobPosting };

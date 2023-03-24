@@ -11,7 +11,11 @@ import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
-import { Delete } from "@mui/icons-material";
+import dynamic from "next/dynamic";
+
+//dynamic imports
+const Edit = dynamic(() => import("@mui/icons-material/Edit"));
+const Delete = dynamic(() => import("@mui/icons-material/Delete"));
 
 
 export default function PostCoop({ onSubmit, data }: any) {
@@ -31,20 +35,46 @@ export default function PostCoop({ onSubmit, data }: any) {
 		}
 	}
 
+	async function handleEdit (id: string) {
+		router.push(`/edit/${id}`);
+	}
+
+
 	return (
 		<div>
 			<Navbar />
 			<div className={styles.submitform}>
 				<div className={styles.header}>
-					<Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={85} height={85} />
+					{ data.companyImage ? (
+						<Image
+							className={styles.logo}
+							src={`https://res.cloudinary.com/honeydrew/image/upload/${data.companyImage}`}
+							width={85}
+							height={85}
+							alt="Image"
+						/>
+					) : (
+						<Image
+							className={styles.logo}
+							src={"/images/imageplaceholder.png"}
+							alt={"image"}
+							width={85}
+							height={85}
+						/>
+
+					)
+					}
 					<div className={styles.subheader}>
 						<div>
 							<h1>{data.companyName}</h1>
 							<p>{data.companyLocation[0].location.city}</p>
 						</div>
 						<div className={styles.subheader2}>
+							<button onClick={() => handleEdit(data._id as string)}>
+								<Edit sx={{ color: "#000" }} fontSize={"large"}/>
+							</button>
 							<button onClick={() => handleDelete(data._id as string)}>
-								<Delete sx={{ color: "#DF5965"}} fontSize={"large"}/>
+								<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
 							</button>
 						</div>
 					</div>
