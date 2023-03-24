@@ -24,12 +24,13 @@ const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
  *
  */
 interface Props {
+	name?: string
     jobPostings: JobPosting[]
     favorites: JobPosting[]
 }
 
 // This is page is used to display all the jobs posted by the company
-export default function DisplayJobs({ jobPostings, favorites }: Props) {
+export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 
 	const [search, setSearch] = useState("");
 
@@ -64,17 +65,24 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
 							</InputRightElement>
 						</InputGroup>
 					</GridItem>
-					<GridItem colSpan={{ sm: 3, md: 1 }}>
-						<Button
-							type={"button"}
-							onClick={() => handleRouteToForm()}
-							className={styles.post}>
-							<div className={styles.postJobText}>
-								<p>Post Job</p>
-								<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+					{
+						name === "Admin"
+							? <GridItem colSpan={{ sm: 3, md: 1 }}>
+								<Button
+									type={"button"}
+									onClick={() => handleRouteToForm()}
+									className={styles.post}>
+									<div className={styles.postJobText}>
+										<p>Post Job</p>
+										<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+									</div>
+								</Button>
+							</GridItem>
+							:
+							<div>
+
 							</div>
-						</Button>
-					</GridItem>
+					}
 				</Grid>
 			</div>
 
@@ -137,6 +145,16 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
 		const form = await getAllPosting();
 		const { message: favorites } = await getFavorites(token.email as string);
+		if (token.name === "Admin") {
+			return {
+				props: {
+					name: token.name,
+					jobPostings: JSON.parse(JSON.stringify(form.message)),
+					favorites: JSON.parse(JSON.stringify(favorites))
+				},
+			};
+		}
+
 
 		return {
 			props: {

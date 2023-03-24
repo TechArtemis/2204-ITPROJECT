@@ -13,6 +13,7 @@ import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
 import ErrorAlert from "@/components/ErrorAlert";
+import { getToken } from "next-auth/jwt";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -584,6 +585,41 @@ export default function FormPages() {
 	);
 };
 
+export async function getServerSideProps(context: { [key: string]: any }) {
+	try {
+		const secret = process.env.NEXTAUTH_SECRET;
+		const token = await getToken(
+			{
+				req: context.req,
+				secret: secret
+			}
+		);
+
+		// If the user is already logged in, redirect.
+		// Note: Make sure not to redirect to the same page
+		// To avoid an infinite loop!
+		if (!token) {
+			return { redirect: { destination: "/login", permanent: false } };
+		}
+		if(token.name !== "Admin") {
+			return {
+				redirect: {
+					destination: "/",
+				}
+			};
+		}
 
 
+		return {
+			props: {
 
+			}
+		};
+	} catch (error) {
+		return {
+			redirect: {
+				destination: "/",
+			},
+		};
+	}
+}

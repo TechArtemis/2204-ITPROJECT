@@ -9,6 +9,7 @@ import { Model } from "mongoose";
  * @param admin the admin account that the database is going to store
  * @returns a code and a message
  */
+// implement first sign in here
 export async function createAdmin(admin: Admin) {
 	try {
 		await Database.setup(process.env.MONGODB_URI);
@@ -20,7 +21,8 @@ export async function createAdmin(admin: Admin) {
 			{
 				email: admin.email,
 				password: admin.password,
-				name: admin.name
+				name: admin.name,
+				favorites: []
 			}
 		);
 		await newAdmin.save();

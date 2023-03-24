@@ -25,7 +25,7 @@ interface Props {
 }
 
 export default function JobCardComponent(props: Props) {
-	const [liked, setLiked] = useState<boolean>(props.liked);
+	const [liked, setLiked] = useState<boolean>(props.liked ?? false);
 
 	async function handleAddToLiked(id: string, action: string) {
 
