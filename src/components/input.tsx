@@ -36,29 +36,29 @@ interface Props {
 
 // The input component
 export default function Input(props: Props) {
-    return (
-        <div className={styles.form}>
-            {props.children}
-            {props.type === "textarea" ? (
-                <textarea
-                    className={styles.textfield}
-                    value={props.value}
-                    rows={props.rows || 5}
-                    onChange={props.onChangeTextArea}
-                    placeholder={props.placeholder}
-                    name={props.name}
-                >
-                </textarea>
-            ) : (
-                <input
-                    className={styles.inputfield}
-                    type={props.type || "text"}
-                    value={props.value}
-                    onChange={props.onChangeInput}
-                    placeholder={props.placeholder}
-                    name={props.name}
-                />
-            )}
-        </div>
-    );
+	return (
+		<div className={styles.form}>
+			{props.children}
+			{props.type === "textarea" ? (
+				<textarea
+					className={styles.textfield}
+					value={props.value}
+					rows={props.rows || 5}
+					onChange={props.onChangeTextArea}
+					placeholder={props.placeholder}
+					name={props.name}
+				>
+				</textarea>
+			) : (
+				<input
+					className={styles.inputfield}
+					type={props.type || "text"}
+					value={props.value}
+					onChange={props.onChangeInput}
+					placeholder={props.placeholder}
+					name={props.name}
+				/>
+			)}
+		</div>
+	);
 }

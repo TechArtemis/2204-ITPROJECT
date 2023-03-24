@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    reactStrictMode: true,
+	reactStrictMode: true,
 };
 
 module.exports = {
-    reactStrictMode: true,
-    images: {
-        domains: ["res.cloudinary.com"]
-    }
+	reactStrictMode: true,
+	images: {
+		domains: ["res.cloudinary.com"]
+	}
 };

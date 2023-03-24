@@ -26,6 +26,7 @@ const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
+const CodeIcon = dynamic(() => import("@mui/icons-material/Code"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -80,6 +81,7 @@ interface Employment {
 //functions for the form pages
 function CompanyPostInfo({ onSubmit, item }: any) {
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const options: Province[] = Object.keys(Location.Province).map(key => {
 		return {
@@ -111,7 +113,10 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 	}
 
 	function removeImage() {
+		console.log("Hello");
+		console.log("Before",item.companyImage);
 		onSubmit({ ...item, companyImage: null });
+		console.log("After", item.companyImage);
 	}
 
 	function handleCheck() {
@@ -148,7 +153,6 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 	return (
 		<div className={styles.container}>
 			<div className={styles.form}>
-				{error && <ErrorAlert message={error}/>}
 				<div className={styles.field}>
 					<div className={styles.remove} onClick={() => removeImage()}>
 						<button>
@@ -170,7 +174,6 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							)
 							}
 						</div>
-
 						<div style={{ display: "none" }}>
 							<input
 								type="file"
@@ -181,8 +184,10 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							/>
 						</div>
 					</div>
-
-
+					<div className={styles.alert}>
+						{error && <ErrorAlert message={error}/>}
+						{loading && <ErrorAlert message="Loading..." type="loading" />}
+					</div>
 					<Input
 						type="text"
 						placeholder="Enter your company name"
@@ -299,8 +304,8 @@ function JobPostInfo({ onSubmit, item }: any) {
 	return (
 		<form className={styles.container}>
 			<div className={styles.form}>
-				{error && <ErrorAlert message={error}/>}
 				<div className={styles.field}>
+					{error && <ErrorAlert message={error}/>}
 					<Input
 						type="text"
 						label="Job Title"
@@ -331,7 +336,9 @@ function JobPostInfo({ onSubmit, item }: any) {
 						name="tags"
 						value={item.tags}
 						onChangeInput={handleChange}
-					/>
+					>
+						<CodeIcon sx={{ color: "#84BD00" }} />
+					</Input>
 					<Input
 						type="textarea"
 						placeholder="Enter your Description"
@@ -542,7 +549,7 @@ export default function FormPages() {
 	}
 
 	return (
-		<div>
+		<div className={styles.background}>
 
 			<div className={styles.stepper}>
 				<p className={formPage >= 1 ? isCompanyValid()

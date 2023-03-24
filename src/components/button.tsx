@@ -16,13 +16,13 @@ interface Props {
 
 // Button component
 export default function Button(props: Props) {
-    return (
-        <button
-            type={props.type}
-            onClick={props.onClick}
-            className={props.className}
-        >
-            {props.children}
-        </button>
-    );
+	return (
+		<button
+			type={props.type}
+			onClick={props.onClick}
+			className={props.className}
+		>
+			{props.children}
+		</button>
+	);
 }

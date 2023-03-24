@@ -1,15 +1,18 @@
 $primary: #84BD00
 $primary-hover: #73a302
-    
+
+.background
+    background-color: #f7f7f7
+    height: 100vh
 .title
     font-size: 30px
     display: flex
     padding: 50px 10px 0px 0px
     margin-left: 15%
-    
+
     h1
         font-family: "Lato-Bold"
-        
+
 .cardContainer
     display: flex
     justify-content: center
@@ -49,10 +52,15 @@ $primary-hover: #73a302
 
 .searchInput
     height: 70px
-    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1)
     border-radius: 35px
     padding-right: 65px
     padding-left: 25px
+
+    &:focus-within
+        background-color: #f7f7f7
+        transition: background-color 0.2s ease-in-out
+
 
 .searchIcon
     height: 70px
@@ -80,15 +88,14 @@ $primary-hover: #73a302
         justify-content: center
         align-items: center
         gap: 10px
-    
+
 .nocontent
     display: flex
     justify-content: center
     font-size: 25px
-    color: #9c9c9c    
+    color: #9c9c9c
 
 .postJobText
     p
         font-size: 17px
         font-family: "Lato-Bold"
-    

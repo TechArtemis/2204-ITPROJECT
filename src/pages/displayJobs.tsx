@@ -44,7 +44,7 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
 	}
 
 	return (
-		<div>
+		<div className={styles.background}>
 			<Navbar />
 			<div className={styles.container}>
 				<Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
@@ -54,7 +54,7 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
 							alignContent="center">
 							<Input
 								type={"text"}
-								placeholder="Search companies, job name, keywords, etc." size="sm"
+								placeholder="Search companies, job name, languages, location, etc." size="sm"
 								value={search}
 								className={styles.searchInput}
 								onChange={handleSearch}
@@ -101,6 +101,7 @@ export default function DisplayJobs({ jobPostings, favorites }: Props) {
 									<Card
 										image={post.companyImage}
 										name={post.companyName}
+										tags ={post.tags[0] }
 										address={post.companyLocation[0].location.city}
 										job={post.jobTitle}
 										type={post.jobType} id={post._id as string}

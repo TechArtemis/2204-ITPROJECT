@@ -30,24 +30,24 @@ interface Option {
 
 // SelectOption component
 export default function SelectOption(props: Props) {
-    return (
-        <div className={styles.form}>
-            {props.children}
-            <select
-                className={styles.dropdown}
-                id="selected"
-                name={props.name}
-                value={props.value}
-                onChange={props.onChange}
-            >
-                {props.options.map((option, idx) => (
-                    <option key={idx} value={option.value}>
-                        {option.label}
-                    </option>
-                ))}
-            </select>
-        </div>
-    );
+	return (
+		<div className={styles.form}>
+			{props.children}
+			<select
+				className={styles.dropdown}
+				id="selected"
+				name={props.name}
+				value={props.value}
+				onChange={props.onChange}
+			>
+				{props.options.map((option, idx) => (
+					<option key={idx} value={option.value}>
+						{option.label}
+					</option>
+				))}
+			</select>
+		</div>
+	);
 }
 
 
