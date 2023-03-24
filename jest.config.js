@@ -1,23 +1,23 @@
 module.exports = {
 
-    // ... other Jest configuration options ...
-    testEnvironment: "node",
-    moduleNameMapper: {
-        "^@/(.*)$": "<rootDir>/src/$1",
-    },
-    moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"],
-    globals: {
-        "ts-jest": {
-            tsconfig: "tsconfig.json",
-            diagnostics: true,
-        },
-    },
-    transform: {
-        "^.+\\.tsx?$": "ts-jest",
-    },
-    transformIgnorePatterns: [
-        "/node_modules/(?!(module-to-transpile|other-module))",
-    ]
+	// ... other Jest configuration options ...
+	testEnvironment: "node",
+	moduleNameMapper: {
+		"^@/(.*)$": "<rootDir>/src/$1",
+	},
+	moduleFileExtensions: ["js", "json", "jsx", "ts", "tsx", "node"],
+	globals: {
+		"ts-jest": {
+			tsconfig: "tsconfig.json",
+			diagnostics: true,
+		},
+	},
+	transform: {
+		"^.+\\.tsx?$": "ts-jest",
+	},
+	transformIgnorePatterns: [
+		"/node_modules/(?!(module-to-transpile|other-module))",
+	]
 };
 
 // module.exports = {

@@ -12,67 +12,67 @@ import { NextAuthOptions } from "next-auth";
 const clientPromise = Database.setupAdapterConnection();
 
 export const authOptions: NextAuthOptions = ({
-    adapter: MongoDBAdapter(clientPromise),
-    session: {
-        strategy: "jwt"
-    },
-    providers: [
-        CredentialsProvider({
-            credentials: {
-                email: { label: "Email", type: "text", placeholder: "email" },
-                password: { label: "Password", type: "text", placeholder: "email" }
-            },
-            async authorize(credentials) {
+	adapter: MongoDBAdapter(clientPromise),
+	session: {
+		strategy: "jwt"
+	},
+	providers: [
+		CredentialsProvider({
+			credentials: {
+				email: { label: "Email", type: "text", placeholder: "email" },
+				password: { label: "Password", type: "text", placeholder: "email" }
+			},
+			async authorize(credentials) {
 
-                // extract username, password from credentials
-                const { email, password }: any = credentials;
+				// extract username, password from credentials
+				const { email, password }: any = credentials;
 
-                // wait for db connection
-                await Database.setup(process.env.MONGODB_URI);
+				// wait for db connection
+				await Database.setup(process.env.MONGODB_URI);
 
-                // Find a user given the username
-                const user = await userModel.findOne({ email });
+				// Find a user given the username
+				const user = await userModel.findOne({ email });
 
-                // If the user isn't logged in / not signed in properly
-                if (!user) {
-                    return null;
-                }
+				// If the user isn't logged in / not signed in properly
+				if (!user) {
+					return null;
+				}
 
-                // user.password is always encrypted
-                const isValid = await bcrypt.compare(password, user.password);
-                if (!isValid) {
-                    return null;
-                }
-
-
-                return {
-                    name: user.name,
-                    email: user.email
-                } as any;
-            }
-        })
-    ],
-    pages: {
-        signIn: "/login"
-    },
-    callbacks: {
-        async jwt({ token, user }) {
-            if (user) {
-                token.user = user;
-            }
+				// user.password is always encrypted
+				const isValid = await bcrypt.compare(password, user.password);
+				if (!isValid) {
+					return null;
+				}
 
 
-            return token;
-        },
-        async session({ session, token }) {
-            if (token && token.user) {
-                session.user = token.user;
-            }
+				return {
+					name: user.name,
+					email: user.email
+				} as any;
+			}
+		})
+	],
+	pages: {
+		signIn: "/login"
+	},
+	callbacks: {
+		async jwt({ token, user }) {
+			if (user) {
+				token.user = user;
+			}
 
 
-            return session;
-        }
-    }
+			return token;
+		},
+		async session({ session, token }) {
+			if (token && token.user) {
+				session.user = token.user;
+			}
+
+
+			return session;
+		}
+	}
 });
 
 export default NextAuth(authOptions);

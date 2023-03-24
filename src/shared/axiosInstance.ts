@@ -1,11 +1,11 @@
-//third-party imports
+// Third-party imports
 import axios from "axios";
 
 export const instance = axios.create(
-    {
-        baseURL: "/api/",
+	{
+		baseURL: "/api/",
 
-        // sets the network timeout
-        timeout: 3000
-    }
+		// sets the network timeout
+		timeout: 3000
+	}
 );
