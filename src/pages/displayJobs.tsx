@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import router from "next/router";
-import { Grid, GridItem, Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 
 // Local imports
 import { getFavorites } from "@/backend/actions/user";
@@ -14,7 +14,7 @@ import Button from "@/components/button";
 import Card from "@/components/cards";
 import { JobPosting } from "@/interface/JobPosting";
 
-//dynamic imports
+// Dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
 
