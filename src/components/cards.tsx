@@ -35,7 +35,7 @@ interface Props {
     job: string,
     type: string,
     liked: boolean,
-	tags: string,
+	tags: string[],
     children?: ReactNode;
     className?: string;
     extraFunction?: (jobID: string) => void;
@@ -79,11 +79,18 @@ export default function Card(props: Props) {
 			</div>
 
 			<div className={styles.jobInfo} onClick={() => handleClick()}>
-				<h1>{props.job}</h1>
-				<h2>{props.type}</h2>
-				<div className={styles.tags}>
-					<p>{props.tags}</p>
-				</div>
+				<>
+					<h1>{props.job}</h1>
+					<h2>{props.type}</h2>
+					{ props.tags.map((item, i) => {
+						<div className={styles.tags} key={i}>
+							<p>{item}</p>
+						</div>;
+					})
+					}
+				</>
+
+
 			</div>
 			<div>
 				{!liked ?
