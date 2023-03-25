@@ -7,9 +7,9 @@ import { useState } from "react";
 
 interface Props {
     session: {
-    user: {
-        name: string
-    }
+		user: {
+			name: string
+		}
     }
 }
 
@@ -26,7 +26,6 @@ export default function Profile(props: Props) {
 		router.push("/");
 	}
 
-
 	const firstLetter = typeof session?.user?.name === "string" && session?.user?.name.length > 0 ? session?.user?.name.charAt(0).toUpperCase() : "";
 
 	return (
@@ -34,11 +33,13 @@ export default function Profile(props: Props) {
 			<div className={styles.logo} onClick={handleLogoClick}>
 				{firstLetter}
 			</div>
-			{showDropdown &&
-          <div className={styles.option}>
-          	<div className={styles.optionItem} onClick={handleLogout}>Sign out</div>
-          </div>
-			}
+
+			{/* <div className={styles.option} style={{ display: "none" }}> */}
+			<div className={styles.option}>
+				<div className={styles.optionItem} onClick={handleLogout}>Sign out</div>
+			</div>
+
+			{/* } */}
 		</div>
 	);
 }

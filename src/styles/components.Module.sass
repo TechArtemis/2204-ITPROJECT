@@ -39,14 +39,19 @@ $primary: #84BD00
     $colors: #2A80B9, #9C56B7, #34495E, #E74C3D, #E77E22 // array of possible colors
     $random-color: nth($colors, floor(random() * length($colors)) + 1) // get a random color from the array
     background-color: $random-color // set the background color to the random color
+    
     &:hover
         cursor: pointer
 
+    &:hover + .option
+        display: inline !important
+
 .container
-    position: relative
     display: inline-block
+    position: relative
 
 .option
+    display: none !important
     position: absolute
     top: 45px
     right: 0
@@ -55,6 +60,9 @@ $primary: #84BD00
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3)
     border-radius: 4px
     z-index: 1
+
+    &:hover
+        display: inline !important
 
 .optionItem
     padding: 8px 16px
@@ -79,7 +87,6 @@ $primary: #84BD00
         background-color: #EEFBF6
         transition: background-color 0.2s ease-in-out
         border: 1px solid #438064
-
 
 .inputfield
     display: flex
@@ -216,10 +223,14 @@ $primary: #84BD00
 
     p
         color: #ffff
-        font-weight: bold 
+        font-weight: bold
 
 .heartIcon
     width: 40px
     height: 40px
     padding-top: 30px
     margin-left: auto
+
+.content
+    @media (max-width: 48em)
+        display: none
