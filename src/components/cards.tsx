@@ -83,9 +83,12 @@ export default function Card(props: Props) {
 					<h1>{props.job}</h1>
 					<h2>{props.type}</h2>
 					{ props.tags.map((item, i) => {
-						<div className={styles.tags} key={i}>
-							<p>{item}</p>
-						</div>;
+						return(
+							<div className={styles.tags} key={i}>
+								<p>{item}</p>
+							</div>
+						);
+
 					})
 					}
 				</>
