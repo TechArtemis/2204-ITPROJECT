@@ -48,7 +48,30 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 		<div className={styles.background}>
 			<Navbar />
 			<div className={styles.container}>
-				<Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
+				<div className={styles.search}>
+					<input
+						type="text"
+						placeholder="Search companies, job name, keywords, etc."
+						value={search}
+						onChange={handleSearch}>
+					</input>
+					<div className={styles.searchIcon}>
+						<Search fontSize="medium" />
+					</div>
+				</div>
+				<Button
+					type={"button"}
+					onClick={() => handleRouteToForm()}
+					className={styles.post}>
+					<div>
+						<p>Post Job</p>
+						<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+					</div>
+				</Button>
+			</div>
+
+
+			{/* <Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
 					<GridItem colSpan={{ sm: 3, md: 2 }}>
 						<InputGroup
 							className={styles.search}
@@ -83,8 +106,7 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 
 							</div>
 					}
-				</Grid>
-			</div>
+				</Grid> */}
 
 			<div className={styles.title}>
 				<h1>Explore Jobs</h1>
