@@ -15,7 +15,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			/**
              * the following if conditions validates the input
              */
-			if (!EMAIL_REGEX.test(admin.email)) {
+			if (!EMAIL_REGEX.test(admin.email) || !admin.email.includes("adminemailcoop")) {
 				throw {
 					code: 400,
 					message: "Invalid Email"

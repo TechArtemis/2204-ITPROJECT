@@ -79,10 +79,9 @@ export default function Card(props: Props) {
 			</div>
 
 			<div className={styles.jobInfo} onClick={() => handleClick()}>
-				<>
-					<h1>{props.job}</h1>
-					<h2>{props.type}</h2>
-					{ props.tags.map((item, i) => {
+				<h1>{props.job}</h1>
+				<h2>{props.type}</h2>
+				{/* { props.tags.map((item, i) => {
 						return(
 							<div className={styles.tags} key={i}>
 								<p>{item}</p>
@@ -90,10 +89,15 @@ export default function Card(props: Props) {
 						);
 
 					})
-					}
-				</>
-
-
+					} */}
+				<div className={styles.tag}>
+					<div className={styles.tags}>
+						<p>{props.tags[0]}</p>
+					</div>
+					<div className={styles.tags}>
+						<p>{props.tags[1]}</p>
+					</div>
+				</div>
 			</div>
 			<div>
 				{!liked ?
