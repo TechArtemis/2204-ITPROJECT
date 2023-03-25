@@ -12,6 +12,7 @@ import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 //dynamic imports
 const Edit = dynamic(() => import("@mui/icons-material/Edit"));
@@ -105,6 +106,8 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 							<p>{data.companyLocation[0].location.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{data.companyContact}</p>
+							<h1>Link</h1>
+							<p><Link href={data.companyLink}>{data.companyLink}</Link></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>

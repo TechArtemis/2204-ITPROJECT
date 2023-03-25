@@ -4,13 +4,20 @@ import bcrypt from "bcrypt";
 
 // Local import
 import { Admin } from "@/interface/Admin";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { PASSWORD_REGEX } from "@/shared/regex";
 import { createAdmin } from "@/backend/actions/admin";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "POST") {
 		try {
+			const { keyone, keytwo } = req.headers;
 			const { admin } = req.body;
+			if (keyone !== process.env.KEYONE && keytwo !== process.env.KEYTWO) {
+				throw {
+					code: 400,
+					message: "Invalid SignUp"
+				};
+			}
 
 			/**
              * the following if conditions validates the input

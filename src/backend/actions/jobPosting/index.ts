@@ -19,6 +19,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
 				companyName: jobPosting.companyName,
 				companyImage: jobPosting.companyImage,
 				companyContact: jobPosting.companyContact,
+				companyLink: jobPosting.companyLink,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
 				jobDescription: jobPosting.jobDescription,

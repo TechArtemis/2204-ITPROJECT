@@ -83,6 +83,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				companyImage: jobPosting.companyImage,
 				companyName: jobPosting.companyName,
 				companyContact: jobPosting.companyContact,
+				companyLink: jobPosting.companyLink,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
 				jobDescription: jobPosting.jobDescription,

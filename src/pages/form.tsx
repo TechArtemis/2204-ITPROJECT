@@ -3,6 +3,8 @@ import React, { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
+import { getToken } from "next-auth/jwt";
+import Link from "next/link";
 
 // Local imports
 import styles from "@/styles/form.module.sass";
@@ -13,7 +15,6 @@ import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
 import ErrorAlert from "@/components/ErrorAlert";
-import { getToken } from "next-auth/jwt";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -28,6 +29,7 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
 const CodeIcon = dynamic(() => import("@mui/icons-material/Code"));
+const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -47,6 +49,7 @@ interface CompanyJob {
     companyImage: File | null;
     companyName: string;
     companyContact: string;
+    companyLink: string;
     companyLocation: {
         address: string;
         city: string;
@@ -130,6 +133,9 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 		else if(item.companyContact == ""){
 			setError("Company contact not entered");
 		}
+		else if(item.companyLink == ""){
+			setError("Company link not entered");
+		}
 		else if(item.companyLocation.address == ""){
 			setError("Company address not entered");
 		}
@@ -202,6 +208,13 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 						name="companyContact" value={item.companyContact}
 						onChangeInput={handleChange} >
 						<EmailIcon sx={{ color: "#84BD00" }}/>
+					</Input>
+					<Input
+						type="text"
+						placeholder="Enter your company link"
+						name="companyLink" value={item.companyLink}
+						onChangeInput={handleChange} >
+						<LinkIcon sx={{ color: "#84BD00" }}/>
 					</Input>
 					<Input
 						type="text"
@@ -420,6 +433,8 @@ function PostCoop({ onSubmit, item }: any) {
 							<p>{item.companyLocation.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{item.companyContact}</p>
+							<h1>Link</h1>
+							<p><Link href={item.companyLink}>{item.companyLink}</Link></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>
@@ -452,6 +467,7 @@ export default function FormPages() {
 		companyImage: null,
 		companyName: "",
 		companyContact: "",
+		companyLink: "",
 		companyLocation: {
 			address: "",
 			city: "",
@@ -470,6 +486,7 @@ export default function FormPages() {
 		return (
 			item.companyAbout !== "" &&
             item.companyContact !== "" &&
+            item.companyLink !== "" &&
             item.companyLocation.address !== "" &&
             item.companyLocation.city !== "" &&
             item.companyLocation.postalCode !== "" &&
@@ -515,6 +532,7 @@ export default function FormPages() {
 
 				companyImage: url.public_id,
 				companyName: item.companyName,
+				companyLink: item.companyLink,
 				companyAbout: item.companyAbout,
 				companyLocation: [
 					{

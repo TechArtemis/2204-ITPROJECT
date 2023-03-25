@@ -23,6 +23,7 @@ export interface JobPosting {
     companyName: string;
     companyImage: string;
     companyContact: string;
+	companyLink: string;
     companyLocation: [{
         location: Location;
     }];
