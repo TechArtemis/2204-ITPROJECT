@@ -59,15 +59,24 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 						<Search fontSize="medium" />
 					</div>
 				</div>
-				<Button
-					type={"button"}
-					onClick={() => handleRouteToForm()}
-					className={styles.post}>
-					<div>
-						<p>Post Job</p>
-						<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-					</div>
-				</Button>
+				{
+					name === "Admin"
+						? <GridItem colSpan={{ sm: 3, md: 1 }}>
+							<Button
+								type={"button"}
+								onClick={() => handleRouteToForm()}
+								className={styles.post}>
+								<div className={styles.postJobText}>
+									<p>Post Job</p>
+									<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+								</div>
+							</Button>
+						</GridItem>
+						:
+						<div>
+
+						</div>
+				}
 			</div>
 
 
@@ -88,24 +97,7 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 							</InputRightElement>
 						</InputGroup>
 					</GridItem>
-					{
-						name === "Admin"
-							? <GridItem colSpan={{ sm: 3, md: 1 }}>
-								<Button
-									type={"button"}
-									onClick={() => handleRouteToForm()}
-									className={styles.post}>
-									<div className={styles.postJobText}>
-										<p>Post Job</p>
-										<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-									</div>
-								</Button>
-							</GridItem>
-							:
-							<div>
 
-							</div>
-					}
 				</Grid> */}
 
 			<div className={styles.title}>

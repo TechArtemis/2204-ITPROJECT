@@ -15,10 +15,10 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			/**
              * the following if conditions validates the input
              */
-			if (!EMAIL_REGEX.test(admin.email) || !admin.email.includes("adminemailcoop")) {
+			if (admin.email !== "admincoop") {
 				throw {
 					code: 400,
-					message: "Invalid Email"
+					message: "Invalid Username"
 				};
 			}
 			if (!PASSWORD_REGEX.test(admin.password)) {
@@ -27,7 +27,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					message: "Invalid Password"
 				};
 			}
-			const hashed= await bcrypt.hash(admin.password, 10);
+			const hashed= await bcrypt.hash(admin.password, 12);
 			const newAdmin: Admin = {
 				email: admin.email,
 				password: hashed,
