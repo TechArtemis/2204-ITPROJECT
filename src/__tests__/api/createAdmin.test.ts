@@ -44,7 +44,7 @@ describe("createUser API", () => {
         });
     });
 
-    it("Should return 200 if all fields are filled and passes the requirements, the Admin account is then made", async () => {
+    it("When admin account is made, and no admin account exists yet, should return 200", async () => {
         const req = {
             method: "POST",
             body: {
@@ -95,7 +95,7 @@ describe("createUser API", () => {
     //     );
     // });
 
-    it("Should return code 400 if Admin already exists", async () => {
+    it("When admin exists, it should return an ERROR, return 400", async () => {
         const req = {
             method: "POST",
             body: {
