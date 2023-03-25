@@ -20,10 +20,10 @@ export default function Navbar() {
 					<p className={styles.content}>Home</p>
 				</Link>
 				<Link href={"/displayJobs"}>
-					<p className={styles.content}>Jobs</p>
+					<p>Explore Jobs</p>
 				</Link>
 				<Link href={"/savedJobs"}>
-					<p className={styles.content}>Saved</p>
+					<p>My Jobs</p>
 				</Link>
 			</div>
 			<div>

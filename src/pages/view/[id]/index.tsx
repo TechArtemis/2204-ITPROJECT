@@ -48,7 +48,7 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 					{ data.companyImage ? (
 						<Image
 							className={styles.logo}
-							src={`https://res.cloudinary.com/honeydrew/image/upload/${data.companyImage}`}
+							src={`https://res.cloudinary.com/saibyouga/image/upload/${data.companyImage}`}
 							width={85}
 							height={85}
 							alt="Image"
