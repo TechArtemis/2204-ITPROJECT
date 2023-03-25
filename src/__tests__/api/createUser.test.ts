@@ -16,7 +16,7 @@ describe("Create User API", () => {
 	});
 
 	// 1st test will check if name is invalid or empty and will receive a response code 400 and message Invalid Name
-	it("Should return code 400 if name is missing or invalid", async () => {
+	it("When \"name\" field is missing or invalid, should return code 400 if name is missing or invalid", async () => {
 		const req = {
 			method: "POST",
 			body: {
@@ -41,7 +41,7 @@ describe("Create User API", () => {
 	});
 
 	// 2nd test will check if password is invalid or empty and will receive a response code 400 and message Invalid Password
-	it("Should return code 400 if password is missing or invalid", async () => {
+	it("When \"password\" field is missing or invalid, should return code 400 if password is missing or invalid", async () => {
 		const req = {
 			method: "POST",
 			body: {
@@ -66,7 +66,7 @@ describe("Create User API", () => {
 	});
 
 	// 3rd test will check if all fields are filled and followed the requirements and will receive a response code 201 and message User created
-	it("Should return 200 if all fields are filled and passes the requirements", async () => {
+	it("When all fields met the correct requirements or specification, should return 200 if all fields are filled and passes the requirements", async () => {
 		const req = {
 			method: "POST",
 			body: {
@@ -92,7 +92,7 @@ describe("Create User API", () => {
 	});
 
 	// 4th test will check if the user already exists and will receive a response code of 409 and message User already exists
-	it("Should return code 400 if user already exists", async () => {
+	it("When the user is already in the database, should return code 400 if user already exists", async () => {
 		const req = {
 			method: "POST",
 			body: {

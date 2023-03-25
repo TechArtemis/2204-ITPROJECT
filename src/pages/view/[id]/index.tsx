@@ -73,12 +73,14 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 							{
 								name === "Admin"
 									?
-									<button onClick={() => handleEdit(data._id as string)}>
-								<Edit sx={{ color: "#000" }} fontSize={"large"}/>
-							</button>
-							<button onClick={() => handleDelete(data._id as string)}>
-								<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
-							</button>
+									<>
+										<button onClick={() => handleEdit(data._id as string)}>
+											<Edit sx={{ color: "#000" }} fontSize={"large"}/>
+										</button>
+										<button onClick={() => handleDelete(data._id as string)}>
+											<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
+										</button>
+									</>
 									:
 									<></>
 							}
