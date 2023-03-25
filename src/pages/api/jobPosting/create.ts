@@ -20,8 +20,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const employmentArr = Object.values(JobPosting.EmploymentType);
 			const jobTitleArr = Object.values(JobPosting.JobTitleType);
 			const { jobPosting } = req.body;
-			console.log(jobPosting.employment)
-			console.log(employmentArr)
+			console.log(jobPosting.employment);
+			console.log(employmentArr);
+
 			/**
              * The following if conditions validates the inputs
              */
