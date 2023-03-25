@@ -131,7 +131,7 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 									<Card
 										image={post.companyImage}
 										name={post.companyName}
-										tags ={post.tags[0] }
+										tags={post.tags}
 										address={post.companyLocation[0].location.city}
 										job={post.jobTitle}
 										type={post.jobType} id={post._id as string}

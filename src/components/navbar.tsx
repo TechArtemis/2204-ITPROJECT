@@ -16,10 +16,10 @@ export default function Navbar() {
 					<p>Home</p>
 				</Link>
 				<Link href={"/displayJobs"}>
-					<p>Jobs</p>
+					<p>Explore Jobs</p>
 				</Link>
 				<Link href={"/savedJobs"}>
-					<p>Saved</p>
+					<p>My Jobs</p>
 				</Link>
 			</div>
 			<div>

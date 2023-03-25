@@ -325,7 +325,7 @@ function PostCoop({ onSubmit, item }: any) {
 					{ item.companyImage ? (
 						<Image
 							className={styles.logo}
-							src={`https://res.cloudinary.com/honeydrew/image/upload/${item.companyImage}`}
+							src={`https://res.cloudinary.com/saibyouga/image/upload/${item.companyImage}`}
 							width={85}
 							height={85}
 							alt="Image"
