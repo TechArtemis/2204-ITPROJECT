@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt";
 import { useState } from "react";
 import dynamic from "next/dynamic";
 import router from "next/router";
-import { Grid } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 
 // Local imports
 import { getFavorites } from "@/backend/actions/user";
@@ -60,22 +60,18 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 					</div>
 				</div>
 				{
-					name === "Admin"
-						? <GridItem colSpan={{ sm: 3, md: 1 }}>
-							<Button
-								type={"button"}
-								onClick={() => handleRouteToForm()}
-								className={styles.post}>
-								<div className={styles.postJobText}>
-									<p>Post Job</p>
-									<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-								</div>
-							</Button>
-						</GridItem>
-						:
-						<div>
-
-						</div>
+					name === "Admin" &&
+					 <GridItem colSpan={{ sm: 3, md: 1 }}>
+					 	<Button
+					 		type={"button"}
+					 		onClick={() => handleRouteToForm()}
+					 		className={styles.post}>
+					 		<div className={styles.postJobText}>
+					 			<p>Post Job</p>
+					 			<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
+					 		</div>
+					 	</Button>
+					 </GridItem>
 				}
 			</div>
 
