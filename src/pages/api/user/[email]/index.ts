@@ -10,6 +10,15 @@ import { getServerSession } from "next-auth/next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "GET") {
 		try {
+
+			const { keyone, keytwo } = req.headers;
+			if (keyone !== process.env.KEYONE && keytwo !== process.env.KEYTWO) {
+				throw {
+					code: 400,
+					message: "Invalid Request"
+				};
+			}
+
 			const { email } = req.query;
 
 			// validation
@@ -77,6 +86,13 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				throw {
 					code: 400,
 					message: "Invalid Password"
+				};
+			}
+
+			if(session?.user?.email !== email) {
+				throw {
+					code: 400,
+					message: "Invalid request"
 				};
 			}
 

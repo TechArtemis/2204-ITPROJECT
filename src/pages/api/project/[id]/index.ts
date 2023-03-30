@@ -1,23 +1,20 @@
-import { updateJobPosting } from "@/backend/actions/jobPosting";
+// Third-Party Imports
 import { NextApiRequest, NextApiResponse } from "next";
 
+// Local Imports
+import { deleteProject } from "@/backend/actions/project";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-
-	if (req.method === "PUT") {
+	if (req.method === "DELETE") {
 		try {
-
 			const { id } = req.query;
-
 			if (!id) {
 				throw {
 					code: 400,
 					message: "Missing _id"
 				};
 			}
-
-			const response = await updateJobPosting(id as string, req.body.jobPosting);
-
+			const response = await deleteProject(id as string);
 			if( response.code !== 200) {
 				throw {
 					code: response.code,
@@ -30,18 +27,19 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					message: response.message
 				}
 			);
-
-		} catch (error: any) {
-			const { code = 500, message } = error;
+		} catch(error: any) {
+			const { code = 400, message = error.message } = error;
 			res.status(code).json(
 				{
-					message
+					message: message
 				}
 			);
 		}
-
 	} else {
-		res.status(405).json({ message: "Method Not Allowed" });
+		res.status(500).json(
+			{
+				message: "INVALID METHOD"
+			}
+		);
 	}
-
 }

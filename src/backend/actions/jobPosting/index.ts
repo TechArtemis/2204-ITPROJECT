@@ -17,9 +17,9 @@ export async function createJobPosting(jobPosting: JobPosting) {
 		const jobPost = new jobPostingModel(
 			{
 				companyName: jobPosting.companyName,
+
 				companyImage: jobPosting.companyImage,
 				companyContact: jobPosting.companyContact,
-				companyLink: jobPosting.companyLink,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
 				jobDescription: jobPosting.jobDescription,
@@ -59,44 +59,6 @@ export async function getJobPosting(_id: String | Types.ObjectId) {
 	}
 }
 
-// /**
-//  * A function that changes the approval state of a job posting in the database
-//  * @param _id the ID of the job posting to be changed
-//  * @returns a code and a message
-//  */
-// export async function approveJobPosting(_id: String | Types.ObjectId) {
-//     try {
-//         await Database.setup(process.env.MONGODB_URI);
-//         const jobPostingExist = await jobPostingModel.findOne({ _id });
-//         if (!jobPostingExist) {
-//             return { code: 400, message: "Invalid Job Posting" };
-//         }
-//         await jobPostingModel.findOneAndUpdate({ _id }, { approvalState: JobPosting.ProjectApproval.Approved }, { new: true });
-//         return { code: 200, message: "Success" };
-//     } catch (error: any) {
-//         return { code: 500, message: error.message };
-//     }
-// }
-
-// /**
-//  * A function that changes the approval state to rejected
-//  * @param _id used to identify which job posting to get
-//  * @returns a code and message
-//  */
-// export async function rejectJobPosting(_id: String | Types.ObjectId) {
-//     try {
-//         await Database.setup(process.env.MONGODB_URI);
-//         const jobPostingExist = await jobPostingModel.findOne({ _id });
-//         if (!jobPostingExist) {
-//             return { code: 400, message: "Invalid Job Posting" };
-//         }
-//         await jobPostingModel.findOneAndUpdate({ _id }, { approvalState: JobPosting.ProjectApproval.Rejected }, { new: true });
-//         return { code: 200, message: "Success" };
-//     } catch (error: any) {
-//         return { code: 500, message: error.message };
-//     }
-// }
-
 /**
  * A function that updates an existing job posting
  * @param _id used to identify which job posting to get
@@ -112,8 +74,9 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 		}
 		const newJobPosting = await jobPostingModel.findOneAndUpdate({ _id },
 			{
-				companyName: jobPosting.companyName,
+
 				companyImage: jobPosting.companyImage,
+				companyName: jobPosting.companyName,
 				companyContact: jobPosting.companyContact,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
@@ -127,10 +90,7 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 			{ new: true });
 
 
-		console.log(newJobPosting);
-
-
-		return { code: 200, message: newJobPosting };
+		return { code: 200, message: "Job Posting Updated" };
 	} catch (error: any) {
 		return { code: 500, message: error.message };
 	}

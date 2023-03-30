@@ -8,8 +8,8 @@ import { Types } from "mongoose";
  * @param {string} name - static value "Admin"
  */
 export interface Admin {
-    _id?: Types.ObjectId,
-    email: string,
-    password: string,
+    _id?: Types.ObjectId | string
+    email: string
+    password: string
     name: "Admin"
 }
