@@ -1,8 +1,7 @@
 $primary: #84BD00
 $primary-hover: #73a302
 $main-menu: #ADADAD
-$button-selected: #EFFEEF
-$border-color: #DFDEDD
+$light-grey: #DFDEDD
 $contentContainer-color: #F4F4F4
     
 .container
@@ -13,10 +12,10 @@ $contentContainer-color: #F4F4F4
 .sidebarContainer
     min-width: 320px
     padding: 35px
-    background-color: #5982a6
+    background-color: #FFFFFF
     border-right: solid
     border-right-width: 2px
-    border-color: $border-color
+    border-color: $light-grey
 
 .contentContainer
     width: 100%
@@ -47,7 +46,7 @@ $contentContainer-color: #F4F4F4
     padding: 10px 12px
     border-radius: 16px
     align-items: center
-    background-color: $button-selected
+    background-color: $light-grey
 
     h1
         margin-left: 15px
@@ -55,11 +54,13 @@ $contentContainer-color: #F4F4F4
 .studentProjects
     display: flex
     flex-direction: row
-    margin-top: 30px
+    margin-top: 20px
     padding: 10px 12px
     border-radius: 16px
     align-items: center
-    background-color: $button-selected
+
+    &:hover
+        background-color: $light-grey
     
     h1
         margin-left: 15px
@@ -67,12 +68,14 @@ $contentContainer-color: #F4F4F4
 .auditLogs
     display: flex
     flex-direction: row
-    margin-top: 30px
+    margin-top: 20px
     align-items: center
     padding: 10px 12px
     border-radius: 16px
     align-items: center
-    background-color: $button-selected
+
+    &:hover
+        background-color: $light-grey
 
     h1
         margin-left: 15px
@@ -117,7 +120,7 @@ $contentContainer-color: #F4F4F4
     align-items: center
 
 .post
-    min-width: 210px
+    min-width: 180px
     height: 70px
     background: $primary
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
@@ -144,5 +147,5 @@ $contentContainer-color: #F4F4F4
     align-items: center
 
     p
-        font-size: 17px
+        font-size: 18px
         font-family: "Lato-Bold"

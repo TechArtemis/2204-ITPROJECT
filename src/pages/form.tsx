@@ -619,13 +619,13 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		if (!token) {
 			return { redirect: { destination: "/login", permanent: false } };
 		}
-		if(token.name !== "Admin") {
-			return {
-				redirect: {
-					destination: "/",
-				}
-			};
-		}
+		// if(token.name !== "Admin") {
+		// 	return {
+		// 		redirect: {
+		// 			destination: "/",
+		// 		}
+		// 	};
+		// }
 
 
 		return {

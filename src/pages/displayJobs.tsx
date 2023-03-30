@@ -75,27 +75,6 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 				}
 			</div>
 
-
-			{/* <Grid templateColumns="repeat(3, 1fr)" className={styles.searchGrid}>
-					<GridItem colSpan={{ sm: 3, md: 2 }}>
-						<InputGroup
-							className={styles.search}
-							alignContent="center">
-							<Input
-								type={"text"}
-								placeholder="Search companies, job name, languages, location, etc." size="sm"
-								value={search}
-								className={styles.searchInput}
-								onChange={handleSearch}
-							/>
-							<InputRightElement className={styles.searchIcon}>
-								<Search fontSize="medium"/>
-							</InputRightElement>
-						</InputGroup>
-					</GridItem>
-
-				</Grid> */}
-
 			<div className={styles.title}>
 				<h1>Explore Jobs</h1>
 			</div>
