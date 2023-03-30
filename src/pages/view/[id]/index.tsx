@@ -106,7 +106,7 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 							<h1>Contact</h1>
 							<p>{data.companyContact}</p>
 							<h1>Link</h1>
-							<p><Link href={data.companyLink}>{data.companyLink}</Link></p>
+							<p><a target="_blank" href={data.companyLink} rel="noopener noreferrer">{data.companyLink}</a></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>

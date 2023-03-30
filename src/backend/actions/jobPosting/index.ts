@@ -21,6 +21,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
 				companyImage: jobPosting.companyImage,
 				companyContact: jobPosting.companyContact,
 				companyLocation: jobPosting.companyLocation,
+				companyLink: jobPosting.companyLink,
 				companyAbout: jobPosting.companyAbout,
 				jobDescription: jobPosting.jobDescription,
 				jobType: jobPosting.jobType,
@@ -33,7 +34,7 @@ export async function createJobPosting(jobPosting: JobPosting) {
 		await jobPost.save();
 
 
-		return { code: 200, message: jobPosting }; // use data from jobPosting to fill up info for email to admin
+		return { code: 200, message: "Success" }; // use data from jobPosting to fill up info for email to admin
 	} catch (error: any) {
 		return { code: 500, message: error.message };
 	}
@@ -80,6 +81,7 @@ export async function updateJobPosting(_id: String | Types.ObjectId, jobPosting:
 				companyContact: jobPosting.companyContact,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
+				companyLink: jobPosting.companyLink,
 				jobDescription: jobPosting.jobDescription,
 				jobType: jobPosting.jobType,
 				jobTitle: jobPosting.jobTitle,
