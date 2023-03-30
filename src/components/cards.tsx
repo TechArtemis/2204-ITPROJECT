@@ -70,7 +70,7 @@ export default function Card(props: Props) {
 			{props.children}
 			<div className={styles.companyInfo} onClick={() => handleClick()}>
 				<div className={styles.companyLogo}>
-					<Image className={styles.logo} src={`https://res.cloudinary.com/saibyouga/image/upload/${props.image}`} alt={"image"} width={50} height={50} />
+					<Image className={styles.cardLogo} src={`https://res.cloudinary.com/saibyouga/image/upload/${props.image}`} alt={"image"} width={50} height={50} />
 				</div>
 				<div>
 					<h3>{props.name}</h3>

@@ -242,7 +242,6 @@ function JobPostInfo({ onSubmit, item }: any) {
 
 	function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
 		onSubmit({ ...item, [event.target.name]: event.target.value });
-		console.log(item);
 	}
 
 	function handleCheck(){
@@ -328,9 +327,6 @@ function JobPostInfo({ onSubmit, item }: any) {
 
 function PostCoop({ onSubmit, item }: any) {
 	const [value, setValue] = useState(1);
-
-	console.log(item.companyImage);
-
 
 	return (
 		<div>
@@ -422,9 +418,6 @@ interface Props {
 
 
 export default function EditFormPage(jobdata: Props) {
-
-	console.log(jobdata);
-
 	const [formPage, setFormPage] = useState<number>(1);
 	const [item, setItem] = useState <CompanyJob>({
 		companyImage: jobdata.jobdata.companyImage,
@@ -475,22 +468,6 @@ export default function EditFormPage(jobdata: Props) {
 		setItem({ ...datatest });
 		const tags = item.tags.split(",");
 		if (formPage === 3) {
-
-			// const form = new FormData();
-			// form.append("files", item.companyImage!);
-
-			// const img = {
-			// 	method: "POST",
-			// 	url: "cloudinary",
-			// 	data: form
-			// };
-
-			// const { data } = await instance.request(img);
-			// const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
-
-			// console.log(url.public_id);
-
-
 			const jobPosting = {
 
 				companyImage: jobdata.jobdata.companyImage,
@@ -518,10 +495,6 @@ export default function EditFormPage(jobdata: Props) {
 			const obj = {
 				jobPosting
 			};
-
-			console.log("test", obj);
-
-			console.log(jobdata.jobdata);
 
 			await instance.put(`/jobPosting/${jobdata.jobdata._id as string}/update`, obj);
 			router.push("/");
