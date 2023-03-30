@@ -12,6 +12,7 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
+import { getToken } from "next-auth/jwt";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -545,7 +546,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 			return { redirect: { destination: "/login", permanent: false } };
 		}
 
-		if(token.name !== "Admin") {
+		if (token.name !== "Admin") {
 			return {
 				redirect: {
 					destination: "/",
@@ -553,5 +554,16 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 			};
 		}
 
-
+		return {
+			props: {
+			}
+		};
+	} catch (error) {
+		return {
+			redirect: {
+				destination: "/",
+			},
+		};
+	}
+}
 
