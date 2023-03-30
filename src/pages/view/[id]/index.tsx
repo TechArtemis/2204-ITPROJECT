@@ -1,23 +1,20 @@
 // Third-party imports
-// import dynamic from "next/dynamic";
+import router from "next/router";
+import dynamic from "next/dynamic";
+import Link from "next/link";
 import { useState } from "react";
 import Image from "next/image";
 import { getToken } from "next-auth/jwt";
-
 
 // Local imports
 import Navbar from "@/components/navbar";
 import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
-import router from "next/router";
-import dynamic from "next/dynamic";
-import Link from "next/link";
 
 //dynamic imports
 const Edit = dynamic(() => import("@mui/icons-material/Edit"));
 const Delete = dynamic(() => import("@mui/icons-material/Delete"));
-
 
 export default function PostCoop({ onSubmit, data, name }: any) {
 	const [value, setValue] = useState(1);

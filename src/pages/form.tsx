@@ -528,6 +528,30 @@ export default function FormPages() {
 	);
 };
 
+export async function getServerSideProps(context: { [key: string]: any }) {
+	try {
+		const secret = process.env.NEXTAUTH_SECRET;
+		const token = await getToken(
+			{
+				req: context.req,
+				secret: secret
+			}
+		);
+
+		// If the user is already logged in, redirect.
+		// Note: Make sure not to redirect to the same page
+		// To avoid an infinite loop!
+		if (!token) {
+			return { redirect: { destination: "/login", permanent: false } };
+		}
+
+		if(token.name !== "Admin") {
+			return {
+				redirect: {
+					destination: "/",
+				}
+			};
+		}
 
 
 

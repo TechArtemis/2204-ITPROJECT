@@ -1,20 +1,23 @@
 // Third-party imports
-import { getToken } from "next-auth/jwt";
-import { useState } from "react";
+import Link from "next/link";
+import Image from "next/image";
 import dynamic from "next/dynamic";
+import { useState } from "react";
 import router from "next/router";
-import { Grid, GridItem } from "@chakra-ui/react";
+import { Button, Grid } from "@chakra-ui/react";
+import { getToken } from "next-auth/jwt";
 
 // Local imports
-import { getFavorites } from "@/backend/actions/user";
-import { getAllPosting } from "@/backend/actions/jobPosting";
-import styles from "@/styles/displayJobs.module.sass";
-import Navbar from "@/components/navbar";
-import Button from "@/components/button";
-import Card from "@/components/cards";
+import styles from "@/styles/admin.module.sass";
 import { JobPosting } from "@/interface/JobPosting";
+import Card from "@/components/cards";
+import { getAllPosting } from "@/backend/actions/jobPosting";
+import { getFavorites } from "@/backend/actions/user";
 
 // Dynamic imports
+const BusinessCenterOutlinedIcon = dynamic(() => import("@mui/icons-material/BusinessCenterOutlined"));
+const LanguageOutlinedIcon = dynamic(() => import("@mui/icons-material/LanguageOutlined"));
+const ArticleOutlinedIcon = dynamic(() => import("@mui/icons-material/ArticleOutlined"));
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
 
@@ -29,8 +32,7 @@ interface Props {
     favorites: JobPosting[]
 }
 
-// This is page is used to display all the jobs posted by the company
-export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
+export default function AdminPage({ jobPostings, favorites, name }: Props) {
 
 	const [search, setSearch] = useState("");
 
@@ -45,48 +47,68 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 	}
 
 	return (
-		<div className={styles.background}>
-			<Navbar />
+		<>
 			<div className={styles.container}>
-				<div className={styles.search}>
-					<input
-						type="text"
-						placeholder="Search companies, job name, keywords, etc."
-						value={search}
-						onChange={handleSearch}>
-					</input>
-					<div className={styles.searchIcon}>
-						<Search fontSize="medium" />
+				<div className={styles.sidebarContainer}>
+					<Image src={"/images/vcc.png"} alt={"logo"} width={140} height={140}/>
+
+					<div className={styles.sidebarItems}>
+
+						<div className={styles.mainMenu}>
+							<h1>Main Menu</h1>
+						</div>
+
+						<div className={styles.jobs}>
+							<BusinessCenterOutlinedIcon fontSize="large" sx={{ color: "#000000" }}/>
+							<h1>Jobs</h1>
+						</div>
+
+						<div className={styles.studentProjects}>
+							<LanguageOutlinedIcon fontSize="large" sx={{ color: "#000000" }}/>
+							<h1>Students Projects</h1>
+						</div>
+
+						<div className={styles.auditLogs}>
+							<ArticleOutlinedIcon fontSize="large" sx={{ color: "#000000" }}/>
+							<h1>Audit Logs</h1>
+						</div>
 					</div>
 				</div>
-				{
-					name === "Admin" &&
-					<GridItem colSpan={{ sm: 3, md: 1 }}>
-					 	<Button
-					 		type={"button"}
-					 		onClick={() => handleRouteToForm()}
-					 		className={styles.post}>
-					 		<div className={styles.postJobText}>
-					 			<p>Post Job</p>
-					 			<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-					 		</div>
-					 	</Button>
-					 </GridItem>
-				}
-			</div>
 
-			<div className={styles.title}>
-				<h1>Explore Jobs</h1>
-			</div>
+				<div className={styles.contentContainer}>
+					<div className={styles.contentTitle}>
+						<h1>Posted Jobs</h1>
+					</div>
 
-			<div className={styles.cardContainer}>
-				<div className={styles.cardArr} >
+					<div className={styles.searchContainer}>
+						<div className={styles.search}>
+							<input
+								type="text"
+								placeholder="Search companies, job name, keywords, etc."
+								value={search}
+								onChange={handleSearch}>
+							</input>
+							<div className={styles.searchIcon}>
+								<Search fontSize="medium" />
+							</div>
+						</div>
+
+						<Button
+							type={"button"}
+							onClick={() => handleRouteToForm()}
+							className={styles.post}>
+							<div className={styles.postJobText}>
+								<p>Add Job</p>
+								<AddIcon fontSize="large" sx={{ color: "#ffffff" }} />
+							</div>
+						</Button>
+					</div>
 
 					{(jobPostings.length === 0 && (
 						<div className={styles.nocontent}>No Jobs have posted yet</div>
 					))}
 
-					<Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(3, 1fr)" }} ml={"5vh"} gap={2}>
+					<Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
 						{jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
                         || card.jobTitle.toLowerCase().includes(search.toLowerCase())
                         || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
@@ -109,11 +131,9 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 					</Grid>
 				</div>
 			</div>
-		</div>
-
+		</>
 	);
 }
-
 
 export async function getServerSideProps(context: { [key: string]: any }) {
 	try {
@@ -143,7 +163,6 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 				},
 			};
 		}
-
 
 		return {
 			props: {
