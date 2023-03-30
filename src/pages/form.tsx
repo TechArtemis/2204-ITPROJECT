@@ -3,8 +3,6 @@ import React, { ChangeEvent, useRef, useState } from "react";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import router from "next/router";
-import { getToken } from "next-auth/jwt";
-import Link from "next/link";
 
 // Local imports
 import styles from "@/styles/form.module.sass";
@@ -14,7 +12,6 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
-import ErrorAlert from "@/components/ErrorAlert";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -28,7 +25,6 @@ const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
-const CodeIcon = dynamic(() => import("@mui/icons-material/Code"));
 const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
 
 /**
@@ -49,7 +45,7 @@ interface CompanyJob {
     companyImage: File | null;
     companyName: string;
     companyContact: string;
-    companyLink: string;
+	companyLink: string;
     companyLocation: {
         address: string;
         city: string;
@@ -84,8 +80,6 @@ interface Employment {
 
 //functions for the form pages
 function CompanyPostInfo({ onSubmit, item }: any) {
-	const [error, setError] = useState("");
-	const [loading, setLoading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const options: Province[] = Object.keys(Location.Province).map(key => {
 		return {
@@ -117,44 +111,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 	}
 
 	function removeImage() {
-		console.log("Hello");
-		console.log("Before",item.companyImage);
 		onSubmit({ ...item, companyImage: null });
-		console.log("After", item.companyImage);
-	}
-
-	function handleCheck() {
-		if(item.companyImage == null){
-			setError("Image not uploaded");
-		}
-		else if(item.companyName == ""){
-			setError("Company name not entered");
-		}
-		else if(item.companyContact == ""){
-			setError("Company contact not entered");
-		}
-		else if(item.companyLink == ""){
-			setError("Company link not entered");
-		}
-		else if(item.companyLocation.address == ""){
-			setError("Company address not entered");
-		}
-		else if(item.companyLocation.city == ""){
-			setError("Company city not entered");
-		}
-		else if(item.companyLocation.postalCode == ""){
-			setError("Company postal code not entered");
-		}
-		else if(item.companyLocation.province == ""){
-			setError("Company province not entered");
-		}
-		else if(item.companyAbout == ""){
-			setError("Company about not entered");
-		}
-		else{
-			setError("");
-			onSubmit(item, true);
-		}
 	}
 
 	return (
@@ -181,6 +138,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							)
 							}
 						</div>
+
 						<div style={{ display: "none" }}>
 							<input
 								type="file"
@@ -191,10 +149,9 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							/>
 						</div>
 					</div>
-					<div className={styles.alert}>
-						{error && <ErrorAlert message={error}/>}
-						{loading && <ErrorAlert message="Loading..." type="loading" />}
-					</div>
+
+
+
 					<Input
 						type="text"
 						placeholder="Enter your company name"
@@ -255,7 +212,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 				</div>
 				<Button
 					type="button"
-					onClick={ () => handleCheck()}
+					onClick={ () => onSubmit(item, true)}
 					className={styles.submit}>
                     Next
 				</Button>
@@ -273,7 +230,6 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 };
 
 function JobPostInfo({ onSubmit, item }: any) {
-	const [error, setError] = useState("");
 	const jobTypeOptions: JobType[] = Object.keys(JobPosting.JobTitleType).map(key => {
 		return {
 			value: key,
@@ -290,36 +246,12 @@ function JobPostInfo({ onSubmit, item }: any) {
 
 	function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
 		onSubmit({ ...item, [event.target.name]: event.target.value });
-		console.log(item);
-	}
-
-	function handleCheck(){
-		if(item.jobTitle == ""){
-			setError("Job title not entered");
-		}
-		else if(item.jobType == ""){
-			setError("Job type not entered");
-		}
-		else if(item.employment == ""){
-			setError("Employment not entered");
-		}
-		else if(item.tags == ""){
-			setError("Tags not entered");
-		}
-		else if(item.jobDescription == ""){
-			setError("Job description not entered");
-		}
-		else{
-			setError("");
-			onSubmit(item, true);
-		}
 	}
 
 	return (
 		<form className={styles.container}>
 			<div className={styles.form}>
 				<div className={styles.field}>
-					{error && <ErrorAlert message={error}/>}
 					<Input
 						type="text"
 						label="Job Title"
@@ -350,9 +282,7 @@ function JobPostInfo({ onSubmit, item }: any) {
 						name="tags"
 						value={item.tags}
 						onChangeInput={handleChange}
-					>
-						<CodeIcon sx={{ color: "#84BD00" }} />
-					</Input>
+					/>
 					<Input
 						type="textarea"
 						placeholder="Enter your Description"
@@ -365,7 +295,7 @@ function JobPostInfo({ onSubmit, item }: any) {
 				</div>
 				<Button
 					type="button"
-					onClick={() => handleCheck()}
+					onClick={() => onSubmit(item,true)}
 					className={styles.submit}>
                     Next
 				</Button>
@@ -434,7 +364,7 @@ function PostCoop({ onSubmit, item }: any) {
 							<h1>Contact</h1>
 							<p>{item.companyContact}</p>
 							<h1>Link</h1>
-							<p><Link href={item.companyLink}>{item.companyLink}</Link></p>
+							<p><a target="_blank" href={item.companyLink} rel="noopener noreferrer">{item.companyLink}</a></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>
@@ -462,6 +392,7 @@ function PostCoop({ onSubmit, item }: any) {
 
 export default function FormPages() {
 	const [formPage, setFormPage] = useState<number>(1);
+
 	const [item, setItem] = useState<CompanyJob>({
 
 		companyImage: null,
@@ -486,7 +417,7 @@ export default function FormPages() {
 		return (
 			item.companyAbout !== "" &&
             item.companyContact !== "" &&
-            item.companyLink !== "" &&
+			item.companyLink !== "" &&
             item.companyLocation.address !== "" &&
             item.companyLocation.city !== "" &&
             item.companyLocation.postalCode !== "" &&
@@ -508,7 +439,7 @@ export default function FormPages() {
 		setFormPage(formPage - 1);
 	};
 
-	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false, error: boolean = false) {
+	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
 		setItem({ ...datatest });
 		const tags = item.tags.split(",");
 		if (formPage === 3) {
@@ -525,15 +456,12 @@ export default function FormPages() {
 			const { data } = await instance.request(img);
 			const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
 
-			console.log(url.public_id);
-
-
 			const jobPosting = {
 
 				companyImage: url.public_id,
 				companyName: item.companyName,
-				companyLink: item.companyLink,
 				companyAbout: item.companyAbout,
+				companyLink: item.companyLink,
 				companyLocation: [
 					{
 						location: {
@@ -556,21 +484,18 @@ export default function FormPages() {
 				jobPosting
 			};
 
-			console.log("test", obj);
-
 			await instance.post("/jobPosting/create", obj);
 			router.push("/");
 
-		}
-		else if (changePage) {
+		} else if(changePage) {
 			setFormPage(formPage + 1);
 		}
 	}
 
 	return (
-		<div className={styles.background}>
-
+		<div>
 			<div className={styles.stepper}>
+
 				<p className={formPage >= 1 ? isCompanyValid()
 					? styles.selected : styles.error : styles.unselected}
 				onClick={() => {setFormPage(1);} }>Step 1: Company Information</p>
@@ -629,16 +554,4 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		}
 
 
-		return {
-			props: {
 
-			}
-		};
-	} catch (error) {
-		return {
-			redirect: {
-				destination: "/",
-			},
-		};
-	}
-}

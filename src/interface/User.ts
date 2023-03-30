@@ -13,7 +13,7 @@ import { JobPosting } from "@/interface/JobPosting";
  *
  */
 export interface User {
-    _id?: Types.ObjectId
+    _id?: Types.ObjectId | string
     name: string
     email: string
     password?: string

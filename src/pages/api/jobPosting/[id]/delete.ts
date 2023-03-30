@@ -6,7 +6,6 @@ import { NextApiRequest, NextApiResponse } from "next";
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 
 	if (req.method === "DELETE") {
-		console.log("entered");
 		try {
 
 			const { id } = req.query;
