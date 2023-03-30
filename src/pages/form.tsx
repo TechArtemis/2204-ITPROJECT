@@ -25,6 +25,7 @@ const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
+const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -44,6 +45,7 @@ interface CompanyJob {
     companyImage: File | null;
     companyName: string;
     companyContact: string;
+	companyLink: string;
     companyLocation: {
         address: string;
         city: string;
@@ -163,6 +165,13 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 						name="companyContact" value={item.companyContact}
 						onChangeInput={handleChange} >
 						<EmailIcon sx={{ color: "#84BD00" }}/>
+					</Input>
+					<Input
+						type="text"
+						placeholder="Enter your company link"
+						name="companyLink" value={item.companyLink}
+						onChangeInput={handleChange} >
+						<LinkIcon sx={{ color: "#84BD00" }}/>
 					</Input>
 					<Input
 						type="text"
@@ -324,7 +333,7 @@ function PostCoop({ onSubmit, item }: any) {
 					<div className={styles.subheader}>
 						<div>
 							<h1>{item.companyName}</h1>
-							<p>{item.companyLocation[0].location.city}</p>
+							<p>{item.companyLocation.city}</p>
 						</div>
 					</div>
 				</div>
@@ -354,6 +363,8 @@ function PostCoop({ onSubmit, item }: any) {
 							<p>{item.companyLocation.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{item.companyContact}</p>
+							<h1>Link</h1>
+							<p><a target="_blank" href={item.companyLink} rel="noopener noreferrer">{item.companyLink}</a></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>
@@ -387,6 +398,7 @@ export default function FormPages() {
 		companyImage: null,
 		companyName: "",
 		companyContact: "",
+		companyLink: "",
 		companyLocation: {
 			address: "",
 			city: "",
@@ -405,6 +417,7 @@ export default function FormPages() {
 		return (
 			item.companyAbout !== "" &&
             item.companyContact !== "" &&
+			item.companyLink !== "" &&
             item.companyLocation.address !== "" &&
             item.companyLocation.city !== "" &&
             item.companyLocation.postalCode !== "" &&
@@ -448,6 +461,7 @@ export default function FormPages() {
 				companyImage: url.public_id,
 				companyName: item.companyName,
 				companyAbout: item.companyAbout,
+				companyLink: item.companyLink,
 				companyLocation: [
 					{
 						location: {
