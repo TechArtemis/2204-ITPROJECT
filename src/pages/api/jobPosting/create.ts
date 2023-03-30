@@ -20,8 +20,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const employmentArr = Object.values(JobPosting.EmploymentType);
 			const jobTitleArr = Object.values(JobPosting.JobTitleType);
 			const { jobPosting } = req.body;
-			console.log(jobPosting.employment);
-			console.log(employmentArr);
 
 			/**
              * The following if conditions validates the inputs
@@ -36,6 +34,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				throw {
 					code: 400,
 					message: "Invalid Contact"
+				};
+			}
+			if (!isValidStr(jobPosting.companyLink)) {
+				throw {
+					code: 400,
+					message: "Invalid Company Link"
 				};
 			}
 			if (!isValidStr(jobPosting.companyAbout)) {
