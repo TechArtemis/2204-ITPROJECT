@@ -21,7 +21,7 @@ export default function Navbar() {
 	}
 
 	return (
-		<>
+		<div>
 			<div className={styles.menuButton}>
 				<Menu>
 					<MenuButton>
@@ -89,6 +89,6 @@ export default function Navbar() {
 					<Profile session={{ user: { name: "" } }}/>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 }

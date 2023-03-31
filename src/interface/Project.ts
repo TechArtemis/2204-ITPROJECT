@@ -2,7 +2,7 @@
 import { Types } from "mongoose";
 
 export interface Project {
-	_id?: Types.ObjectId | string;
+	_id: Types.ObjectId | string;
 	name: string
 	image: string
 	hyperlink: string
