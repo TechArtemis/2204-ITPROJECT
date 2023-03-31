@@ -33,6 +33,7 @@ export default function CreateProject(project: Project) {
 		description: ""
 	});
 
+	const [isLoading, setIsLoading] = useState(false);
 
 	function handleChange (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
 		setForm({ ...form,[event.target.name]: event.target.value });
@@ -63,6 +64,7 @@ export default function CreateProject(project: Project) {
 	}
 
 	async function handleSubmit() {
+		setIsLoading(true);
 		const formData = new FormData();
 		formData.append("files", form.image!);
 
@@ -91,6 +93,7 @@ export default function CreateProject(project: Project) {
 		console.log(obj);
 
 		await instance.post("/project/create", obj);
+		setIsLoading(false);
 		router.push("/displayProjects");
 	}
 

@@ -6,14 +6,6 @@ import { Project } from "@/interface/Project";
 
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 
-interface Proj {
-	id: string,
-	name: string,
-	image: string,
-	hyperlink: string,
-	description: string,
-	children?: ReactNode;
-}
 
 interface Props {
 	proj: Project[]
@@ -30,14 +22,16 @@ export default function ProjectPagination({ proj }: Props) {
 	function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
 		const val = event.target.value;
 		setSearch(val);
-		setCurrentPage(1); // reset the current page when the search term changes
+		setCurrentPage(1);
 	}
 
-	const filteredProjects = proj.filter(
-		(project) =>
-			project.name.toLowerCase().includes(search.toLowerCase()) ||
+	const filteredProjects = Array.isArray(proj) ?
+		proj.filter(
+			(project) =>
+				project.name.toLowerCase().includes(search.toLowerCase()) ||
 			project.description.toLowerCase().includes(search.toLowerCase())
-	);
+		): [];
+
 
 	const indexOfLastProject = currentPage * projectsPerPage;
 	const indexOfFirstProject = indexOfLastProject - projectsPerPage;

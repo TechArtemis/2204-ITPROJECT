@@ -27,6 +27,7 @@ export default function JobPagination({ name, jobPostings, favorites }: Props) {
 	  setCurrentPage(1);
 	}
 
+
 	const filteredProjects = jobPostings.filter((job) =>
 		job.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
         job.companyName.toLowerCase().includes(search.toLowerCase())

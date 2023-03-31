@@ -40,9 +40,6 @@ export async function getAllProject() {
 	try {
 		await Database.setup(process.env.MONGODB_URI);
 		const projects = await projectModel.find();
-		if(projects.length <= 0) {
-			return { code: 400, message: "There are no projects found" };
-		}
 
 		return { code: 200, message: projects };
 

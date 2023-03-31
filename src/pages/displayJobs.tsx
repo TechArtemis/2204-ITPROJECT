@@ -61,13 +61,12 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 
 			<div className={styles.cardContainer}>
 				<div className={styles.cardArr} >
-					{(jobPostings.length === 0 && (
-						<div className={styles.nocontent}>No Jobs have posted yet</div>
-					))}
 
-					<div className={styles.cards}>
-						<JobPagination name={name} jobPostings={jobPostings} favorites={favorites} />
-					</div>
+					{jobPostings.length === 0 ? (
+						<div className={styles.nocontent}>No Jobs have posted yet</div>
+					) : (
+						<JobPagination jobPostings={jobPostings} favorites={favorites} />
+					)}
 
 				</div>
 			</div>

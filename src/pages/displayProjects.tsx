@@ -22,6 +22,8 @@ interface Props {
 }
 
 export default function DisplayProjects({ projects, name }: Props) {
+	console.log(projects);
+	console.log(projects.length);
 
 	function handleRouteToProjectForm() {
 		router.push("/createProject");
@@ -54,11 +56,12 @@ export default function DisplayProjects({ projects, name }: Props) {
 			<div className={styles.cardContainer}>
 				<div className={styles.cardArr} >
 
-					{(projects.length === 0 && (
+					{projects.length <= 0 ?(
 						<div className={styles.nocontent}>No Projects have posted yet</div>
-					))}
+					) : (
+						<ProjectPagination proj={projects} />
+					)}
 
-					<ProjectPagination proj={projects} />
 				</div>
 			</div>
 		</div>

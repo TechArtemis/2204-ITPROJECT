@@ -13,7 +13,6 @@ import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
 import ErrorAlert from "@/components/ErrorAlert";
-import { getToken } from "next-auth/jwt";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -27,8 +26,7 @@ const PersonSearchIcon = dynamic(() => import("@mui/icons-material/PersonSearch"
 const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
-const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
-const CodeIcon = dynamic(()=> import("@mui/icons-material/Code"));
+const CodeIcon = dynamic(() => import("@mui/icons-material/Code"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -48,7 +46,6 @@ interface CompanyJob {
     companyImage: File | null;
     companyName: string;
     companyContact: string;
-	companyLink: string;
     companyLocation: {
         address: string;
         city: string;
@@ -84,6 +81,7 @@ interface Employment {
 //functions for the form pages
 function CompanyPostInfo({ onSubmit, item }: any) {
 	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const options: Province[] = Object.keys(Location.Province).map(key => {
 		return {
@@ -115,7 +113,10 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 	}
 
 	function removeImage() {
+		console.log("Hello");
+		console.log("Before",item.companyImage);
 		onSubmit({ ...item, companyImage: null });
+		console.log("After", item.companyImage);
 	}
 
 	function handleCheck() {
@@ -173,7 +174,6 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							)
 							}
 						</div>
-
 						<div style={{ display: "none" }}>
 							<input
 								type="file"
@@ -186,6 +186,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 					</div>
 					<div className={styles.alert}>
 						{error && <ErrorAlert message={error}/>}
+						{loading && <ErrorAlert message="Loading..." type="loading" />}
 					</div>
 					<Input
 						type="text"
@@ -200,13 +201,6 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 						name="companyContact" value={item.companyContact}
 						onChangeInput={handleChange} >
 						<EmailIcon sx={{ color: "#84BD00" }}/>
-					</Input>
-					<Input
-						type="text"
-						placeholder="Enter your company link"
-						name="companyLink" value={item.companyLink}
-						onChangeInput={handleChange} >
-						<LinkIcon sx={{ color: "#84BD00" }}/>
 					</Input>
 					<Input
 						type="text"
@@ -247,7 +241,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 				</div>
 				<Button
 					type="button"
-					onClick={() => handleCheck()}
+					onClick={ () => handleCheck()}
 					className={styles.submit}>
                     Next
 				</Button>
@@ -282,6 +276,7 @@ function JobPostInfo({ onSubmit, item }: any) {
 
 	function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
 		onSubmit({ ...item, [event.target.name]: event.target.value });
+		console.log(item);
 	}
 
 	function handleCheck(){
@@ -424,8 +419,6 @@ function PostCoop({ onSubmit, item }: any) {
 							<p>{item.companyLocation.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{item.companyContact}</p>
-							<h1>Link</h1>
-							<p><a target="_blank" href={item.companyLink} rel="noopener noreferrer">{item.companyLink}</a></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>
@@ -452,17 +445,12 @@ function PostCoop({ onSubmit, item }: any) {
 };
 
 export default function FormPages() {
-
-	const [loading, setLoading] = useState(false);
-
 	const [formPage, setFormPage] = useState<number>(1);
-
 	const [item, setItem] = useState<CompanyJob>({
 
 		companyImage: null,
 		companyName: "",
 		companyContact: "",
-		companyLink: "",
 		companyLocation: {
 			address: "",
 			city: "",
@@ -481,7 +469,6 @@ export default function FormPages() {
 		return (
 			item.companyAbout !== "" &&
             item.companyContact !== "" &&
-			item.companyLink !== "" &&
             item.companyLocation.address !== "" &&
             item.companyLocation.city !== "" &&
             item.companyLocation.postalCode !== "" &&
@@ -503,8 +490,7 @@ export default function FormPages() {
 		setFormPage(formPage - 1);
 	};
 
-	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
-		setLoading(true);
+	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false, error: boolean = false) {
 		setItem({ ...datatest });
 		const tags = item.tags.split(",");
 		if (formPage === 3) {
@@ -521,12 +507,14 @@ export default function FormPages() {
 			const { data } = await instance.request(img);
 			const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
 
+			console.log(url.public_id);
+
+
 			const jobPosting = {
 
 				companyImage: url.public_id,
 				companyName: item.companyName,
 				companyAbout: item.companyAbout,
-				companyLink: item.companyLink,
 				companyLocation: [
 					{
 						location: {
@@ -549,19 +537,21 @@ export default function FormPages() {
 				jobPosting
 			};
 
+			console.log("test", obj);
+
 			await instance.post("/jobPosting/create", obj);
-			setLoading(false);
 			router.push("/");
 
-		} else if(changePage) {
+		}
+		else if (changePage) {
 			setFormPage(formPage + 1);
 		}
 	}
 
 	return (
-		<div>
-			<div className={styles.stepper}>
+		<div className={styles.background}>
 
+			<div className={styles.stepper}>
 				<p className={formPage >= 1 ? isCompanyValid()
 					? styles.selected : styles.error : styles.unselected}
 				onClick={() => {setFormPage(1);} }>Step 1: Company Information</p>
@@ -594,41 +584,6 @@ export default function FormPages() {
 	);
 };
 
-export async function getServerSideProps(context: { [key: string]: any }) {
-	try {
-		const secret = process.env.NEXTAUTH_SECRET;
-		const token = await getToken(
-			{
-				req: context.req,
-				secret: secret
-			}
-		);
 
-		// If the user is already logged in, redirect.
-		// Note: Make sure not to redirect to the same page
-		// To avoid an infinite loop!
-		if (!token) {
-			return { redirect: { destination: "/login", permanent: false } };
-		}
 
-		if (token.name !== "Admin") {
-			return {
-				redirect: {
-					destination: "/",
-				}
-			};
-		}
-
-		return {
-			props: {
-			}
-		};
-	} catch (error) {
-		return {
-			redirect: {
-				destination: "/",
-			},
-		};
-	}
-}
 
