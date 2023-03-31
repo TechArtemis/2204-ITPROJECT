@@ -44,7 +44,7 @@ export default function PostCoop({ onSubmit, data }: any) {
 						</div>
 						<div className={styles.subheader2}>
 							<button onClick={() => handleDelete(data._id as string)}>
-								<Delete sx={{ color: "#DF5965"}} fontSize={"large"}/>
+								<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
 							</button>
 						</div>
 					</div>

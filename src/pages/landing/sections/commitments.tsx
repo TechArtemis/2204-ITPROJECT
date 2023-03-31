@@ -7,7 +7,7 @@ import { Commitment } from "@/components/commitments";
 
 export const Commitments = () => {
 	return (
-		<Flex pl="200px" background="green.900" justifyContent="space-between" alignItems="center">
+		<Flex pl={["50px", "100px", "200px", "200px"]} background="green.900" justifyContent="space-between" alignItems="center">
 			<Box py="60px" pr="140px">
 				<Heading fontSize={42} fontFamily={"Lato-Bold"} letterSpacing="3px" color="whiteAlpha.900" pb="60px">
                     Committed to your
@@ -19,7 +19,7 @@ export const Commitments = () => {
 					<Commitment text="VCC will provide academic support to help students balance their co-op and academic responsibilities. " />
 				</VStack>
 			</Box>
-			<AspectRatio ratio={8 / 10} width="500px">
+			<AspectRatio display={["none", "none", "none", "none", "inline"]} ratio={8 / 10} w="full">
 				<Img src="./images/studentsBanner.png" />
 			</AspectRatio>
 		</Flex>
