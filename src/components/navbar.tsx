@@ -22,6 +22,9 @@ export default function Navbar() {
 				<Link href={"/displayJobs"}>
 					<p>Explore Jobs</p>
 				</Link>
+				<Link href={"/displayProjects"}>
+					<p>Explore Projects</p>
+				</Link>
 				<Link href={"/savedJobs"}>
 					<p>My Jobs</p>
 				</Link>

@@ -1,0 +1,126 @@
+
+.container
+    display: flex
+    flex-direction: column
+    width: 100%
+
+.form
+    display: flex
+    padding-top: 100px
+    flex-direction: column
+    align-items: center
+    justify-content: center
+    width: 100%
+
+.field
+    display: grid
+    justify-content: space-evenly
+
+.fileupload
+    display: flex
+    flex-direction: column
+    align-items: center
+    justify-content: center
+
+    width: 100%
+    height: 100%
+    padding: 10px 0px 20px 0px
+
+.remove
+    position: absolute
+    padding-left: 155px
+    top: 450px
+
+    button
+        background: #84BD00
+        border-radius: 100px
+        width: 30px
+        height: 30px
+        padding: 1px
+        color: #FFFFFF
+
+        &:hover
+            background: #8a8a8a
+
+.opt
+    display: flex
+    justify-content: center
+    align-items: center
+    border-radius: 20px
+    width: 350px
+    height: 260px
+
+    border: 1px solid #9c9c9c
+    color: #434343
+
+.img
+    width: 100%
+    height: 100%
+    border-radius: 20px
+
+//stepper
+$primary: #84BD00
+$primary-hover: #73a302
+
+$step-width: 100%// Define the width of each step
+$transition-duration: 0.9s // Define the duration of the animation
+
+.stepper
+    display: flex
+    justify-content: center
+
+    p
+        flex-basis: $step-width
+        text-align: center
+        padding: 17px
+        cursor: pointer
+        transition: all $transition-duration
+
+        &.unselected
+            background-color: #eee
+            color: #aaa
+
+        &.selected
+            background-color: $primary
+            color: #fff
+
+        &.error
+            background-color: #5b5b5b
+            color: #fff
+
+        &:hover:not(.selected)
+            background-color: #ccc
+
+        &.selected
+            animation: bounce-in $transition-duration
+
+    @keyframes bounce-in
+        0%
+            transform: scale(0.9)
+
+        50%
+            transform: scale(1.1)
+
+        100%
+            transform: scale(1)
+
+    @keyframes fade-in
+        0%
+            opacity: 0
+
+        100%
+            opacity: 1
+
+            animation: fade-in $transition-duration
+
+.submit
+    background: $primary
+    border-radius: 10px
+    width: 350px
+    height: 60px
+
+    font-style: normal
+    font-weight: 500
+    font-size: 17px
+    line-height: 29px
+    color: #FFFFFF

@@ -12,6 +12,7 @@ import { Location } from "@/interface/Location";
 import SelectOption from "@/components/dropdown";
 import { JobPosting } from "@/interface/JobPosting";
 import { instance } from "@/shared/axiosInstance";
+import ErrorAlert from "@/components/ErrorAlert";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -26,6 +27,7 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
 const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
+const CodeIcon = dynamic(()=> import("@mui/icons-material/Code"));
 
 /**
  * @param {string} companyImage - logo of the company
@@ -80,6 +82,8 @@ interface Employment {
 
 //functions for the form pages
 function CompanyPostInfo({ onSubmit, item }: any) {
+	const [error, setError] = useState("");
+	const [loading, setLoading] = useState(false);
 	const inputRef = useRef<HTMLInputElement>(null);
 	const options: Province[] = Object.keys(Location.Province).map(key => {
 		return {
@@ -112,6 +116,37 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 
 	function removeImage() {
 		onSubmit({ ...item, companyImage: null });
+	}
+
+	function handleCheck() {
+		if(item.companyImage == null){
+			setError("Image not uploaded");
+		}
+		else if(item.companyName == ""){
+			setError("Company name not entered");
+		}
+		else if(item.companyContact == ""){
+			setError("Company contact not entered");
+		}
+		else if(item.companyLocation.address == ""){
+			setError("Company address not entered");
+		}
+		else if(item.companyLocation.city == ""){
+			setError("Company city not entered");
+		}
+		else if(item.companyLocation.postalCode == ""){
+			setError("Company postal code not entered");
+		}
+		else if(item.companyLocation.province == ""){
+			setError("Company province not entered");
+		}
+		else if(item.companyAbout == ""){
+			setError("Company about not entered");
+		}
+		else{
+			setError("");
+			onSubmit(item, true);
+		}
 	}
 
 	return (
@@ -149,9 +184,10 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 							/>
 						</div>
 					</div>
-
-
-
+					<div className={styles.alert}>
+						{error && <ErrorAlert message={error}/>}
+						{loading && <ErrorAlert message="Loading..." type="loading" />}
+					</div>
 					<Input
 						type="text"
 						placeholder="Enter your company name"
@@ -212,7 +248,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 				</div>
 				<Button
 					type="button"
-					onClick={ () => onSubmit(item, true)}
+					onClick={() => handleCheck()}
 					className={styles.submit}>
                     Next
 				</Button>
@@ -230,6 +266,7 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 };
 
 function JobPostInfo({ onSubmit, item }: any) {
+	const [error, setError] = useState("");
 	const jobTypeOptions: JobType[] = Object.keys(JobPosting.JobTitleType).map(key => {
 		return {
 			value: key,
@@ -248,10 +285,33 @@ function JobPostInfo({ onSubmit, item }: any) {
 		onSubmit({ ...item, [event.target.name]: event.target.value });
 	}
 
+	function handleCheck(){
+		if(item.jobTitle == ""){
+			setError("Job title not entered");
+		}
+		else if(item.jobType == ""){
+			setError("Job type not entered");
+		}
+		else if(item.employment == ""){
+			setError("Employment not entered");
+		}
+		else if(item.tags == ""){
+			setError("Tags not entered");
+		}
+		else if(item.jobDescription == ""){
+			setError("Job description not entered");
+		}
+		else{
+			setError("");
+			onSubmit(item, true);
+		}
+	}
+
 	return (
 		<form className={styles.container}>
 			<div className={styles.form}>
 				<div className={styles.field}>
+					{error && <ErrorAlert message={error}/>}
 					<Input
 						type="text"
 						label="Job Title"
@@ -282,7 +342,9 @@ function JobPostInfo({ onSubmit, item }: any) {
 						name="tags"
 						value={item.tags}
 						onChangeInput={handleChange}
-					/>
+					>
+						<CodeIcon sx={{ color: "#84BD00" }} />
+					</Input>
 					<Input
 						type="textarea"
 						placeholder="Enter your Description"
@@ -295,7 +357,7 @@ function JobPostInfo({ onSubmit, item }: any) {
 				</div>
 				<Button
 					type="button"
-					onClick={() => onSubmit(item,true)}
+					onClick={() => handleCheck()}
 					className={styles.submit}>
                     Next
 				</Button>

@@ -1,5 +1,4 @@
 // Third-party imports
-// import dynamic from "next/dynamic";
 import { useState } from "react";
 import Image from "next/image";
 import { getToken } from "next-auth/jwt";
@@ -12,7 +11,6 @@ import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
 import dynamic from "next/dynamic";
-import Link from "next/link";
 
 //dynamic imports
 const Edit = dynamic(() => import("@mui/icons-material/Edit"));
@@ -48,7 +46,7 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 					{ data.companyImage ? (
 						<Image
 							className={styles.logo}
-							src={`https://res.cloudinary.com/saibyouga/image/upload/${data.companyImage}`}
+							src={`https://res.cloudinary.com/honeydrew/image/upload/${data.companyImage}`}
 							width={85}
 							height={85}
 							alt="Image"
@@ -83,7 +81,7 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 									</>
 									:
 									<></>
-							}
+							 }
 						</div>
 					</div>
 				</div>
