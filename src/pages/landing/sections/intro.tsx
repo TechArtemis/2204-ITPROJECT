@@ -5,10 +5,12 @@ import { FaSignInAlt } from "react-icons/fa";
 
 export const Intro = () => {
 	return (
-		<Box w="full" bg="green.900" px="200px" py="60px" mb="120px">
-			<Flex justifyContent="space-between" alignItems="center" pb="80px">
-				<Heading fontSize={54} fontFamily={"Lato-Bold"} letterSpacing="3px" color="whiteAlpha.900">People who care <br /> about your growth </Heading>
-				<Box maxW="300px">
+		<Box w="full" bg="green.900" px={["50px", "50px", "200px", "200px"]} py="60px" mb="120px">
+			<Flex justifyContent="space-between" alignItems="center" flexDirection={["column", "column", "column", "row"]} pb="80px">
+				<Heading fontSize={54} fontFamily={"Lato-Bold"} letterSpacing="3px" color="whiteAlpha.900" w="100%" textAlign={["center", "center", "center", "left"]}>
+					People who care <br /> about your growth
+				</Heading>
+				<Box maxW="300px" mt={["50px", "50px", "50px", "0px"]}>
 					<Text color="whiteAlpha.700" pb="20px">
                         The VCC Co-op program provides post-secondary students with a work placement in the canadian workforce that allows them to explore the tech sector and expand their skills and competencies by working on projects that augment their field of study.
 					</Text>

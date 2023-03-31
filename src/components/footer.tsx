@@ -5,7 +5,7 @@ import { FaSignInAlt } from "react-icons/fa";
 
 export default function Footer() {
 	return (
-		<Box w="full" bg="green.900" px="200px" py="180px" textAlign="center">
+		<Box w="full" bg="green.900" px={["50px", "100px", "200px", "200px"]} py="180px" textAlign="center">
 			<Heading
 				color="white"
 				fontSize={46}
