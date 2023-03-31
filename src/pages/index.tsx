@@ -11,12 +11,9 @@ import HowWeWork from "./landing/sections/howWeWork";
 import Testimonials from "./landing/sections/testimonials";
 import Commitments from "./landing/sections/commitments";
 
-
-
-
 export default function Home() {
 	return (
-		<Box>
+		<Box >
 			<Header />
 			<Intro />
 			<Services />
