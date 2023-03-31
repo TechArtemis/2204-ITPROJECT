@@ -81,15 +81,6 @@ export default function Card(props: Props) {
 			<div className={styles.jobInfo} onClick={() => handleClick()}>
 				<h1>{props.job}</h1>
 				<h2>{props.type}</h2>
-				{/* { props.tags.map((item, i) => {
-						return(
-							<div className={styles.tags} key={i}>
-								<p>{item}</p>
-							</div>
-						);
-
-					})
-					} */}
 				<div className={styles.tag}>
 					<div className={styles.tags}>
 						<p>{props.tags[0]}</p>

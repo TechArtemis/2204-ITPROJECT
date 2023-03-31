@@ -19,13 +19,6 @@ interface Props {
 }
 
 export default function JobPostings(props: Props) {
-	const settings = {
-		dots: true,
-		infinite: true,
-		speed: 500,
-		slidesToShow: 4,
-		slidesToScroll: 3
-	};
 
 	const items = props.jobs.map((post: JobPosting, idx) => (
 		<div className="item" data-value={idx.toString()} key={idx}>

@@ -1,6 +1,6 @@
 // Third-party imports
 import React from "react";
-import { Box, Flex, Heading, HStack, Spacer, Text } from "@chakra-ui/react";
+import { Box, Flex, Heading, Spacer, Text } from "@chakra-ui/react";
 import { RiComputerLine } from "react-icons/ri";
 import { BsPencilSquare } from "react-icons/bs";
 

@@ -3,9 +3,6 @@ import { Flex, Heading, Icon, Link, Menu, MenuButton, MenuDivider, MenuItem, Men
 import { FaSignInAlt } from "react-icons/fa";
 import dynamic from "next/dynamic";
 import NextLink from "next/link";
-import { HamburgerIcon } from "@chakra-ui/icons";
-
-// Local imports
 
 // Dynamic Imports
 const MenuIcon = dynamic(() => import("@mui/icons-material/Menu"));
@@ -25,12 +22,12 @@ export default function Header(){
 				<Flex display={["inline", "inline", "inline", "inline", "none"]}>
 					<Menu>
 						<MenuButton>
-							<HamburgerIcon style={{ fontSize: 36 }}/>
+							<MenuIcon style={{ fontSize: 36 }}/>
 						</MenuButton>
 						<MenuList>
 							<Link as={NextLink} href='./'>
 								<MenuItem color="black">
-								Home
+									Home
 								</MenuItem>
 							</Link>
 
@@ -38,7 +35,7 @@ export default function Header(){
 
 							<Link href='https://www.vcc.ca/programs/computer-systems-technology/' isExternal>
 								<MenuItem color="black">
-								Programs and Courses
+									Programs and Courses
 								</MenuItem>
 							</Link>
 
@@ -46,7 +43,7 @@ export default function Header(){
 
 							<Link as={NextLink} href='./login'>
 								<MenuItem color="black">
-								Job Postings
+									Job Postings
 								</MenuItem>
 							</Link>
 
@@ -54,7 +51,7 @@ export default function Header(){
 
 							<Link as={NextLink} href='./login'>
 								<MenuItem color="black">
-								Company Job Form
+									Company Job Form
 								</MenuItem>
 							</Link>
 
@@ -62,7 +59,7 @@ export default function Header(){
 
 							<Link as={NextLink} href='/login' alignContent="center">
 								<MenuItem color="black">
-                				Login
+                					Login
 								</MenuItem>
 							</Link>
 
