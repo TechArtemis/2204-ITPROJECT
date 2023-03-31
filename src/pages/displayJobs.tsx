@@ -41,7 +41,7 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 			<div className={styles.container}>
 				{
 					name === "Admin" &&
-					 <GridItem colSpan={{ sm: 3, md: 1 }}>
+					<GridItem colSpan={{ sm: 3, md: 1 }}>
 					 	<Button
 					 		type={"button"}
 					 		onClick={() => handleRouteToForm()}
