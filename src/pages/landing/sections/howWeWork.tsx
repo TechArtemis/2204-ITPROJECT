@@ -1,5 +1,5 @@
 import React from "react";
-import { Box, HStack, Heading, Flex } from "@chakra-ui/react";
+import { Box, Heading, Flex } from "@chakra-ui/react";
 import { CoopWorkMethodCard } from "@/components/CoopWorkMethodCard";
 
 export const HowWeWork = () => {

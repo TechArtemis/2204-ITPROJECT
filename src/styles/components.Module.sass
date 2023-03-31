@@ -19,8 +19,18 @@ $primary: #84BD00
 		p
 			font-family: "Lato-Bold"
 
-			&:hover
-				border-bottom: 2px solid $primary
+.navItems
+	@media (max-width: 48em)
+		display: none !important
+
+.menuButton
+	display: none
+	padding: 30px 50px 0px 50px
+	width: 100%
+
+	@media (max-width: 48em)
+		display: flex !important
+
 
 .logo
 	display: inline-flex	
