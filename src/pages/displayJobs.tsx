@@ -114,7 +114,6 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 	);
 }
 
-
 export async function getServerSideProps(context: { [key: string]: any }) {
 	try {
 		const secret = process.env.NEXTAUTH_SECRET;
