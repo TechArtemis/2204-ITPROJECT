@@ -465,43 +465,47 @@ export default function EditFormPage(jobdata: Props) {
 	};
 
 	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false, error: boolean = false) {
-		setItem({ ...datatest });
-		const tags = item.tags.split(",");
-		if (formPage === 3) {
-			const jobPosting = {
+		try{
+			setItem({ ...datatest });
+			const tags = item.tags.split(",");
+			if (formPage === 3) {
+				const jobPosting = {
 
-				companyImage: jobdata.jobdata.companyImage,
-				companyName: item.companyName,
-				companyAbout: item.companyAbout,
-				companyLink: item.companyLink,
-				companyLocation: [
-					{
-						location: {
-							address: item.companyLocation.address,
-							city: item.companyLocation.city,
-							province: item.companyLocation.province,
-							postalCode: item.companyLocation.postalCode
+					companyImage: jobdata.jobdata.companyImage,
+					companyName: item.companyName,
+					companyAbout: item.companyAbout,
+					companyLink: item.companyLink,
+					companyLocation: [
+						{
+							location: {
+								address: item.companyLocation.address,
+								city: item.companyLocation.city,
+								province: item.companyLocation.province,
+								postalCode: item.companyLocation.postalCode
+							}
 						}
-					}
-				],
-				companyContact: item.companyContact,
-				jobTitle: item.jobTitle,
-				jobType: item.jobType,
-				employment: item.employment,
-				jobDescription: item.jobDescription,
-				tags: tags
-			};
+					],
+					companyContact: item.companyContact,
+					jobTitle: item.jobTitle,
+					jobType: item.jobType,
+					employment: item.employment,
+					jobDescription: item.jobDescription,
+					tags: tags
+				};
 
-			const obj = {
-				jobPosting
-			};
+				const obj = {
+					jobPosting
+				};
 
-			await instance.put(`/jobPosting/${jobdata.jobdata._id as string}/update`, obj);
-			router.push("/");
+				await instance.put(`/jobPosting/${jobdata.jobdata._id as string}/update`, obj);
+				router.push("/");
 
-		}
-		else if (changePage) {
-			setFormPage(formPage + 1);
+			}
+			else if (changePage) {
+				setFormPage(formPage + 1);
+			}
+		}catch (err) {
+			router.push("/ErrorPage");
 		}
 	}
 

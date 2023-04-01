@@ -459,8 +459,7 @@ function PostCoop({ onSubmit, item }: any) {
 
 export default function FormPages() {
 
-	const [loading, setLoading] = useState(false);
-
+	const [isLoading, setIsLoading] = useState(false);
 	const [formPage, setFormPage] = useState<number>(1);
 
 	const [item, setItem] = useState<CompanyJob>({
@@ -510,58 +509,62 @@ export default function FormPages() {
 	};
 
 	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
+		try {
+			setItem({ ...datatest });
+			const tags = item.tags.split(", ");
+			if (formPage === 3) {
 
-		setItem({ ...datatest });
-		const tags = item.tags.split(", ");
-		if (formPage === 3) {
+				const form = new FormData();
+				form.append("files", item.companyImage!);
 
-			const form = new FormData();
-			form.append("files", item.companyImage!);
+				const img = {
+					method: "POST",
+					url: "cloudinary",
+					data: form
+				};
 
-			const img = {
-				method: "POST",
-				url: "cloudinary",
-				data: form
-			};
+				const { data } = await instance.request(img);
+				const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
 
-			const { data } = await instance.request(img);
-			const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
+				const jobPosting = {
 
-			const jobPosting = {
-
-				companyImage: url.public_id,
-				companyName: item.companyName,
-				companyAbout: item.companyAbout,
-				companyLink: item.companyLink,
-				companyLocation: [
-					{
-						location: {
-							address: item.companyLocation.address,
-							city: item.companyLocation.city,
-							province: item.companyLocation.province,
-							postalCode: item.companyLocation.postalCode
+					companyImage: url.public_id,
+					companyName: item.companyName,
+					companyAbout: item.companyAbout,
+					companyLink: item.companyLink,
+					companyLocation: [
+						{
+							location: {
+								address: item.companyLocation.address,
+								city: item.companyLocation.city,
+								province: item.companyLocation.province,
+								postalCode: item.companyLocation.postalCode
+							}
 						}
-					}
-				],
-				companyContact: item.companyContact,
-				jobTitle: item.jobTitle,
-				jobType: item.jobType,
-				employment: item.employment,
-				jobDescription: item.jobDescription,
-				tags: tags
-			};
+					],
 
-			const obj = {
-				jobPosting
-			};
+					companyContact: item.companyContact,
+					jobTitle: item.jobTitle,
+					jobType: item.jobType,
+					employment: item.employment,
+					jobDescription: item.jobDescription,
+					tags: tags
+				};
 
-			await instance.post("/jobPosting/create", obj);
-			setLoading(false);
-			router.push("/");
+				const obj = {
+					jobPosting
+				};
 
-		} else if(changePage) {
-			setFormPage(formPage + 1);
+				await instance.post("/jobPosting/create", obj);
+				router.push("/");
+
+			} else if(changePage) {
+				setFormPage(formPage + 1);
+			}
+		} catch (error) {
+			router.push("/ErrorPage");
 		}
+
 	}
 
 	return (
