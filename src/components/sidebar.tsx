@@ -55,7 +55,7 @@ export default function Sidebar(props: Props) {
 					)}
 				</Link>
 
-				<Link href={"/admin/auditLogs"}>
+				{/* <Link href={"/admin/auditLogs"}>
 					{props.isAuditPage ? (
 						<div className={`${styles.auditLogs} ${styles.auditLogsClicked}`}>
                         	<ArticleOutlinedIcon fontSize="large" sx={{ color: "#000000" }} />
@@ -67,7 +67,7 @@ export default function Sidebar(props: Props) {
 							<h1>Audit Logs</h1>
 						</div>
 					)}
-				</Link>
+				</Link> */}
 
 			</div>
 		</>
