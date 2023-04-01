@@ -70,7 +70,7 @@ export default function Navbar() {
 
 			<div className={styles.nav}>
 				<div className={styles.navItems}>
-					<Image src={"/images/vcc.png"} alt={"logo"} width={100} height={100}/>
+					<Image src={"/images/vcc.png"} alt={"logo"} width={100} height={100} unoptimized={true}/>
 				</div>
 
 				<div className={styles.navItems}>

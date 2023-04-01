@@ -21,7 +21,8 @@ interface Props {
 export default function Sidebar(props: Props) {
 	return (
 		<>
-			<Image src={"/images/vcc.png"} alt={"logo"} width={140} height={140} /><div className={styles.sidebarItems}>
+			<Image src={"/images/vcc.png"} alt={"logo"} width={140} height={140} unoptimized={true}/>
+			<div className={styles.sidebarItems}>
 				<div className={styles.mainMenu}>
 					<h1>Main Menu</h1>
 				</div>
