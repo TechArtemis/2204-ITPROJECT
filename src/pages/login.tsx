@@ -24,6 +24,7 @@ import router from "next/router";
 import { getToken } from "next-auth/jwt";
 import { ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
 import NextLink from "next/link";
+import { PASSWORD_REGEX, STUDENT_EMAIL_REGEX } from "@/shared/regex";
 
 export default function LogIn() {
 
@@ -31,6 +32,8 @@ export default function LogIn() {
 	const [input, setInput] = useState("");
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [isEmailInvalid, setIsEmailInvalid] = useState(false);
+	const [isPasswordInvalid, setIsPasswordInvalid] = useState(false);
 
 
 	const handleInputChange = (e: { target: { value: SetStateAction<string>; }; }) => setInput(e.target.value);
@@ -70,7 +73,7 @@ export default function LogIn() {
 			}
 		} catch (error: any) {
 		}
-	}
+	};
 
 	return (
 

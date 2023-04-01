@@ -11,8 +11,6 @@ import styles from "@/styles/projectView.module.sass";
 const Edit = dynamic(() => import("@mui/icons-material/Edit"));
 const Delete = dynamic(() => import("@mui/icons-material/Delete"));
 
-
-
 export default function ViewProject({ onSubmit, data, name }: any) {
 	async function handleDelete(id: string) {
 		try {
@@ -49,10 +47,7 @@ export default function ViewProject({ onSubmit, data, name }: any) {
 							width={85}
 							height={85}
 						/>
-
-
-					)
-					}
+					)}
 				</div>
 
 				<div className={styles.content}>
@@ -78,10 +73,6 @@ export default function ViewProject({ onSubmit, data, name }: any) {
 
 					<h2><a href={`https://${data.hyperlink}`} target="_blank" rel="noopener noreferrer">{data.hyperlink}</a></h2>
 					<h3>{data.description}</h3>
-
-
-
-
 				</div>
 			</div>
 
