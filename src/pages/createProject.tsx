@@ -116,8 +116,8 @@ export default function CreateProject(project: Project) {
 				router.push("/admin/studentPosts");
 			}
 
-		} catch (err) {
-			router.push("/ErrorPage");
+		} catch (error: any) {
+			router.push(`/${error.response.data.code}/${error.response.data.message}`);
 		}
 
 	}

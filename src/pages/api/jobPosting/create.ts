@@ -121,6 +121,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 			const { code = 500, message } = error;
 			res.status(code).json(
 				{
+					code,
 					message
 				}
 			);

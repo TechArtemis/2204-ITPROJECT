@@ -555,14 +555,15 @@ export default function FormPages() {
 					jobPosting
 				};
 
-				await instance.post("/jobPosting/create", obj);
+				const response = await instance.post("/jobPosting/create", obj);
+
 				router.push("/");
 
 			} else if(changePage) {
 				setFormPage(formPage + 1);
 			}
-		} catch (error) {
-			router.push("/ErrorPage");
+		} catch (error: any) {
+			router.push(`/${error.response.data.code}/${error.response.data.message}`);
 		}
 
 	}
