@@ -23,14 +23,18 @@ interface Props {
 export default function AdminStudentPage(props: Props) {
 
 	const [search, setSearch] = useState("");
+
 	function handleRouteToProject() {
 		router.push("/createProject");
 	}
+
 	function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
 		const val = event.target.value;
 
 		setSearch(val);
 	};
+
+
 	return (
 		<>
 			<div className={styles.container}>
@@ -44,33 +48,33 @@ export default function AdminStudentPage(props: Props) {
 					</div>
 
 					<Grid
-				templateRows={{ sm: "repeat(2, 1fr)", xl: "repeat(1, 1fr)" }}
-				templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }}
-				gap={5}>
-					<div className={styles.searchContainer}>
-						<input
-							type="text"
-							placeholder="Search project name, description."
-							value={search}
-							onChange={handleSearch}>
-						</input>
-						<div className={styles.searchIcon}>
-							<Search fontSize="medium" />
-						</div>
-					</div>
-
-				<GridItem>
-						<Button
-							type={"button"}
-							onClick={() => handleRouteToProject()}
-							className={styles.postJob}>
-							<div className={styles.postItemText}>
-								<p>Add Job</p>
-								<AddIcon fontSize="large" sx={{ color: "#ffffff" }} />
+						templateRows={{ sm: "repeat(2, 1fr)", xl: "repeat(1, 1fr)" }}
+						templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }}
+						gap={5}>
+						<div className={styles.searchContainer}>
+							<input
+								type="text"
+								placeholder="Search project name, description."
+								value={search}
+								onChange={handleSearch}>
+							</input>
+							<div className={styles.searchIcon}>
+								<Search fontSize="medium" />
 							</div>
-						</Button>
-				</GridItem>
-				</Grid>
+						</div>
+
+						<GridItem>
+							<Button
+								type={"button"}
+								onClick={() => handleRouteToProject()}
+								className={styles.postJob}>
+								<div className={styles.postItemText}>
+									<p>Add Job</p>
+									<AddIcon fontSize="large" sx={{ color: "#ffffff" }} />
+								</div>
+							</Button>
+						</GridItem>
+					</Grid>
 
 					<div className={styles.contentItems}>
 

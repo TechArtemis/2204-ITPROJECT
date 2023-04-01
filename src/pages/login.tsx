@@ -114,18 +114,18 @@ export default function LogIn() {
 												<FormLabel>Email Address</FormLabel>
 												<Input type="email" onChange={handleEmailChange} />
 												{!isEmailInvalid ? (
-											<FormHelperText>
+													<FormHelperText>
                                                 Enter your VCC student email or personal CST alumni email
-											</FormHelperText>
+													</FormHelperText>
 												) : (
-											<FormErrorMessage>
+													<FormErrorMessage>
                                                 Invalid e-mail, please use a valid VCC e-mail
-											</FormErrorMessage>
+													</FormErrorMessage>
 												)}
 											</FormControl>
 										</Box>
 										<Box>
-											<FormControl id="password" isInvalid={isPasswordInvalid}  isRequired >
+											<FormControl id="password" isInvalid={isPasswordInvalid} isRequired >
 												<FormLabel>Password</FormLabel>
 												<InputGroup>
 													<Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
