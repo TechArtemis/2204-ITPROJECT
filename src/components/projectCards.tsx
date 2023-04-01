@@ -3,8 +3,6 @@ import Image from "next/image";
 import styles from "@/styles/components.module.sass";
 import router from "next/router";
 
-
-
 interface Props {
     id: string,
     name: string,

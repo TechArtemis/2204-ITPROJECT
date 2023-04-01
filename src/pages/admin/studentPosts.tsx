@@ -1,10 +1,7 @@
 // Third-party imports
-import Link from "next/link";
-import Image from "next/image";
-import dynamic from "next/dynamic";
 import { useState } from "react";
 import router from "next/router";
-import { Button, Grid } from "@chakra-ui/react";
+import { Grid } from "@chakra-ui/react";
 import { getToken } from "next-auth/jwt";
 
 // Local imports
@@ -15,28 +12,11 @@ import { Project } from "@/interface/Project";
 import ProjectCards from "@/components/projectCards";
 import { getAllProject } from "@/backend/actions/project";
 
-// Dynamic imports
-const Search = dynamic(() => import("@mui/icons-material/Search"));
-const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
-
 interface Props {
 	projectPosts: Project[]
 }
 
 export default function AdminStudentPage(props: Props) {
-
-	const [search, setSearch] = useState("");
-
-	function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
-		const val = event.target.value;
-
-		setSearch(val);
-	};
-
-	function handleRouteToForm() {
-		router.push("/form");
-	}
-
 	return (
 		<>
 			<div className={styles.container}>
@@ -55,7 +35,7 @@ export default function AdminStudentPage(props: Props) {
 
 					<div className={styles.contentItems}>
 
-						<Grid templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
+						<Grid templateColumns={"repeat(1, 1fr)"} ml={"5vh"} gap={2}>
 							{props.projectPosts.map((post: Project, idx) => (
 								<ProjectCards
 									key={idx}
