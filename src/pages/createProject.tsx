@@ -26,7 +26,6 @@ interface Project {
 
 
 export default function CreateProject(project: Project) {
-	const [error, setError] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
 	const [disabled, setDisabled] = useState(false);
 	const [ form, setForm ] = useState<Project>({
@@ -36,6 +35,7 @@ export default function CreateProject(project: Project) {
 		description: ""
 	});
 
+	const [error, setError] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
 	function handleChange (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
@@ -64,37 +64,64 @@ export default function CreateProject(project: Project) {
 		);
 	}
 
+
 	async function handleSubmit() {
-		setIsLoading(true);
-		setDisabled(true);
-		const formData = new FormData();
-		formData.append("files", form.image!);
+		try{
+			setDisabled(true);
 
-		const img = {
-			method: "POST",
-			url: "cloudinary",
-			data: formData
-		};
+			if(form.name === ""){
+				setError("Please enter a project name");
+				setDisabled(false);
+			}
+			else if(form.hyperlink === ""){
+				setError("Please enter a project hyperlink (github, website, etc) ");
+				setDisabled(false);
+			}
+			else if(form.description === ""){
+				setError("Please enter a project description");
+				setDisabled(false);
+			}
+			else if(form.image === null){
+				setError("Please upload a project image");
+				setDisabled(false);
+			}
+			else{
+				setIsLoading(true);
+				setError("");
+				const formData = new FormData();
+				formData.append("files", form.image!);
 
-		const { data } = await instance.request(img);
-		const { data : { data : { url: url } } } = await instance.post("/cloudinary", formData);
+				const img = {
+					method: "POST",
+					url: "cloudinary",
+					data: formData
+				};
 
+				const { data } = await instance.request(img);
+				const { data : { data : { url: url } } } = await instance.post("/cloudinary", formData);
 
-		const project = {
-			name: form.name,
-			image: url.public_id,
-			hyperlink: form.hyperlink,
-			description: form.description
-		};
+				const project = {
+					name: form.name,
+					image: url.public_id,
+					hyperlink: form.hyperlink,
+					description: form.description
+				};
 
-		const obj = {
-			project
-		};
+				const obj = {
+					project
+				};
 
-		await instance.post("/project/create", obj);
-		setIsLoading(false);
-		router.push("/admin/studentPosts");
+				await instance.post("/project/create", obj);
+				setIsLoading(false);
+				router.push("/admin/studentPosts");
+			}
+
+		} catch (error: any) {
+			router.push(`/${error.response.data.code}/${error.response.data.message}`);
+		}
+
 	}
+
 
 	return (
 		<div className={styles.container}>
@@ -106,7 +133,8 @@ export default function CreateProject(project: Project) {
 			</div>
 			<div className={styles.form}>
 				<div className={styles.field}>
-					{error && <ErrorAlert message={error}/>}
+					{error && <ErrorAlert type="error" message={error}/>}
+					{isLoading && <ErrorAlert type="loading" message={"Loading..."}/>}
 					<Input
 						type="text"
 						name="name"

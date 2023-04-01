@@ -3,7 +3,6 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import router from "next/router";
 import { Button, Grid } from "@chakra-ui/react";
 import { getToken } from "next-auth/jwt";
 
@@ -15,6 +14,7 @@ import { getAllPosting } from "@/backend/actions/jobPosting";
 import { getFavorites } from "@/backend/actions/user";
 import Sidebar from "@/components/sidebar";
 import Searchbar from "@/components/searchbar";
+import Profile from "@/components/profile";
 
 // Dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));
@@ -51,6 +51,11 @@ export default function AdminJobsPage({ jobPostings, favorites, name }: Props) {
 				<div className={styles.contentContainer}>
 					<div className={styles.contentTitle}>
 						<h1>Posted Jobs</h1>
+						<Profile session={{
+							user: {
+								name: ""
+							}
+						}}/>
 					</div>
 
 					<div className={styles.searchContainer}>

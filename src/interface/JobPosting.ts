@@ -44,7 +44,9 @@ export namespace JobPosting {
         PartTime = "Part-Time",
         FullTime = "Full-Time",
         Contracted = "Contracted",
-        Seasonal = "Seasonal"
+        Seasonal = "Seasonal",
+
+        // Coop= "Co-op"
     }
 
     // Enum for Employement Type

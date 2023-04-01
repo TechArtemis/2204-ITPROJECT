@@ -137,17 +137,78 @@ $primary: #84BD00
 	width: 350px
 	height: auto
 
-.erroricon
+.successicon
 	padding-top: 0px
 
-.message
+.success
 	display: flex
 	color: #000
 	font-size: 14px
 	text-transform: none
 	font-weight: bold
-	background-color: #fbeeee
-	border: 1px solid #fbeeee
+	background-color: #EEFBF6
+	border: 1px solid #EEFBF6
+	border-radius: .25rem
+	padding: .75rem 1.25rem
+	width: 350px
+
+	p
+		padding: 7px 0px 0px 14px
+
+.loadingicon
+	padding-top: 0px
+	animation: spin 1s linear infinite
+
+.loading 
+	display: flex
+	color: #000
+	font-size: 14px
+	text-transform: none
+	font-weight: bold
+	background-color: #EAFAFC
+	border: 1px solid #EAFAFC
+	border-radius: .25rem
+	padding: .75rem 1.25rem
+	width: 350px
+
+	p
+		padding: 7px 0px 0px 14px
+
+	@keyframes spin
+		0%
+			transform: rotate(0deg)
+		100%
+			transform: rotate(360deg)
+
+.warningicon
+	padding-top: 0px
+
+.warning
+	display: flex
+	color: #000
+	font-size: 14px
+	text-transform: none
+	font-weight: bold
+	background-color: #FEF9EB
+	border: 1px solid #FEF9EB
+	border-radius: .25rem
+	padding: .75rem 1.25rem
+	width: 350px
+
+	p
+		padding: 7px 0px 0px 14px
+
+.erroricon
+	padding-top: 0px
+
+.error
+	display: flex
+	color: #000
+	font-size: 14px
+	text-transform: none
+	font-weight: bold
+	background-color: #FBEEEE
+	border: 1px solid #FBEEEE
 	border-radius: .25rem
 	padding: .75rem 1.25rem
 	width: 350px
