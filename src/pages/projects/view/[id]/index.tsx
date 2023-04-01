@@ -14,14 +14,14 @@ const Delete = dynamic(() => import("@mui/icons-material/Delete"));
 
 
 export default function ViewProject({ onSubmit, data, name }: any) {
-	async function handleDelete (id: string) {
+	async function handleDelete(id: string) {
 		try {
 			const res = await instance.delete(`/project/${id}`);
-			if(res.status === 200) {
+			if (res.status === 200) {
 				router.push("/displayProjects");
 			}
 
-		} catch(error: any) {
+		} catch (error: any) {
 			console.log(error);
 		}
 	}
@@ -31,13 +31,14 @@ export default function ViewProject({ onSubmit, data, name }: any) {
 			<Navbar />
 			<div className={styles.submitform}>
 				<div className={styles.imgcontent}>
-					{ data.companyImage ? (
+					{data.image ? (
 						<Image
 							className={styles.img}
-							src={`https://res.cloudinary.com/honeydrew/image/upload/${data.image}`}
+							src={`https://res.cloudinary.com/di8zlg2gt/image/upload/${data.image}`}
 							width={85}
 							height={85}
 							alt="Image"
+							unoptimized={true}
 						/>
 					) : (
 						<Image
@@ -60,19 +61,22 @@ export default function ViewProject({ onSubmit, data, name }: any) {
 						<div>
 							<h1>{data.name}</h1>
 						</div>
-						{/* {
-					name === "Admin" */}
-						<div className={styles.button}>
-							<button onClick={() => handleDelete(data._id as string)}>
-								<Delete sx={{ color: "#DF5965" }} fontSize={"large"}/>
-							</button>
-						</div>
-						{/* : */}
-						<></>
-						{/* //  } */}
+						{
+							name === "Admin"
+								?
+								<>
+									<div className={styles.button1}>
+										<button onClick={() => handleDelete(data._id as string)}>
+											<Delete sx={{ color: "#DF5965" }} fontSize={"large"} />
+										</button>
+									</div>
+								</>
+								:
+								<></>
+						}
 					</div>
 
-					<h2>{data.hyperlink}</h2>
+					<h2><a href={`https://${data.hyperlink}`} target="_blank" rel="noopener noreferrer">{data.hyperlink}</a></h2>
 					<h3>{data.description}</h3>
 
 
@@ -107,7 +111,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
 		const { id } = context.params;
 		const form = await getProject(id);
-		if(token.name === "Admin") {
+		if (token.name === "Admin") {
 			return {
 				props: {
 					name: token.name,

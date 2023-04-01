@@ -2,7 +2,8 @@
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import router from "next/router";
-import { Button, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
+import Button from "@/components/button";
 
 // Local imports
 import styles from "@/styles/admin.module.sass";
@@ -27,7 +28,11 @@ export default function Searchbar(props: Props) {
 	};
 
 	function handleRouteToForm() {
-		router.push("/form");
+		router.push("/createJobs");
+	}
+
+	function handleRouteToProject() {
+		router.push("/createProject");
 	}
 
 	return (
@@ -64,7 +69,7 @@ export default function Searchbar(props: Props) {
 					) : (
 						<Button
 							type={"button"}
-							onClick={() => handleRouteToForm()}
+							onClick={() => handleRouteToProject()}
 							className={styles.postProject}>
 							<div className={styles.postItemText}>
 								<p>Add Project</p>
@@ -73,7 +78,6 @@ export default function Searchbar(props: Props) {
 						</Button>
 					)}
 				</GridItem>
-
 			</Grid>
 		</>
 	);

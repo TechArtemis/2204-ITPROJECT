@@ -36,8 +36,6 @@ export default function JobCardComponent(props: Props) {
 		if (action === "add"){
 			setLiked(true);
 			const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));
-
-			console.log(res);
 		} else {
 			setLiked(false);
 			const res = await instance.post("favorites", { id, action }).then(response => console.log(response)).catch(error => console.log(error));

@@ -38,23 +38,6 @@ export default function DisplayJobs({ jobPostings, favorites, name }: Props) {
 	return (
 		<div className={styles.background}>
 			<Navbar />
-			<div className={styles.container}>
-				{
-					name === "Admin" &&
-					<GridItem colSpan={{ sm: 3, md: 1 }}>
-					 	<Button
-					 		type={"button"}
-					 		onClick={() => handleRouteToForm()}
-					 		className={styles.post}>
-					 		<div className={styles.postJobText}>
-					 			<p>Post Job</p>
-					 			<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-					 		</div>
-					 	</Button>
-					 </GridItem>
-				}
-			</div>
-
 			<div className={styles.title}>
 				<h1>Explore Jobs</h1>
 			</div>
@@ -96,16 +79,6 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 
 		const form = await getAllPosting();
 		const { message: favorites } = await getFavorites(token.email as string);
-		if (token.name === "Admin") {
-			return {
-				props: {
-					name: token.name,
-					jobPostings: JSON.parse(JSON.stringify(form.message)),
-					favorites: JSON.parse(JSON.stringify(favorites))
-				},
-			};
-		}
-
 
 		return {
 			props: {

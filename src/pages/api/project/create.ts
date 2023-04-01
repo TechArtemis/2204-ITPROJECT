@@ -7,8 +7,6 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 	if (req.method === "POST") {
 		try {
 			const { project } = req.body;
-
-			console.log(project);
 			if (!isValidStr(project.name)) {
 				throw {
 					code: 400,

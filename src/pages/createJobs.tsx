@@ -366,6 +366,12 @@ function JobPostInfo({ onSubmit, item }: any) {
 };
 
 function PostCoop({ onSubmit, item }: any) {
+	const [disabled, setDisabled] = useState(false);
+
+	function handleClick() {
+		setDisabled(true);
+		onSubmit(item, false);
+	}
 	const [value, setValue] = useState(1);
 
 	return (
@@ -444,7 +450,7 @@ function PostCoop({ onSubmit, item }: any) {
 				</div>
 			</div>
 			<div className={styles.subheader2}>
-				<button onClick={() => onSubmit(item, false)}
+				<button disabled = {disabled} onClick={() => handleClick()}
 					className={styles.submit}>Submit</button>
 			</div>
 		</div>
@@ -504,9 +510,9 @@ export default function FormPages() {
 	};
 
 	async function handleSubmit(datatest: CompanyJob, changePage: boolean = false) {
-		setLoading(true);
+
 		setItem({ ...datatest });
-		const tags = item.tags.split(",");
+		const tags = item.tags.split(", ");
 		if (formPage === 3) {
 
 			const form = new FormData();
@@ -614,7 +620,7 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		if (token.name !== "Admin") {
 			return {
 				redirect: {
-					destination: "/",
+					destination: "/home",
 				}
 			};
 		}

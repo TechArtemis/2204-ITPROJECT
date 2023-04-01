@@ -51,8 +51,8 @@ export default function AdminStudentPage() {
 
 					<div className={styles.contentItems}>
 
-						{/* TODO: Put student projects that are posted in here */}
-
+					<Grid templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
+						</
 					</div>
 				</div>
 			</div>
@@ -90,10 +90,10 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		}
 
 		return {
-			props: {
-				jobPostings: JSON.parse(JSON.stringify(form.message)),
-				favorites: JSON.parse(JSON.stringify(favorites))
-			},
+			redirect: {
+				destination: "/home",
+				permanent: false
+			}
 		};
 	} catch (error) {
 		return {

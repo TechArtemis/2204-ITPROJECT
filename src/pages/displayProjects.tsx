@@ -22,8 +22,6 @@ interface Props {
 }
 
 export default function DisplayProjects({ projects, name }: Props) {
-	console.log(projects);
-	console.log(projects.length);
 
 	function handleRouteToProjectForm() {
 		router.push("/createProject");
@@ -32,22 +30,6 @@ export default function DisplayProjects({ projects, name }: Props) {
 	return (
 		<div>
 			<Navbar />
-			<div className={styles.container}>
-				{
-					name === "Admin" &&
-					<GridItem colSpan={{ sm: 3, md: 1 }}>
-						<Button
-							type={"button"}
-							onClick={() => handleRouteToProjectForm()}
-							className={styles.post}>
-							<div className={styles.postJobText}>
-								<p>Post Project</p>
-								<AddIcon fontSize="medium" sx={{ color: "#ffff" }} />
-							</div>
-						</Button>
-					</GridItem>
-				}
-			</div>
 
 			<div className={styles.title}>
 				<h1>Explore Projects</h1>
@@ -87,16 +69,6 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		}
 
 		const form = await getAllProject();
-
-		if (token.name === "Admin") {
-			return {
-				props: {
-					name: token.name,
-					projects: JSON.parse(JSON.stringify(form.message)),
-
-				},
-			};
-		}
 
 		return {
 			props: {
