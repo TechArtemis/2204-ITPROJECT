@@ -124,6 +124,12 @@ export default function SignupCard() {
 						bg={useColorModeValue("gray.50", "gray.800")}>
 						<Stack spacing={8} mx={"auto"} w={"full"} maxW={"lg"} py={12} px={6}>
 							<Stack align={"center"}>
+								<Image
+									boxSize='150px'
+									objectFit='contain'
+									src='./images/vcc.png'
+									alt='School logo'
+								/>
 								<Heading fontSize={"4xl"} textAlign={"center"} fontFamily={"Lato-Bold"}>
                                     Sign up
 								</Heading>
