@@ -110,13 +110,22 @@ export default function LogIn() {
 								<Stack spacing={4}>
 									<VStack alignItems={"left"}>
 										<Box>
-											<FormControl id="email" isRequired>
+											<FormControl id="email" isInvalid={isEmailInvalid} isRequired>
 												<FormLabel>Email Address</FormLabel>
 												<Input type="email" onChange={handleEmailChange} />
+												{!isEmailInvalid ? (
+											<FormHelperText>
+                                                Enter your VCC student email or personal CST alumni email
+											</FormHelperText>
+												) : (
+											<FormErrorMessage>
+                                                Invalid e-mail, please use a valid VCC e-mail
+											</FormErrorMessage>
+												)}
 											</FormControl>
 										</Box>
 										<Box>
-											<FormControl id="password" isRequired >
+											<FormControl id="password" isInvalid={isPasswordInvalid}  isRequired >
 												<FormLabel>Password</FormLabel>
 												<InputGroup>
 													<Input type={showPassword ? "text" : "password"} onChange={handlePasswordChange} />
@@ -130,6 +139,11 @@ export default function LogIn() {
 														</Button>
 													</InputRightElement>
 												</InputGroup>
+												{isPasswordInvalid &&
+                                            <FormErrorMessage>
+                                                Password is required
+                                            </FormErrorMessage>
+												}
 											</FormControl>
 										</Box>
 									</VStack>

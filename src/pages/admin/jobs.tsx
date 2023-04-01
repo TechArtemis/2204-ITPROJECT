@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { Button, Grid } from "@chakra-ui/react";
+import { Button, Grid, GridItem } from "@chakra-ui/react";
 import { getToken } from "next-auth/jwt";
 
 // Local imports
@@ -15,6 +15,7 @@ import { getFavorites } from "@/backend/actions/user";
 import Sidebar from "@/components/sidebar";
 import Searchbar from "@/components/searchbar";
 import Profile from "@/components/profile";
+import router from "next/router";
 
 // Dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));
@@ -34,7 +35,9 @@ interface Props {
 export default function AdminJobsPage({ jobPostings, favorites, name }: Props) {
 
 	const [search, setSearch] = useState("");
-
+	function handleRouteToForm() {
+		router.push("/createJobs");
+	}
 	function handleSearch(event: React.ChangeEvent<HTMLInputElement>) {
 		const val = event.target.value;
 
@@ -57,11 +60,34 @@ export default function AdminJobsPage({ jobPostings, favorites, name }: Props) {
 							}
 						}}/>
 					</div>
-
+					<Grid
+				templateRows={{ sm: "repeat(2, 1fr)", xl: "repeat(1, 1fr)" }}
+				templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }}
+				gap={5}>
 					<div className={styles.searchContainer}>
-						<Searchbar isJobsPage/>
+						<input
+							type="text"
+							placeholder="Search companies, job name, keywords, etc."
+							value={search}
+							onChange={handleSearch}>
+						</input>
+						<div className={styles.searchIcon}>
+							<Search fontSize="medium" />
+						</div>
 					</div>
 
+				<GridItem>
+						<Button
+							type={"button"}
+							onClick={() => handleRouteToForm()}
+							className={styles.postJob}>
+							<div className={styles.postItemText}>
+								<p>Add Job</p>
+								<AddIcon fontSize="large" sx={{ color: "#ffffff" }} />
+							</div>
+						</Button>
+				</GridItem>
+				</Grid>
 					<div className={styles.contentItems}>
 
 						{(jobPostings.length === 0 && (
@@ -69,7 +95,8 @@ export default function AdminJobsPage({ jobPostings, favorites, name }: Props) {
 						))}
 
 						<Grid templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
-							{jobPostings.filter((card) => card.companyName.toLowerCase().includes(search.toLowerCase())
+							{jobPostings.filter((card) => 
+						   card.companyName.toLowerCase().includes(search.toLowerCase())
                         || card.jobTitle.toLowerCase().includes(search.toLowerCase())
                         || card.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
                         || card.jobType.toLowerCase().includes(search.toLowerCase())
