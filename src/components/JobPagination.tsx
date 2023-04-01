@@ -17,7 +17,7 @@ interface Props {
 // }
 export default function JobPagination({ name, jobPostings, favorites }: Props) {
 	const [currentPage, setCurrentPage] = useState(1);
-	const [projectsPerPage] = useState(3);
+	const [jobsPerPage] = useState(3);
 
 	const [search, setSearch] = useState("");
 
@@ -28,7 +28,7 @@ export default function JobPagination({ name, jobPostings, favorites }: Props) {
 	}
 
 
-	const filteredProjects = jobPostings.filter((job) =>
+	const filteredJobs = jobPostings.filter((job) =>
 		job.jobTitle.toLowerCase().includes(search.toLowerCase()) ||
         job.companyName.toLowerCase().includes(search.toLowerCase())
         || job.companyLocation[0].location.city.toLowerCase().includes(search.toLowerCase())
@@ -37,12 +37,12 @@ export default function JobPagination({ name, jobPostings, favorites }: Props) {
 
 	);
 
-	const indexOfLastProject = currentPage * projectsPerPage;
-	const indexOfFirstProject = indexOfLastProject - projectsPerPage;
+	const indexOfLastJobs = currentPage * jobsPerPage;
+	const indexOfFirstJobs = indexOfLastJobs - jobsPerPage;
 
-	const currentProjects = filteredProjects.slice(
-		indexOfFirstProject,
-		indexOfLastProject
+	const currentProjects = filteredJobs.slice(
+		indexOfFirstJobs,
+		indexOfLastJobs
 	);
 
 
@@ -53,7 +53,7 @@ export default function JobPagination({ name, jobPostings, favorites }: Props) {
 	  setCurrentPage(value);
 	};
 
-	const pageCounter = Math.ceil(filteredProjects.length / projectsPerPage);
+	const pageCounter = Math.ceil(filteredJobs.length / jobsPerPage);
 
 
 	return (

@@ -5,6 +5,8 @@ import Image from "next/image";
 import dynamic from "next/dynamic";
 import { instance } from "@/shared/axiosInstance";
 import router from "next/router";
+import ErrorAlert from "@/components/ErrorAlert";
+import { getToken } from "next-auth/jwt";
 
 const Close = dynamic(() => import("@mui/icons-material/Close"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
@@ -24,8 +26,9 @@ interface Project {
 
 
 export default function CreateProject(project: Project) {
-
+	const [error, setError] = useState("");
 	const inputRef = useRef<HTMLInputElement>(null);
+	const [disabled, setDisabled] = useState(false);
 	const [ form, setForm ] = useState<Project>({
 		name: "",
 		image: null,
@@ -37,13 +40,11 @@ export default function CreateProject(project: Project) {
 
 	function handleChange (event: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) {
 		setForm({ ...form,[event.target.name]: event.target.value });
-		console.log(form);
 	}
 
 	async function handleImgUpload (event: React.ChangeEvent<HTMLInputElement>){
 		const val = event.target.files![0];
 		setForm({ ...form, image: val });
-		console.log(val);
 	};
 
 	function handleFileClick() {
@@ -65,6 +66,7 @@ export default function CreateProject(project: Project) {
 
 	async function handleSubmit() {
 		setIsLoading(true);
+		setDisabled(true);
 		const formData = new FormData();
 		formData.append("files", form.image!);
 
@@ -77,6 +79,7 @@ export default function CreateProject(project: Project) {
 		const { data } = await instance.request(img);
 		const { data : { data : { url: url } } } = await instance.post("/cloudinary", formData);
 
+
 		const project = {
 			name: form.name,
 			image: url.public_id,
@@ -84,17 +87,13 @@ export default function CreateProject(project: Project) {
 			description: form.description
 		};
 
-		console.log("project", project);
-
 		const obj = {
 			project
 		};
 
-		console.log(obj);
-
 		await instance.post("/project/create", obj);
 		setIsLoading(false);
-		router.push("/displayProjects");
+		router.push("/admin/studentPosts");
 	}
 
 	return (
@@ -107,6 +106,7 @@ export default function CreateProject(project: Project) {
 			</div>
 			<div className={styles.form}>
 				<div className={styles.field}>
+					{error && <ErrorAlert message={error}/>}
 					<Input
 						type="text"
 						name="name"
@@ -166,7 +166,7 @@ export default function CreateProject(project: Project) {
 							/>
 						</div>
 					</div>
-					<button onClick={() => handleSubmit()}
+					<button disabled = {disabled} onClick={() => handleSubmit()}
 						className={styles.submit}>Submit</button>
 				</div>
 			</div>
@@ -174,3 +174,42 @@ export default function CreateProject(project: Project) {
 	);
 
 }
+
+export async function getServerSideProps(context: { [key: string]: any }) {
+	try {
+		const secret = process.env.NEXTAUTH_SECRET;
+		const token = await getToken(
+			{
+				req: context.req,
+				secret: secret
+			}
+		);
+
+		// If the user is already logged in, redirect.
+		// Note: Make sure not to redirect to the same page
+		// To avoid an infinite loop!
+		if (!token) {
+			return { redirect: { destination: "/login", permanent: false } };
+		}
+
+		if (token.name !== "Admin") {
+			return {
+				redirect: {
+					destination: "/home",
+				}
+			};
+		}
+
+		return {
+			props: {
+			}
+		};
+	} catch (error) {
+		return {
+			redirect: {
+				destination: "/",
+			},
+		};
+	}
+}
+

@@ -41,6 +41,12 @@ export default function Navbar() {
 							</MenuItem>
 						</Link>
 
+						<Link as={NextLink} href='/displayProjects'>
+							<MenuItem color="black">
+							Student Projects
+							</MenuItem>
+						</Link>
+
 						<Link as={NextLink} href='/savedJobs'>
 							<MenuItem color="black">
 							My Jobs
@@ -76,6 +82,11 @@ export default function Navbar() {
 					<Link href={"/displayJobs"}>
 						<p>
 							Explore Jobs
+						</p>
+					</Link>
+					<Link href={"/displayProjects"}>
+						<p>
+							Student Projects
 						</p>
 					</Link>
 					<Link href={"/savedJobs"}>

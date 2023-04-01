@@ -9,6 +9,7 @@ import Card from "@/components/cards";
 import Navbar from "@/components/navbar";
 import { JobPosting } from "@/interface/JobPosting";
 import styles from "@/styles/displayJobs.module.sass";
+import SavedPagination from "@/components/SavedPagination";
 
 /**
  * @param {jobPostings} JobPosting[] - array of job postings
@@ -21,8 +22,6 @@ interface Props {
 
 export default function SavedJobs({ data }: Props) {
 
-	const [jobs, setJobs] = useState<JobPosting[]>(data);
-
 	return (
 		<div className={styles.background}>
 			<Navbar />
@@ -34,28 +33,11 @@ export default function SavedJobs({ data }: Props) {
 
 				<div className={styles.cardArr}>
 
-					{(jobs.length === 0 && (
-						<div className={styles.nocontent}>No Jobs have been saved yet</div>
-					))}
-					<Grid templateColumns={{ sm: "repeat(1, 1fr)", md: "repeat(2, 1fr)", "2xl": "repeat(3, 1fr)" }} ml={"5vh"} gap={2}>
-						{jobs.map((post: JobPosting, idx) => (
-							<div key={idx} className={styles.cardWrapper}>
-								<Card
-									image={post.companyImage}
-									name={post.companyName}
-									tags={post.tags}
-									address={post.companyLocation[0].location.city}
-									job={post.jobTitle}
-									type={post.jobType} id={post._id as string}
-									extraFunction={(jobPosting) => {
-										console.info("here");
-										setJobs([...jobs.filter(job => job._id !== jobPosting)]);
-									}}
-									liked
-								/>
-							</div>
-						))}
-					</Grid>
+					{data.length === 0 ? (
+						<div className={styles.nocontent}>No Saved Jobs yet</div>
+					) : (
+						<SavedPagination data={data}/>
+					)}
 				</div>
 			</div>
 		</div>

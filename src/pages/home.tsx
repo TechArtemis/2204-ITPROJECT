@@ -167,6 +167,14 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 	if (!token) {
 		return { redirect: { destination: "/", permanent: false } };
 	}
+	if (token.name === "Admin") {
+		return {
+			redirect: {
+				destination: "/admin/jobs",
+				permanent: false
+			}
+		};
+	}
 
 	const jobs = await getAllPosting();
 	const { message: favorites } = await getFavorites(token.email as string);

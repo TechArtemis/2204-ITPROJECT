@@ -22,7 +22,6 @@ export default function PostCoop({ onSubmit, data }: any) {
 		try {
 			const res = await instance.delete(`/jobPosting/${id}/delete`);
 			if(res.status === 200) {
-				console.log("deleted");
 				router.push("/displayJobs");
 			}
 

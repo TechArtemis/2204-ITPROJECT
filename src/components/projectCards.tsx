@@ -25,7 +25,7 @@ export default function ProjectCards(props: Props) {
 		<div className={styles.projectCards} onClick={() => handleClick()}>
 			{props.children}
 			<div className={styles.preview}>
-				<Image className={styles.image} src={`https://res.cloudinary.com/honeydrew/image/upload/${props.image}`} alt={"image"} width={500} height={500}/>
+				<Image className={styles.image} src={`https://res.cloudinary.com/di8zlg2gt/image/upload/${props.image}`} alt={"image"} width={500} height={500}/>
 			</div>
 			<div className={styles.cardcontent}>
 				<h3>{props.name}</h3>

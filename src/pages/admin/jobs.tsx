@@ -41,10 +41,6 @@ export default function AdminJobsPage({ jobPostings, favorites, name }: Props) {
 		setSearch(val);
 	};
 
-	function handleRouteToForm() {
-		router.push("/form");
-	}
-
 	return (
 		<>
 			<div className={styles.container}>
@@ -127,10 +123,10 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 		}
 
 		return {
-			props: {
-				jobPostings: JSON.parse(JSON.stringify(form.message)),
-				favorites: JSON.parse(JSON.stringify(favorites))
-			},
+			redirect: {
+				destination: "/home",
+				permanent: false
+			}
 		};
 	} catch (error) {
 		return {
