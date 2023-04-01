@@ -87,7 +87,7 @@ export default function AdminStudentPage(props: Props) {
 						<Grid templateColumns={"repeat(1, 1fr)"} ml={"5vh"} gap={2}>
 							{
 								props.projectPosts.filter((proj) =>
-								proj.name.toLowerCase().includes(search.toLowerCase())
+									proj.name.toLowerCase().includes(search.toLowerCase())
 								).map((post: Project, idx) => (
 									<ProjectCards
 										key={idx}
