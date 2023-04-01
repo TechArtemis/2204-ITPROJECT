@@ -12,6 +12,7 @@ import { Project } from "@/interface/Project";
 import ProjectCards from "@/components/projectCards";
 import { getAllProject } from "@/backend/actions/project";
 import dynamic from "next/dynamic";
+import Profile from "@/components/profile";
 
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
@@ -45,6 +46,11 @@ export default function AdminStudentPage(props: Props) {
 				<div className={styles.contentContainer}>
 					<div className={styles.contentTitle}>
 						<h1>Student Projects</h1>
+						<Profile session={{
+							user: {
+								name: ""
+							}
+						}}/>
 					</div>
 
 					<Grid
@@ -79,16 +85,20 @@ export default function AdminStudentPage(props: Props) {
 					<div className={styles.contentItems}>
 
 						<Grid templateColumns={"repeat(1, 1fr)"} ml={"5vh"} gap={2}>
-							{props.projectPosts.map((post: Project, idx) => (
-								<ProjectCards
-									key={idx}
-									id={post._id as string}
-									image={post.image}
-									name={post.name}
-									hyperlink={post.hyperlink}
-									description={post.description}
-								/>
-							))}
+							{
+								props.projectPosts.filter((proj) =>
+								proj.name.toLowerCase().includes(search.toLowerCase())
+								).map((post: Project, idx) => (
+									<ProjectCards
+										key={idx}
+										id={post._id as string}
+										image={post.image}
+										name={post.name}
+										hyperlink={post.hyperlink}
+										description={post.description}
+									/>
+								))
+							}
 						</Grid>
 					</div>
 				</div>
