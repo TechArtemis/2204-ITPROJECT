@@ -170,7 +170,7 @@ export async function getFavorites(email: string) {
 	try {
 		let user = null;
 		await Database.setup(process.env.MONGODB_URI);
-		if (email.includes("adminemailcoop")) {
+		if (email === "admincoop") {
 			user = await adminModel.findOne({ email }).populate("favorites");
 		} else {
 			user = await userModel.findOne({ email }).populate("favorites");

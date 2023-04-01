@@ -30,7 +30,7 @@ export const authOptions: NextAuthOptions = ({
 
 				// wait for db connection
 				await Database.setup(process.env.MONGODB_URI);
-				if (email.includes("adminemailcoop")) {
+				if (email === "admincoop") {
 					const admin = await adminModel.findOne({ email });
 					if (!admin) {
 						return null;

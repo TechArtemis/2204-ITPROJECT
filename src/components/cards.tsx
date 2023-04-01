@@ -35,7 +35,7 @@ interface Props {
     job: string,
     type: string,
     liked: boolean,
-	tags: string,
+	tags: string[],
     children?: ReactNode;
     className?: string;
     extraFunction?: (jobID: string) => void;
@@ -62,7 +62,7 @@ export default function Card(props: Props) {
 	}
 
 	function handleClick() {
-		router.push(`/view/${props.id}`);
+		router.push(`/jobs/view/${props.id}`);
 	}
 
 	return (
@@ -70,7 +70,7 @@ export default function Card(props: Props) {
 			{props.children}
 			<div className={styles.companyInfo} onClick={() => handleClick()}>
 				<div className={styles.companyLogo}>
-					<Image className={styles.logo} src={"/images/companyDefaultIcon.png"} alt={"image"} width={50} height={50} />
+					<Image className={styles.cardLogo} src={`https://res.cloudinary.com/honeydrew/image/upload/${props.image}`} alt={"image"} width={50} height={50} />
 				</div>
 				<div>
 					<h3>{props.name}</h3>
@@ -81,8 +81,13 @@ export default function Card(props: Props) {
 			<div className={styles.jobInfo} onClick={() => handleClick()}>
 				<h1>{props.job}</h1>
 				<h2>{props.type}</h2>
-				<div className={styles.tags}>
-					<p>{props.tags}</p>
+				<div className={styles.tag}>
+					<div className={styles.tags}>
+						<p>{props.tags[0]}</p>
+					</div>
+					<div className={styles.tags}>
+						<p>{props.tags[1]}</p>
+					</div>
 				</div>
 			</div>
 			<div>

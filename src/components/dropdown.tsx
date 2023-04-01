@@ -41,7 +41,7 @@ export default function SelectOption(props: Props) {
 				onChange={props.onChange}
 			>
 				{props.options.map((option, idx) => (
-					<option key={idx} value={option.value}>
+					<option key={idx} value={option.label}>
 						{option.label}
 					</option>
 				))}

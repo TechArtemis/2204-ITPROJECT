@@ -19,6 +19,7 @@ import ErrorAlert from "@/components/ErrorAlert";
 import { getAllPosting, getJobPosting } from "@/backend/actions/jobPosting";
 import { getFavorites } from "@/backend/actions/user";
 import { getToken } from "next-auth/jwt";
+import Link from "next/link";
 
 // Dynamic imports
 const BusinessIcon = dynamic(() => import("@mui/icons-material/BusinessRounded"));
@@ -33,11 +34,13 @@ const WorkIcon = dynamic(() => import("@mui/icons-material/Work"));
 const CameraAlt = dynamic(() => import("@mui/icons-material/CameraAlt"));
 const Close = dynamic(() => import("@mui/icons-material/Close"));
 const CodeIcon = dynamic(() => import("@mui/icons-material/Code"));
+const LinkIcon = dynamic(()=> import("@mui/icons-material/Link"));
 
 /**
  * @param {string} companyImage - logo of the company
  * @param {string} companyName - name of the company
  * @param {string} companyContact - contact of the company
+ * @param {string} companyLink - link of the company
  * @param {string} companyLocation - location of the company
  * @param {string} companyAbout - about the company
  * @param {string} jobTitle - title of the job
@@ -52,6 +55,7 @@ interface CompanyJob {
     companyImage?: File | null | string;
     companyName: string;
     companyContact: string;
+    companyLink: string;
     companyLocation: {
         address: string;
         city: string;
@@ -115,6 +119,9 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 		else if(item.companyContact == ""){
 			setError("Company contact not entered");
 		}
+		else if(item.companyLink == ""){
+			setError("Company link not entered");
+		}
 		else if(item.companyLocation.address == ""){
 			setError("Company address not entered");
 		}
@@ -153,6 +160,13 @@ function CompanyPostInfo({ onSubmit, item }: any) {
 						name="companyContact" value={item.companyContact}
 						onChangeInput={handleChange} >
 						<EmailIcon sx={{ color: "#84BD00" }}/>
+					</Input>
+					<Input
+						type="text"
+						placeholder="Enter your company link"
+						name="companyLink" value={item.companyLink}
+						onChangeInput={handleChange} >
+						<LinkIcon sx={{ color: "#84BD00" }}/>
 					</Input>
 					<Input
 						type="text"
@@ -228,7 +242,6 @@ function JobPostInfo({ onSubmit, item }: any) {
 
 	function handleChange(event: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement> | ChangeEvent<HTMLSelectElement>) {
 		onSubmit({ ...item, [event.target.name]: event.target.value });
-		console.log(item);
 	}
 
 	function handleCheck(){
@@ -315,9 +328,6 @@ function JobPostInfo({ onSubmit, item }: any) {
 function PostCoop({ onSubmit, item }: any) {
 	const [value, setValue] = useState(1);
 
-	console.log(item.companyImage);
-
-
 	return (
 		<div>
 			<div className={styles.submitform}>
@@ -325,7 +335,7 @@ function PostCoop({ onSubmit, item }: any) {
 					{ item.companyImage ? (
 						<Image
 							className={styles.logo}
-							src={`https://res.cloudinary.com/honeydrew/image/upload/${item.companyImage}`}
+							src={`https://res.cloudinary.com/saibyouga/image/upload/${item.companyImage}`}
 							width={85}
 							height={85}
 							alt="Image"
@@ -374,6 +384,8 @@ function PostCoop({ onSubmit, item }: any) {
 							<p>{item.companyLocation.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{item.companyContact}</p>
+							<h1>Link</h1>
+							<p><Link href={item.companyLink}>{item.companyLink}</Link></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>
@@ -406,14 +418,12 @@ interface Props {
 
 
 export default function EditFormPage(jobdata: Props) {
-
-	console.log(jobdata);
-
 	const [formPage, setFormPage] = useState<number>(1);
 	const [item, setItem] = useState <CompanyJob>({
 		companyImage: jobdata.jobdata.companyImage,
 		companyName: jobdata.jobdata.companyName,
 		companyContact: jobdata.jobdata.companyContact,
+		companyLink: jobdata.jobdata.companyLink,
 		companyLocation: {
 			address: jobdata.jobdata.companyLocation[0].location.address,
 			city: jobdata.jobdata.companyLocation[0].location.city,
@@ -432,6 +442,7 @@ export default function EditFormPage(jobdata: Props) {
 		return (
 			item.companyAbout !== "" &&
             item.companyContact !== "" &&
+            item.companyLink !== "" &&
             item.companyLocation.address !== "" &&
             item.companyLocation.city !== "" &&
             item.companyLocation.postalCode !== "" &&
@@ -457,27 +468,12 @@ export default function EditFormPage(jobdata: Props) {
 		setItem({ ...datatest });
 		const tags = item.tags.split(",");
 		if (formPage === 3) {
-
-			// const form = new FormData();
-			// form.append("files", item.companyImage!);
-
-			// const img = {
-			// 	method: "POST",
-			// 	url: "cloudinary",
-			// 	data: form
-			// };
-
-			// const { data } = await instance.request(img);
-			// const { data: { data:{ url:url } } } = await instance.post("/cloudinary", form);
-
-			// console.log(url.public_id);
-
-
 			const jobPosting = {
 
 				companyImage: jobdata.jobdata.companyImage,
 				companyName: item.companyName,
 				companyAbout: item.companyAbout,
+				companyLink: item.companyLink,
 				companyLocation: [
 					{
 						location: {
@@ -499,10 +495,6 @@ export default function EditFormPage(jobdata: Props) {
 			const obj = {
 				jobPosting
 			};
-
-			console.log("test", obj);
-
-			console.log(jobdata.jobdata);
 
 			await instance.put(`/jobPosting/${jobdata.jobdata._id as string}/update`, obj);
 			router.push("/");

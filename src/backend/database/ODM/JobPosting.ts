@@ -22,6 +22,10 @@ const jobPostingSchema = new Schema (
 			type: String,
 			required: true
 		},
+		companyLink: {
+			type: String,
+			required: true
+		},
 		companyLocation: {
 			type: [] as Location[],
 			required: true

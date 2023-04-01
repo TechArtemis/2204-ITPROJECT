@@ -2,8 +2,11 @@ $primary: #84BD00
 $primary-hover: #73a302
 
 .background
-    background-color: #f7f7f7
     height: 100vh
+    background-color: #f7f7f7
+    height: 100%
+    min-height: 100vh
+
 .title
     font-size: 30px
     display: flex
@@ -13,27 +16,28 @@ $primary-hover: #73a302
     h1
         font-family: "Lato-Bold"
 
+
+    
 .cardContainer
     display: flex
     justify-content: center
-    align-items: center
-
-.cardArr
-    display: flex
-    justify-content: center
-    padding: 50px
-    flex-direction: row
+    padding: 40px
+    background-color: #ff1f1f00
     flex-wrap: wrap
-    width: 100%
 
 .cardWrapper
     margin: 25px
 
+    &:hover
+        cursor: pointer
+
 .container
     display: flex
-    justify-content: center
-    align-items: center
     padding-top: 40px
+
+    @media (max-width: 48em)
+        flex-direction: column
+        min-width: 100%
 
 .swiper
     display: flex
@@ -47,24 +51,32 @@ $primary-hover: #73a302
         width: 80%
 
 .search
+    display: flex
+    flex-direction: row
+    justify-content: center
+    align-items: center
+    width: 700px
+    height: 68px
+    border: 1px solid #DCDCDC
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    border-radius: 50px
+    background-color: white
+
     @media (max-width: 48em)
-        margin: 0px 0px 0px 0px
+        width: 100%
 
-.searchInput
-    height: 70px
-    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.1)
-    border-radius: 35px
-    padding-right: 65px
-    padding-left: 25px
-
-    &:focus-within
-        background-color: #f7f7f7
-        transition: background-color 0.2s ease-in-out
-
+    input
+        border-radius: 50px
+        width: 95%
+        height: 100%
+        padding: 10px 0px 10px 20px
+        outline: none
 
 .searchIcon
-    height: 70px
+    display: flex
+    height: 68px
     margin-right: 20px
+    align-items: center
 
 .post
     min-width: 180px

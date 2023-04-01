@@ -36,6 +36,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					message: "Invalid Contact"
 				};
 			}
+			if (!isValidStr(jobPosting.companyLink)) {
+				throw {
+					code: 400,
+					message: "Invalid Company Link"
+				};
+			}
 			if (!isValidStr(jobPosting.companyAbout)) {
 				throw {
 					code: 400,
@@ -81,6 +87,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 				companyImage: jobPosting.companyImage,
 				companyName: jobPosting.companyName,
 				companyContact: jobPosting.companyContact,
+				companyLink: jobPosting.companyLink,
 				companyLocation: jobPosting.companyLocation,
 				companyAbout: jobPosting.companyAbout,
 				jobDescription: jobPosting.jobDescription,

@@ -19,20 +19,21 @@ import { Location } from "@/interface/Location";
  *
  */
 export interface JobPosting {
-    _id?: Types.ObjectId | string;
-    companyName: string;
-    companyImage: string;
-    companyContact: string;
+    _id?: Types.ObjectId | string
+    companyName: string
+    companyImage: string
+    companyContact: string
+	companyLink: string
     companyLocation: [{
-        location: Location;
+        location: Location
     }];
-    companyAbout: string;
-    jobDescription: string;
-    jobType: JobPosting.JobTitleType;
-    jobTitle: string;
-    employment: JobPosting.EmploymentType;
-    datePosted: Date;
-    tags: string[];
+    companyAbout: string
+    jobDescription: string
+    jobType: JobPosting.JobTitleType
+    jobTitle: string
+    employment: JobPosting.EmploymentType
+    datePosted: Date
+    tags: string[]
 }
 
 //namespace for JobPosting

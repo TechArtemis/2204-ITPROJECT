@@ -1,22 +1,20 @@
 // Third-party imports
-// import dynamic from "next/dynamic";
+import router from "next/router";
+import dynamic from "next/dynamic";
 import { useState } from "react";
 import Image from "next/image";
 import { getToken } from "next-auth/jwt";
-
 
 // Local imports
 import Navbar from "@/components/navbar";
 import styles from "@/styles/form.module.sass";
 import { getJobPosting } from "@/backend/actions/jobPosting";
 import { instance } from "@/shared/axiosInstance";
-import router from "next/router";
-import dynamic from "next/dynamic";
+
 
 //dynamic imports
 const Edit = dynamic(() => import("@mui/icons-material/Edit"));
 const Delete = dynamic(() => import("@mui/icons-material/Delete"));
-
 
 export default function PostCoop({ onSubmit, data, name }: any) {
 	const [value, setValue] = useState(1);
@@ -26,7 +24,6 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 		try {
 			const res = await instance.delete(`/jobPosting/${id}/delete`);
 			if(res.status === 200) {
-				console.log("deleted");
 				router.push("/displayJobs");
 			}
 
@@ -83,7 +80,7 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 									</>
 									:
 									<></>
-							}
+							 }
 						</div>
 					</div>
 				</div>
@@ -105,6 +102,8 @@ export default function PostCoop({ onSubmit, data, name }: any) {
 							<p>{data.companyLocation[0].location.postalCode}</p>
 							<h1>Contact</h1>
 							<p>{data.companyContact}</p>
+							<h1>Link</h1>
+							<p><a target="_blank" href={data.companyLink} rel="noopener noreferrer">{data.companyLink}</a></p>
 						</div>
 						:
 						<div className={styles.jobDetails}>

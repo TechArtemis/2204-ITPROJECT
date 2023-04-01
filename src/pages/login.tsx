@@ -46,8 +46,20 @@ export default function LogIn() {
 
 		setPassword(val);
 	};
+	const handleLogin = async () => {
+		if (email !== "admincoop") {
+			if (!STUDENT_EMAIL_REGEX.test(email)) {
+				setIsEmailInvalid(true);
+			} else {
+				setIsEmailInvalid(false);
+			}
+		}
+		if (!PASSWORD_REGEX.test(password)) {
+			setIsPasswordInvalid(true);
+		} else {
+			setIsPasswordInvalid(false);
+		}
 
-	async function handleLogin() {
 		try {
 			const response = await signIn("credentials", { redirect: false, email, password });
 

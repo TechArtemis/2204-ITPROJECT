@@ -4,21 +4,28 @@ import bcrypt from "bcrypt";
 
 // Local import
 import { Admin } from "@/interface/Admin";
-import { EMAIL_REGEX, PASSWORD_REGEX } from "@/shared/regex";
+import { PASSWORD_REGEX } from "@/shared/regex";
 import { createAdmin } from "@/backend/actions/admin";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
 	if (req.method === "POST") {
 		try {
+			const { keyone, keytwo } = req.headers;
 			const { admin } = req.body;
+			if (keyone !== process.env.KEYONE && keytwo !== process.env.KEYTWO) {
+				throw {
+					code: 400,
+					message: "Invalid SignUp"
+				};
+			}
 
 			/**
              * the following if conditions validates the input
              */
-			if (!EMAIL_REGEX.test(admin.email)) {
+			if (admin.email !== "admincoop") {
 				throw {
 					code: 400,
-					message: "Invalid Email"
+					message: "Invalid Username"
 				};
 			}
 			if (!PASSWORD_REGEX.test(admin.password)) {
@@ -27,7 +34,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 					message: "Invalid Password"
 				};
 			}
-			const hashed= await bcrypt.hash(admin.password, 10);
+			const hashed= await bcrypt.hash(admin.password, 12);
 			const newAdmin: Admin = {
 				email: admin.email,
 				password: hashed,

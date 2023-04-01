@@ -28,13 +28,10 @@ export default function JobCardComponent(props: Props) {
 	const [liked, setLiked] = useState<boolean>(props.liked ?? false);
 
 	async function handleAddToLiked(id: string, action: string) {
-
 		if(props.extraFunction && action !== "add") {
 
 			props.extraFunction(id);
 		}
-
-		console.log(id);
 
 		if (action === "add"){
 			setLiked(true);
