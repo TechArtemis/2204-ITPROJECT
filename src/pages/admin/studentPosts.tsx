@@ -9,17 +9,21 @@ import { getToken } from "next-auth/jwt";
 
 // Local imports
 import styles from "@/styles/admin.module.sass";
-import { JobPosting } from "@/interface/JobPosting";
-import { getAllPosting } from "@/backend/actions/jobPosting";
-import { getFavorites } from "@/backend/actions/user";
 import Sidebar from "@/components/sidebar";
 import Searchbar from "@/components/searchbar";
+import { Project } from "@/interface/Project";
+import ProjectCards from "@/components/projectCards";
+import { getAllProject } from "@/backend/actions/project";
 
 // Dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
 
-export default function AdminStudentPage() {
+interface Props {
+	projectPosts: Project[]
+}
+
+export default function AdminStudentPage(props: Props) {
 
 	const [search, setSearch] = useState("");
 
@@ -51,8 +55,18 @@ export default function AdminStudentPage() {
 
 					<div className={styles.contentItems}>
 
-					<Grid templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
-						</
+						<Grid templateColumns={{ sm: "repeat(1, 1fr)", xl: "repeat(2, 1fr)" }} ml={"5vh"} gap={2}>
+							{props.projectPosts.map((post: Project, idx) => (
+								<ProjectCards
+									key={idx}
+									id={post._id as string}
+									image={post.image}
+									name={post.name}
+									hyperlink={post.hyperlink}
+									description={post.description}
+								/>
+							))}
+						</Grid>
 					</div>
 				</div>
 			</div>
@@ -77,14 +91,12 @@ export async function getServerSideProps(context: { [key: string]: any }) {
 			return { redirect: { destination: "/login", permanent: false } };
 		}
 
-		const form = await getAllPosting();
-		const { message: favorites } = await getFavorites(token.email as string);
+		const form = await getAllProject();
 		if (token.name === "Admin") {
 			return {
 				props: {
 					name: token.name,
-					jobPostings: JSON.parse(JSON.stringify(form.message)),
-					favorites: JSON.parse(JSON.stringify(favorites))
+					projectPosts: JSON.parse(JSON.stringify(form.message))
 				},
 			};
 		}

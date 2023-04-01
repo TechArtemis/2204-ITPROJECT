@@ -22,11 +22,6 @@ interface Props {
 }
 
 export default function DisplayProjects({ projects, name }: Props) {
-
-	function handleRouteToProjectForm() {
-		router.push("/createProject");
-	}
-
 	return (
 		<div>
 			<Navbar />
