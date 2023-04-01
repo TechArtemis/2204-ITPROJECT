@@ -3,7 +3,8 @@ import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { useState } from "react";
-import { Button, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
+
 import { getToken } from "next-auth/jwt";
 
 // Local imports
@@ -16,6 +17,7 @@ import Sidebar from "@/components/sidebar";
 import Searchbar from "@/components/searchbar";
 import Profile from "@/components/profile";
 import router from "next/router";
+import Button from "@/components/button";
 
 // Dynamic imports
 const Search = dynamic(() => import("@mui/icons-material/Search"));

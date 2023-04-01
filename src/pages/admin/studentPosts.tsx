@@ -1,7 +1,7 @@
 // Third-party imports
 import { useState } from "react";
 import router from "next/router";
-import { Button, Grid, GridItem } from "@chakra-ui/react";
+import { Grid, GridItem } from "@chakra-ui/react";
 import { getToken } from "next-auth/jwt";
 
 // Local imports
@@ -13,6 +13,7 @@ import ProjectCards from "@/components/projectCards";
 import { getAllProject } from "@/backend/actions/project";
 import dynamic from "next/dynamic";
 import Profile from "@/components/profile";
+import Button from "@/components/button";
 
 const Search = dynamic(() => import("@mui/icons-material/Search"));
 const AddIcon = dynamic(() => import("@mui/icons-material/Add"));
