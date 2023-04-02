@@ -76,7 +76,7 @@ export default function AdminStudentPage(props: Props) {
 								onClick={() => handleRouteToProject()}
 								className={styles.postJob}>
 								<div className={styles.postItemText}>
-									<p>Add Job</p>
+									<p>Add Project</p>
 									<AddIcon fontSize="large" sx={{ color: "#ffffff" }} />
 								</div>
 							</Button>
