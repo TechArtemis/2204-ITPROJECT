@@ -1,0 +1,237 @@
+$primary: #84BD00
+$primary-hover: #73a302
+$main-menu: #ADADAD
+$light-grey: #DFDEDD
+$contentContainer-color: #F4F4F4
+  
+.container
+    display: flex
+    flex-direction: row
+    height: 100%
+    min-height: 120vh
+
+
+.sidebarContainer
+    min-width: 320px
+    padding: 35px
+    background-color: #FFFFFF
+    border-right: solid
+    border-right-width: 2px
+    border-color: $light-grey
+
+    @media (max-width: 62em)
+        min-width: 82px
+        max-width: 82px
+        padding: 10px
+
+.contentContainer
+    width: 100%
+    background-color: $contentContainer-color
+    padding: 100px 80px 0px 80px
+    
+    @media (max-width: 62em)
+        padding: 50px 50px 0px 10px
+
+// ------------------------------------------------------------
+
+.sidebarItems
+    margin-top: 40px
+    
+    h1
+        font-family: "Lato-Bold"
+        font-size: 18px
+        color: black
+
+.mainMenu
+    margin-left: 12px
+
+    @media (max-width: 62em)
+        display: none
+
+    h1
+        font-size: 26px
+        color: $main-menu
+
+.jobs
+    display: flex
+    flex-direction: row
+    margin-top: 30px
+    padding: 10px 12px
+    border-radius: 16px
+    align-items: center
+    
+    &:hover
+        background-color: $light-grey
+
+    h1
+        margin-left: 15px
+
+        @media (max-width: 62em)
+            display: none
+    
+.jobsClicked
+    background-color: $light-grey
+
+.studentProjects
+    display: flex
+    flex-direction: row
+    margin-top: 20px
+    padding: 10px 12px
+    border-radius: 16px
+    align-items: center
+
+    &:hover
+        background-color: $light-grey
+    
+    h1
+        margin-left: 15px
+
+        @media (max-width: 62em)
+            display: none
+
+.studentProjectsClicked
+    background-color: $light-grey
+
+.auditLogs
+    display: flex
+    flex-direction: row
+    margin-top: 20px
+    align-items: center
+    padding: 10px 12px
+    border-radius: 16px
+    align-items: center
+
+    &:hover
+        background-color: $light-grey
+
+    h1
+        margin-left: 15px
+
+        @media (max-width: 62em)
+            display: none
+
+.auditLogsClicked
+    background-color: $light-grey
+
+// ------------------------------------------------------------
+
+.contentTitle
+    display: flex
+    justify-content: space-between
+    margin-bottom: 30px
+
+    h1
+        font-size: 46px
+        font-family: "Lato-Bold"
+        letter-spacing: 1.6px
+
+.searchContainer
+    display: flex
+    margin: 0 auto
+    width: 	800px
+    height: 68px
+    border: 1px solid #DCDCDC
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    border-radius: 50px
+    background-color: white
+
+    @media (max-width: 48em)
+        width: 100%
+
+    input
+        border-radius: 50px
+        width: 95%
+        height: 100%
+        padding: 10px 0px 10px 20px
+        outline: none
+
+.search
+    display: flex
+    width: 700px
+    height: 68px
+    border: 1px solid #DCDCDC
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    border-radius: 50px
+    background-color: white
+
+    @media (max-width: 80em)
+        width: 550px
+
+    @media (max-width: 48em)
+        width: 400px
+        margin-bottom: -20px
+
+    input
+        border-radius: 50px
+        width: 95%
+        height: 100%
+        padding: 0px 0px 0px 20px
+        outline: none
+
+.searchIcon
+    display: flex
+    height: 68px
+    margin-right: 20px
+    align-items: center
+
+.postJob
+    min-width: 180px
+    height: 70px
+    background: $primary
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    border-radius: 100px
+
+    @media (max-width: 768px)
+        margin: 20px 0px 0px 0px
+        margin-top: 20px
+
+    &:hover
+        background: $primary-hover
+
+    div
+        color: #ffff
+        text-transform: uppercase
+        display: flex
+        justify-content: center
+        align-items: center
+        gap: 10px
+
+.postProject
+    min-width: 220px
+    height: 70px
+    background: $primary
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.25)
+    border-radius: 100px
+    margin: 0px 0px 0px 0px
+
+    @media (max-width: 768px)
+        margin: 20px 0px 0px 0px
+
+    &:hover
+        background: $primary-hover
+
+    div
+        color: #ffff
+        text-transform: uppercase
+        display: flex
+        justify-content: center
+        align-items: center
+        gap: 10px
+
+.postItemText
+    display: flex
+    align-items: center
+
+    p
+        font-size: 18px
+        font-family: "Lato-Bold"
+
+// ------------------------------------------------------------
+
+.nocontent
+    font-family: "Lato-Bold"
+    font-size: 26px
+    margin-left: 40px
+
+.contentItems
+    margin: 30px -10px 0px -40px

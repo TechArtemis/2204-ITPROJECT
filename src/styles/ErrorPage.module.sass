@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Concert+One&display=swap')
+
+.error
+    display: flex
+    flex-direction: column
+    justify-content: center
+    align-items: center
+    background-color: #f7f7f7
+    height: 100vh
+    font-size: 3rem
+
+    h1
+        font-family: 'Concert One', cursive
+        font-size: 300px
+        color: #e2e2e2
+        animation: liquid 5s ease-in-out infinite alternate
+
+    h3
+        font-family: 'Concert One', cursive
+        font-size: 50px
+        text-transform: uppercase
+        color: #e2e2e2
+        animation: wave-color 2s ease-in-out infinite
+
+.redirect
+    font-size: 20px
+    color: #bdbdbd
+    text-decoration: none
+
+@keyframes liquid
+    0%
+        transform: skewX(-20deg) skewY(-10deg) scale(1.1)
+
+    50%
+        transform: skewX(20deg) skewY(10deg) scale(0.9)
+
+    100%
+        transform: skewX(-20deg) skewY(-10deg) scale(1.1)
+
+@keyframes wave-color
+    0%
+        color: #84BD00
+
+    50%
+        color: #84bd009f
+
+    100%
+        color: #b1e92dab

@@ -1,22 +1,29 @@
-import cloudinary from "@/backend/config/cloudinary";
+import cloudinary from "@/shared/cloudinary";
 
 const { uploader } = cloudinary;
 
 export async function uploadFile(path: string) {
-    const response = await uploader.upload(path,
-        {
-            unique_filename: true
-        }
-    );
+	try {
+		const response = await uploader.upload(
+			path,
+			{
+				// eslint-disable-next-line camelcase
+				unique_filename: true
+			}
+		);
+		if (!response) {
+			throw {
+				code: 500,
+				message: `failed to upload file with path: ${path}`
+			};
+		}
 
-    if (!response) {
-        throw {
-            status: 500,
-            message: `failed to upload file with path: ${ path }`
-        };
-    }
+		return response;
 
-    return {
-        filename: response.public_id
-    };
+	} catch (error: any) {
+		throw{
+			error
+		};
+
+	}
 }
